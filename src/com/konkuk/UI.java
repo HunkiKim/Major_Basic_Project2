@@ -7,7 +7,8 @@ public class UI {
         System.out.println(msg);
     }
 
-    public static String getInput() {
+    public static String getInput(String msg) {
+        if(msg != null) print(msg);
         Scanner scanner = new Scanner(System.in);
         return scanner.next();
     }

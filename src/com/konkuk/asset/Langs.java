@@ -8,5 +8,4 @@ public final class Langs {
             "3. 로그 조회\n" +
             "4. 프로그램 종료\n" +
             HORIZON;
-
 }
