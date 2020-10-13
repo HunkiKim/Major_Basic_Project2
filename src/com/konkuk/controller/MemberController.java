@@ -13,13 +13,14 @@ public class MemberController extends Controller {
     }
 
     public Controller start() {
+        UI.print("화이팅.");
         if (currentMenu == Menu.FIND) {
             find();
         } else if (currentMenu == Menu.ADD) {
             add();
         }
         // 수정 필요
-        return null;
+        return new MainController();
     }
 
     private void find() {
