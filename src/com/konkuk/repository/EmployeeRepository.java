@@ -43,6 +43,7 @@ public class EmployeeRepository {
     }
 
     private void createEmptyDataFile() throws IOException {
+        UI.debug("새로운 파일 생성");
         File file = new File(Settings.DATA_EMPLOYEE);
         BufferedWriter bw = new BufferedWriter(new FileWriter(file));
         // BOM
@@ -53,6 +54,9 @@ public class EmployeeRepository {
 
     private List<Employee> loadData() {
         List<Employee> result = new ArrayList<>();
+
+
+
         return result;
     }
 
