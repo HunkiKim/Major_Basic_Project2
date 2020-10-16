@@ -4,6 +4,7 @@ import com.konkuk.UI;
 import com.konkuk.asset.Langs;
 
 public class MainController extends Controller {
+
     public Controller start() {
         Controller next = null;
         while(true) {
@@ -11,9 +12,9 @@ public class MainController extends Controller {
             String nextMenu = UI.getInput();
             switch (nextMenu) {
                 case "1":
-                    next = new MemberController(MemberController.Menu.ADD);
+                    next = new EmployeeController(EmployeeController.Menu.ADD);
                 case "2":
-                    next = new MemberController(MemberController.Menu.FIND);
+                    next = new EmployeeController(EmployeeController.Menu.FIND);
                 default:
                     break;
             }
@@ -22,4 +23,5 @@ public class MainController extends Controller {
         }
         return next;
     }
+
 }

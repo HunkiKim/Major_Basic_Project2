@@ -1,14 +1,14 @@
 package com.konkuk.controller;
 
 import com.konkuk.UI;
-import com.konkuk.dto.Member;
-import com.konkuk.service.MemberService;
+import com.konkuk.dto.Employee;
+import com.konkuk.service.EmployeeService;
 
-public class MemberController extends Controller {
+public class EmployeeController extends Controller {
     public enum Menu {FIND, ADD}
     protected Menu currentMenu;
 
-    public MemberController(Menu menu) {
+    public EmployeeController(Menu menu) {
         this.currentMenu = menu;
     }
 
@@ -28,11 +28,11 @@ public class MemberController extends Controller {
 
     private void add() {
         // Member 생성
-        Member member = new Member();
+        Employee employee = new Employee();
         // member.id ....
 
         // 모든 service, repository 는 임시로 new 만들어쓰기
-        boolean result = new MemberService().add(member);
+        boolean result = new EmployeeService().add(employee);
         // 성공과 실패의 처리
     }
 }
