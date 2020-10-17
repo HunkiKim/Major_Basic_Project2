@@ -4,20 +4,7 @@ import com.konkuk.Utils;
 import com.konkuk.asset.Langs;
 import com.konkuk.asset.Settings;
 import com.konkuk.dto.Employee;
-import com.sun.javaws.exceptions.InvalidArgumentException;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class EmployeeRepository extends Repository {
 
@@ -37,12 +24,7 @@ public class EmployeeRepository extends Repository {
                 return new Employee(id, name, salary, residualDayOff);
             });
         } else {
-            try {
-                createEmptyDataFile(Settings.DATA_EMPLOYEE, Employee.getHeader());
-            } catch (IOException e) {
-                // 다음파일 해보고 수정
-                Utils.exit("Employee Repository IOE");
-            }
+            createEmptyDataFile(Settings.DATA_EMPLOYEE, Employee.getHeader());
         }
     }
 
@@ -54,7 +36,12 @@ public class EmployeeRepository extends Repository {
         return Instance.instance;
     }
 
+    private int maxId = -1;
     public void add(Employee employee) {
-        // save to database
+        if(maxId == -1) {
+            employeeList.forEach((e -> maxId = Math.max(maxId, e.id)));
+        }
+        employee.id = ++maxId;
+        // employee save
     }
 }
