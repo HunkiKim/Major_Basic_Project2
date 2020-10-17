@@ -8,4 +8,6 @@ public final class Langs {
             "3. 로그 조회\n" +
             "4. 프로그램 종료\n" +
             HORIZON;
+    public static final String VIOLATE_UNIQUE_KEY = "식별자 규칙에 위배되는 데이터 파일 발견으로 종료합니다.";
+    public static final String DATA_FILE_HEADER_EMPLOYEE = "\"사번\",\"이름\",\"연봉\",\"잔여 연차\"";
 }

@@ -13,8 +13,4 @@ public class UI {
         Scanner scanner = new Scanner(System.in);
         return scanner.next();
     }
-
-    public static void debug(String msg) {
-        if(Settings.DEBUG) print("Debug: " + msg);
-    }
 }

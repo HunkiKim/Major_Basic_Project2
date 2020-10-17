@@ -28,11 +28,11 @@ public class EmployeeController extends Controller {
 
     private void add() {
         // Member 생성
-        Employee employee = new Employee();
+//        Employee employee = new Employee();
         // member.id ....
 
         // 모든 service, repository 는 임시로 new 만들어쓰기
-        boolean result = new EmployeeService().add(employee);
+//        boolean result = new EmployeeService().add(employee);
         // 성공과 실패의 처리
     }
 }
