@@ -3,7 +3,8 @@ package com.konkuk.controller;
 import com.konkuk.Main;
 import com.konkuk.UI;
 import com.konkuk.asset.Langs;
-import com.konkuk.service.DayOffService;
+import com.konkuk.dto.DayOff;
+import com.konkuk.service.DayOffHistoryService;
 
 public class DayOffHistoryController extends Controller{
     public enum Menu{
