@@ -31,9 +31,7 @@ public class LogRepository extends Repository {
                 }
                 return new Log(log_number, log_category, log_content, Day);
             });
-        } //else {
-        //createEmptyDataFile(Settings.DATA_LOG, Employee.getHeader());
-        //}
+        }
     }
 
     private static class Instance {
@@ -68,9 +66,7 @@ public class LogRepository extends Repository {
         }
         return result;
     }
-    public static void main(String[] args) {
-        System.out.print(get_log());
-    }
+
     public static int CountLine () { // 로그 번호를 저장하기 위해 log.txt 파일의 line 수를 count하여 return한다
         int linecount = 0;
         File file = new File("logs.txt");

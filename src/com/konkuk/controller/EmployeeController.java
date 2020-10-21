@@ -1,8 +1,6 @@
 package com.konkuk.controller;
 
-import com.konkuk.UI;
-import com.konkuk.dto.Employee;
-import com.konkuk.service.EmployeeService;
+import com.konkuk.service.UI;
 
 public class EmployeeController extends Controller {
     public enum Menu {FIND, ADD}

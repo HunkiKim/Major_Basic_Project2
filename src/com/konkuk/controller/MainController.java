@@ -1,6 +1,6 @@
 package com.konkuk.controller;
 
-import com.konkuk.UI;
+import com.konkuk.service.UI;
 import com.konkuk.asset.Langs;
 
 public class MainController extends Controller {
