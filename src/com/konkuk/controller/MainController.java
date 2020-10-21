@@ -15,6 +15,8 @@ public class MainController extends Controller {
                     next = new EmployeeController(EmployeeController.Menu.ADD);
                 case "2":
                     next = new EmployeeController(EmployeeController.Menu.FIND);
+                case "3":
+                    next = new LogController(LogController.Menu.LOG);
                 default:
                     break;
             }
