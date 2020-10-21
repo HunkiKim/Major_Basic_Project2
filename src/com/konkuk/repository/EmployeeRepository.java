@@ -8,7 +8,7 @@ import com.konkuk.dto.Employee;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeRepository extends Repository {
+public class EmployeeRepository extends Repository implements  IEmployeeRepository {
 
     private List<Employee> employeeList;
 
@@ -40,6 +40,7 @@ public class EmployeeRepository extends Repository {
 
     // todo: 단기 - 껍데기만 만들어둠
     private int maxId = -1;
+    @Override
     public Employee add(Employee employee) {
         if (maxId == -1) {
             employeeList.forEach((e -> maxId = Math.max(maxId, e.id)));
@@ -49,38 +50,38 @@ public class EmployeeRepository extends Repository {
         return employee;
     }
 
-    // todo: 단기 - 껍데기만 만들어둠, 부분 문자열 검색
+    @Override
     public List<Employee> findByName(String name) {
         List<Employee> results = new ArrayList<>();
         results.add(new Employee(0, "임시", 1000, 5));
         return results;
     }
 
-    // todo: 단기 - 껍데기만 만들어둠색, 완전 일치 검색
+    @Override
     public List<Employee> findBySalary(int salary) {
         List<Employee> results = new ArrayList<>();
         results.add(new Employee(0, "임시", 1000, 5));
         return results;
     }
 
-    // todo: 단기 - 껍데기만 만들어둠, 부분 문자열 검색
+    @Override
     public List<Employee> findById(int id) {
         List<Employee> results = new ArrayList<>();
         results.add(new Employee(0, "임시", 1000, 5));
         return results;
     }
 
-    // todo: 단기 - 껍데기만 만들어둠, 완전 일치 검색
+    @Override
     public Employee findByExactId(int id) {
         return new Employee(0, "임시", 1000, 5);
     }
 
-    // todo: 단기 - 껍데기만 만들어둠
+    @Override
     public Employee update(int targetId, Employee datas) {
         return datas;
     }
 
-    // todo: 단기 - 껍데기만 만들어둠
+    @Override
     public Boolean delete(int targetId) {
         return true;
     }
