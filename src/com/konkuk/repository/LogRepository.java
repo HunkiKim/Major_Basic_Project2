@@ -49,12 +49,12 @@ public class LogRepository {
 
         try {
             writer = new FileWriter(file, true);
-            int log_number1 = CountLine() + 1; // log.txt 파일의 line 수를 불러와 +1 한 값을 로그번호로 지
+            int log_number1 = CountLine() + 1; // log.txt 파일의 line 수를 불러와 +1 한 값을 로그번호로 지정
             String log_number = Integer.toString(log_number1);
             writer.write("\"" + log_number + "\",");
             writer.write("\"" + category + "\",");
             writer.write("\"" + content + "\",");
-            if (month1 < 10) {
+            if (month1 < 10) { // 월이 10보다 작으면 앞에 0 을 붙여주기 위해서 따로 분류
                 writer.write("\"" + year + "0" + month + day + " " + hour + ":" + min + "\",");
                 writer.flush();
             }
