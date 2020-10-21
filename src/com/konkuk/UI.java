@@ -1,5 +1,7 @@
 package com.konkuk;
 
+import com.konkuk.asset.Settings;
+
 import java.util.Scanner;
 
 public class UI {
