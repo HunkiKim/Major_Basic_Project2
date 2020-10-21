@@ -23,12 +23,16 @@ public class EmployeeController extends Controller {
         return new MainController();
     }
 
-    private void find() {
+    private void find() {//직원 검색
+
     }
 
-    private void add() {
+    private void add() { // 직원 추가
         // Member 생성
-//        Employee employee = new Employee();
+
+        int id; String name; int salary; int residualDayOff;
+        System.out.println("");
+        UI.getInput();
         // member.id ....
 
         // 모든 service, repository 는 임시로 new 만들어쓰기
