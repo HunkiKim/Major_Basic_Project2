@@ -1,17 +1,76 @@
 package com.konkuk.repository;
 
-import java.io.BufferedWriter;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
+import com.konkuk.service.Utils;
+import com.konkuk.asset.Langs;
+import com.konkuk.asset.Settings;
+import java.util.ArrayList;
 
-public class LogRepository {
+import com.konkuk.dto.Log;
 
+public class LogRepository extends Repository {
+    private List<Log> logList;
+
+    private LogRepository() {
+        this.debugTitle = "log";
+        if(isDataFileExists(Settings.DATA_LOG)) {
+            logList = loadData(Settings.DATA_LOG, (parsedData, uniquePolicy) -> {
+                int log_number = Integer.parseInt(parsedData.get(0));
+                String log_category = parsedData.get(1);
+                String log_content = parsedData.get(2);
+                String Day = parsedData.get(3);
+                if(uniquePolicy.contains(log_number)) {
+                    Utils.exit(Langs.VIOLATE_UNIQUE_KEY);
+                }
+                return new Log(log_number, log_category, log_content, Day);
+            });
+        } //else {
+        //createEmptyDataFile(Settings.DATA_LOG, Employee.getHeader());
+        //}
+    }
+
+    private static class Instance {
+        private static final LogRepository instance = new LogRepository();
+    }
+
+    public static LogRepository getInstance() {
+        return Instance.instance;
+    }
+
+    public static List<String> get_log () {
+        Repository rp = new Repository();
+        List<String> result = new ArrayList<>();
+        try {
+            File file = new File("log.txt");
+            FileReader filereader = new FileReader(file);
+            BufferedReader bufReader = new BufferedReader(filereader);
+            String line = "";
+            while((line = bufReader.readLine()) != null) {
+                result.add(rp.parseDataLine(line).get(0));
+                result.add(rp.parseDataLine(line).get(1));
+                result.add(rp.parseDataLine(line).get(2));
+                result.add(rp.parseDataLine(line).get(3));
+            }
+            bufReader.close();
+
+
+        }catch (FileNotFoundException e) {
+
+        }catch (IOException e) {
+
+        }
+        return result;
+    }
+    public static void main(String[] args) {
+        System.out.print(get_log());
+    }
     public static int CountLine () { // 로그 번호를 저장하기 위해 log.txt 파일의 line 수를 count하여 return한다
         int linecount = 0;
         File file = new File("logs.txt");
@@ -21,6 +80,7 @@ public class LogRepository {
             while(in.readLine() != null) {
                 linecount++;
             }
+            in.close();
         }catch(Exception e) {
             e.printStackTrace();
         }
