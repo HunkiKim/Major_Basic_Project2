@@ -16,4 +16,28 @@ public class DayOffService {
 //        dayOffRepository.add(dayoff);
         return false;
     }
+
+    public boolean add(String reason, String count){
+
+
+        return false;
+    }
+
+    public boolean change(String reason, String start){
+
+
+        return false;
+    }
+
+    public boolean cancel(){
+
+        return false;
+    }
+
+    public boolean reduct(String reason, String count){
+
+
+        return false;
+    }
+
 }

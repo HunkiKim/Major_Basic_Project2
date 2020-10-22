@@ -20,8 +20,18 @@ public final class Langs {
             "2. 반차\n" +
             HORIZON +
             "입력: ";
+    public static final String DAY_OFF_CC = HORIZON +
+            "1. 연차 수정\n" +
+            "2. 연차 취소\n" +
+            HORIZON +
+            "입력: ";
     public static final String DAY_OFF_REASON = "연차 사용 사유를 입력하세요: ";
     public static final String DAY_OFF_START = "연차 사용 시작 시간을 입력하세요: ";
+    public static final String DAY_OFF_CHANGE_REASON = "연차 사유를 입력하세요(수정하지 않을 시 'p' 나 'P'를 입력하세요): ";
+    public static final String DAY_OFF_CHANGE_START = "연차 시작 시간을 입력하세요(수정하지 않을 시 'p' 나 'P'를 입력하세요): ";
+    public static final String DAY_OFF_ADD = "연차 추가 개수를 입력하세요: ";
+    public static final String DAY_OFF_RED = "연차 차감 개수를 입력하세요: ";
+    public static final String INPUT_NUM = "연차 번호를 입력하세요: ";
     public static final String INPUT_ERROR = "다시 입력하세요.";
     public static final String FAIL_TO_CREATE_DATA_FILE = "데이터 파일 생성에 실패했습니다.";
     public static final String VIOLATE_UNIQUE_KEY = "식별자 규칙에 위배되는 데이터 파일 발견으로 종료합니다.";
@@ -29,6 +39,7 @@ public final class Langs {
     public static final String DAY_OFF_FIRST_PAGE = "첫 페이지입니다.";
     public static final String DAY_OFF_LAST_PAGE = "마지막 페이지입니다.";
     public static final String DATA_FILE_HEADER_EMPLOYEE = "\"사번\",\"이름\",\"연봉\",\"잔여 연차\"";
+    public static final String DATA_FILE_HEADER_DAYOFF_USE = "\"사번\",\"이름\",\"사유\",\"연차 시작\",\"연차 종료\",\"잔여 연차 수\"";
     public static final String DATA_FILE_HEADER_DAYOFF = "\"번호\",\"사번\",\"변동 연차 수\",\"사유\",\"연차 시작\",\"연차 종료\",\"생성 날짜\"";
 
     public static final String DAY_OFF_HISTORY_MAIN = HORIZON +
