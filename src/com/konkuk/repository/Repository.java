@@ -2,7 +2,6 @@ package com.konkuk.repository;
 
 import com.konkuk.service.Utils;
 import com.konkuk.asset.Langs;
-import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -10,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -39,7 +39,7 @@ public class Repository {
         }
     }
 
-    protected List<String> parseDataLine(String data) throws InvalidArgumentException {
+    protected List<String> parseDataLine(String data) throws ParseException {
         List<String> result = new ArrayList<>();
         StringBuilder s = new StringBuilder();
         boolean error = false;
@@ -86,7 +86,8 @@ public class Repository {
                 }
             }
         }
-        if(error) throw new InvalidArgumentException(null);
+        // todo: 추후수정
+        if(error) throw new ParseException("", 0);
         // 마지막 처리
         result.add(s.toString());
         return result;
@@ -120,7 +121,7 @@ public class Repository {
                     // todo: 일부 데이터가 없는경우 (사번은 무시, 기획서에서 사번만 고유하므로 나머지는 수정 필요를 명시하자)
                     List<String> parsed = parseDataLine(line);
                     result.add(deserializer.deserialize(parsed, uniquePolicy));
-                } catch (InvalidArgumentException | NumberFormatException e) {
+                } catch (ParseException | NumberFormatException e) {
                     // Line이 이상하거나, 정상 파싱은 되었으나 데이터가 이상한 경우
                     ignoredData.getAndIncrement();
                 } // int에 해당하는 데이터가 숫자가 아닌 경우

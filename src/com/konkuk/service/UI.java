@@ -13,4 +13,9 @@ public class UI {
         Scanner scanner = new Scanner(System.in);
         return scanner.next();
     }
+
+    public static int getInput1(){
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextInt();
+    }
 }
