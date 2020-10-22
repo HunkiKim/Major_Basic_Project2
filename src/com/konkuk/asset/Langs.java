@@ -49,6 +49,7 @@ public final class Langs {
             "입력 ";
     public static final String DAY_OFF_HISTORY_PAGE = "\n" +
             "1. 다음 연차 내역    " + "2. 이전 연차 내역\n"+
+            HORIZON +
             "입력: ";
     public static final String DAY_OFF_HISTORY_DATE_START = "\n연차 시작 날짜를 입력하세요: ";
     public static final String DAY_OFF_HISTORY_DATE_END = "\n연차 종료 날짜를 입력하세요: ";
