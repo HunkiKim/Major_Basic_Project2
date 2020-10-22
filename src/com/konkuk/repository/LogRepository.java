@@ -6,9 +6,10 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.List;
-import com.konkuk.service.Utils;
+import com.konkuk.Utils;
 import com.konkuk.asset.Langs;
 import com.konkuk.asset.Settings;
 import java.util.ArrayList;
@@ -60,6 +61,8 @@ public class LogRepository extends Repository {
 
 
         }catch (FileNotFoundException e) {
+
+        }catch (ParseException e) {
 
         }catch (IOException e) {
 

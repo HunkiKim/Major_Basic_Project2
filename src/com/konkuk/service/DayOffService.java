@@ -16,7 +16,10 @@ public class DayOffService {
         int id = employee.getId();
         String name = employee.getName();
         int fcount = employee.getResidualDayOff();
-        DayOff dayOff = new DayOff(list_num, id, name, reason, start, end, fcount);
+
+        // 오류나서 변경해놨어여 / 단기
+        DayOff dayOff = null;
+//        DayOff dayOff = new DayOff(list_num, id, name, reason, start, end, fcount);
         dayOffRepository.add(dayOff);
         list_num++;
         return false;

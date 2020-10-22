@@ -4,6 +4,7 @@ import com.konkuk.Main;
 import com.konkuk.UI;
 import com.konkuk.asset.Langs;
 import com.konkuk.dto.DayOff;
+import com.konkuk.dto.Employee;
 import com.konkuk.service.DayOffService;
 
 import static com.konkuk.asset.Langs.DAY_OFF_CC;
@@ -50,6 +51,9 @@ public class DayOffController extends Controller {
         DayOffService dayOffService = new DayOffService();
         // 타입에는 반차인지 연차인지. 일단은 그냥 int로 해놨어요
 
+        // 오류나서 일단 넣어놨어여
+        String end = null;
+        Employee employee = null;
         while (true) {
             if (menu.equals("1")) {       //수정
                 //종료시간
@@ -91,6 +95,8 @@ public class DayOffController extends Controller {
         int count = UI.getInput1();
 
 
+        // 오류나서 일단 넣어놨어여
+        Employee employee = null;
         DayOffService dayOffService = new DayOffService();
         boolean isDone = dayOffService.add(employee, reason, count);
 
@@ -127,6 +133,7 @@ public class DayOffController extends Controller {
                 //종료시간
 
 
+                String end = null;
                 boolean isDone = dayOffService.change(dayOff, reason, start, end);
 
                 if (isDone) {
@@ -163,6 +170,8 @@ public class DayOffController extends Controller {
         int count = UI.getInput1();
 
         DayOffService dayOffService = new DayOffService();
+        // 얘도 오류낫 ㅓ일단 넣었어여
+        Employee employee = null;
         boolean isDone = dayOffService.reduct(employee, reason, count);
 
         if(isDone) {
