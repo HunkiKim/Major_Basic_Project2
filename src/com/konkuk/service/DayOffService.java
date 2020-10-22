@@ -9,12 +9,11 @@ public class DayOffService {
     private int list_num = 1;
 
     public boolean use(int type, String reason, String start) {
-//
 //        dayOffRepository.findByDate();
 //        dayOffRepository.findByEmployeeId();
 //        등의 기능을 사용해서 구현
         //DayOff dayOff = new DayOff(list_num, id, name, reason, start, end, fcount);
-        dayOffRepository.add(dayOff);
+//        dayOffRepository.add(dayOff);
         list_num++;
         return false;
     }

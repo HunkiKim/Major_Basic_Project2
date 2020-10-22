@@ -14,6 +14,8 @@ public class DayOff {
     public Date dateDayOffEnd;
     public Date dateCreated;
 
+    public DayOff() {};
+
     public DayOff(int num, int id, String name, String reason, Date dateDayOffStart, Date dateDayOffEnd, int count){
         this.num = num;
         this.id = id;
