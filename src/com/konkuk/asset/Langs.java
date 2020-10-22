@@ -25,6 +25,9 @@ public final class Langs {
     public static final String INPUT_ERROR = "다시 입력하세요.";
     public static final String FAIL_TO_CREATE_DATA_FILE = "데이터 파일 생성에 실패했습니다.";
     public static final String VIOLATE_UNIQUE_KEY = "식별자 규칙에 위배되는 데이터 파일 발견으로 종료합니다.";
+    public static final String DAY_OFF_DSNT_EXIST = "해당 연차내역이 존재하지 않습니다.";
+    public static final String DAY_OFF_FIRST_PAGE = "첫 페이지입니다.";
+    public static final String DAY_OFF_LAST_PAGE = "마지막 페이지입니다.";
     public static final String DATA_FILE_HEADER_EMPLOYEE = "\"사번\",\"이름\",\"연봉\",\"잔여 연차\"";
     public static final String DATA_FILE_HEADER_DAYOFF = "\"번호\",\"사번\",\"변동 연차 수\",\"사유\",\"연차 시작\",\"연차 종료\",\"생성 날짜\"";
 

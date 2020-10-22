@@ -23,8 +23,8 @@ public class DayOffHistoryRepository extends Repository implements IDayOffHistor
     }
 
     @Override
-    public List<DayOff> findALl(){
-        // 이번 연도와 연차 시작 연도가 같은 데이터만 불러오기
+    public List<DayOff> findByEmployeeId(int employeeId){
+        // 해당 사번의 이번 연도 연차 내역 데이터만 불러오기
         List<DayOff> results = new ArrayList<>();
         results.add(new DayOff(
                 0,
@@ -37,8 +37,8 @@ public class DayOffHistoryRepository extends Repository implements IDayOffHistor
         return results;
     }
     @Override
-    public List<DayOff> findByEmployeeId(int employeeId){
-        // 해당 사번의 연차 내역 데이터만 불러오기
+    public List<DayOff> findByDate(int employeeId, Date start, Date end){
+        // 해당 사번의 연차 시작 연도부터 끝나는 연도까지의 데이터 불러오기
         List<DayOff> results = new ArrayList<>();
         results.add(new DayOff(
                 0,
@@ -48,6 +48,8 @@ public class DayOffHistoryRepository extends Repository implements IDayOffHistor
                 new Date(0),
                 new Date(0),
                 new Date(0)));
+
+
         return results;
     }
 }

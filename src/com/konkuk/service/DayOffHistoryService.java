@@ -4,6 +4,8 @@ import com.konkuk.dto.DayOff;
 import com.konkuk.repository.DayOffHistoryRepository;
 import com.konkuk.repository.DayOffRepository;
 
+import java.util.Date;
+
 public class DayOffHistoryService {
     DayOffHistoryRepository dayOffHistoryRepository = DayOffHistoryRepository.getInstance();
 
@@ -12,7 +14,7 @@ public class DayOffHistoryService {
         return false;
     }
 
-    public boolean advancedSearch(int searchPage){
+    public boolean advancedSearch(int searchPage, Date start, Date end){
         return false;
     }
 
