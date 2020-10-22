@@ -32,6 +32,7 @@ public final class Langs {
     public static final String EMPLOYEE_ID = "사번: ";
     public static final String EMPLOYEE_NAME = "이름: ";
     public static final String EMPLOYEE_SALARY = "연봉: ";
+    public static final String EMPLOYEE_TARGET = "대상 입력: ";
     public static final String LENGTH_ERROR = "길이가 맞지 않습니다. 다시 입력해주세요.";
     public static final String LETTER_ERROR = "문법규칙에 맞지 않는 문자가 있습니다. 다시 입력해주세요.";
     public static final String DAY_OFF_REASON = "연차 사용 사유를 입력하세요: ";
