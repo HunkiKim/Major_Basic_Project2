@@ -10,10 +10,14 @@ import java.util.Date;
 public class DayOffHistoryController extends Controller{
     public int annualPage;
     public int searchPage;
-    public DayOffHistoryController(){
+    public int employeeId;
+    public DayOffHistoryController(int employeeId){
         this.annualPage = 0;
         this.searchPage = 0;
+        this.employeeId = employeeId;
     }
+
+
     public enum Menu{
         ANNUAL_HISTORY("1"),
         ADVANCED_SEARCH("2"),
@@ -43,7 +47,6 @@ public class DayOffHistoryController extends Controller{
             return name;
         }
     }
-
     public Controller start(){
 
         UI.print(Langs.DAY_OFF_HISTORY_MAIN);
@@ -64,31 +67,31 @@ public class DayOffHistoryController extends Controller{
         boolean result;
 
         DayOffHistoryService history = new DayOffHistoryService();
-        result = history.annualHistory(this.annualPage); // 기능 미완성
+        result = history.annualHistory(this.employeeId, this.annualPage); // 기능 미완성
         if(!result){
             UI.print(Langs.DAY_OFF_DSNT_EXIST);
-            return new DayOffHistoryController();
+            return new DayOffHistoryController(this.employeeId);
         }
 
         UI.print(Langs.DAY_OFF_HISTORY_PAGE);
         String menu = UI.getInput();
 
         if(menu.equals(PageMenu.NEXT_PAGE.getMenu())){
-            if(history.isExistsNextPage(this.annualPage)) this.annualPage++;
+            if(history.isNextPageExists(this.annualPage)) this.annualPage++;
             else{
-                UI.print(Langs.DAY_OFF_LAST_PAGE);//Langs에 추가
+                UI.print(Langs.DAY_OFF_LAST_PAGE);
                 this.annualHistory();
             }
         }else if(menu.equals(PageMenu.PREV_PAGE.getMenu())){
-            if(history.isExistsPrevPage(this.annualPage)) this.annualPage--;
+            if(history.isPrevPageExists(this.annualPage)) this.annualPage--;
             else{
-                UI.print(Langs.DAY_OFF_FIRST_PAGE);// Langs에 추가
+                UI.print(Langs.DAY_OFF_FIRST_PAGE);
                 this.annualHistory();
             }
         }else if(menu.equals(PageMenu.BACK_PAGE1.getMenu())||menu.equals(PageMenu.BACK_PAGE2.getMenu())){
-            return new DayOffHistoryController();
+            return new DayOffHistoryController(this.employeeId);
         }
-        return new DayOffHistoryController();
+        return new DayOffHistoryController(this.employeeId);
     }
     public Controller advancedSearch(){
         //연차내역 상세 검색
@@ -99,12 +102,12 @@ public class DayOffHistoryController extends Controller{
 
 
         DayOffHistoryService history = new DayOffHistoryService();
-        result = history.advancedSearch(this.searchPage, startDate, endDate); // 기능 미완성
+        result = history.advancedSearch(this.employeeId,this.searchPage, startDate, endDate); // 기능 미완성
         if(!result){
             UI.print(Langs.DAY_OFF_DSNT_EXIST);
-            return new DayOffHistoryController();
+            return new DayOffHistoryController(this.employeeId);
         }
 
-        return new DayOffHistoryController();
+        return new DayOffHistoryController(this.employeeId);
     }
 }
