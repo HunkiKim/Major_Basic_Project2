@@ -15,11 +15,19 @@ public class Manual {
     private int lnum;  //연차 번호(list 검색용)
     private float count;  //추가 혹은 차감할 연차개수
     private float fcount; //추가 혹은 차감된 연차개수
-    private int day = 8;  //연차 시간
+    //private int day = 8;  //연차 시간
     private int halfday = 4;  //반차 시간
     private int list_num = 1;  //연차 번호(db추가용)
 
     Scanner s = new Scanner(System.in);
+
+    private String ymd;
+    private String hour;
+    private String minute;
+
+
+    String Time = ymd + " " + hour + ":" + minute;
+
 
     public void menu(){
 
