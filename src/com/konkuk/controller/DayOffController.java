@@ -59,7 +59,10 @@ public class DayOffController extends Controller {
         UI.print(Langs.DAY_OFF_REASON);
         String reason = UI.getInput();
         UI.print(Langs.DAY_OFF_ADD);
-        String count = UI.getInput();
+        int count = UI.getInput1();
+
+        //종료 시간 계산
+
 
         DayOffService dayOffService = new DayOffService();
         boolean isDone = dayOffService.add(reason, count);
@@ -77,10 +80,12 @@ public class DayOffController extends Controller {
         UI.print(Langs.DAY_OFF_CC);
         String menu = UI.getInput();
 
-        //연차 사용 리스트
+        //연차 사용 리스트 출력
 
         DayOffService dayOffService = new DayOffService();
         UI.print(Langs.INPUT_NUM);
+
+        DayOff dayOff = new DayOff();       //연차번호에 해당하는 dayOff객체 찾기
 
         while (true) {
             if (menu.equals("1")) {       //수정
@@ -100,7 +105,8 @@ public class DayOffController extends Controller {
                 }
 
             } else if (menu.equals("2")) {        //취소
-                boolean isDone = dayOffService.cancel();
+
+                boolean isDone = dayOffService.cancel(dayOff);
                 if (isDone) {
                     //잘 된것
                     // 다음처리
@@ -121,7 +127,7 @@ public class DayOffController extends Controller {
         UI.print(Langs.DAY_OFF_REASON);
         String reason = UI.getInput();
         UI.print(Langs.DAY_OFF_RED);
-        String count = UI.getInput();
+        int count = UI.getInput1();
 
         DayOffService dayOffService = new DayOffService();
         boolean isDone = dayOffService.reduct(reason, count);

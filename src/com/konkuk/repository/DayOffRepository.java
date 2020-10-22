@@ -38,6 +38,9 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
     }
 
     @Override
+    public boolean delete(DayOff dayoff) { return true; }
+
+    @Override
     public List<DayOff> findByEmployeeId(int employeeId) {
         List<DayOff> results = new ArrayList<>();
         results.add(new DayOff(
