@@ -7,6 +7,7 @@ import com.konkuk.repository.DayOffHistoryRepository;
 import com.konkuk.repository.DayOffRepository;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +18,18 @@ public class DayOffHistoryService {
         // 해당 페이지의 연간 연차내역 출력
         String record = "";
         this.dayOffList = dayOffHistoryRepository.findByEmployeeId(employeeId);
-        // TODO: 생성 날짜 기준 내림차순 정렬
+
+        dayOffList.sort(new Comparator<DayOff>() {
+            @Override
+            public int compare(DayOff o1, DayOff o2) {
+                if (o1.id>o2.id){
+                    return -1;
+                }else{
+                    return 1;
+                }
+
+            }
+        });
 
         int listSize = this.dayOffList.size();
         List<DayOff> subList = new ArrayList<>(this.dayOffList.subList(annualPage*10, Math.min(listSize,annualPage*10+9)));
