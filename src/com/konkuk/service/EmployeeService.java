@@ -10,6 +10,7 @@ public class EmployeeService {
     public boolean add(Employee employee) {
         // 비즈니스 로직
 
+
         return false;
     }
     public boolean idcheck(String id){
@@ -49,11 +50,23 @@ public class EmployeeService {
             }
         }
 
-        if(salary.length()>=8 && salary.length()<=10){
+        if(salary.length()<8 || salary.length()>10){
             UI.print(Langs.LENGTH_ERROR);
             return false;
         }
 
         return true;
+    }
+
+    public int check(String yn){
+        if(yn.equals("Yes") || yn.equals("Y") || yn.equals("y") || yn.equals("yes")){
+            return 0;
+        }
+        else if(yn.equals("No") || yn.equals("n") || yn.equals("N") || yn.equals("no")){
+            return 1;
+        }
+        else{
+            return -1;
+        }
     }
 }
