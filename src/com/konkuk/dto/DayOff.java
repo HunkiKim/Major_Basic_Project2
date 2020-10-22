@@ -8,10 +8,22 @@ public class DayOff {
     public int num;
     public int id;
     public int dayOffNumber;
+    public String name;
     public String reason;
     public Date dateDayOffStart;
     public Date dateDayOffEnd;
     public Date dateCreated;
+
+    public DayOff() {}
+
+    public DayOff(int num, int id, String name, String reason, Date dateDayOffStart, Date dateDayOffEnd, int count){
+        this.num = num;
+        this.id = id;
+        this.name = name;
+        this.reason = reason;
+        this.dateDayOffStart = dateDayOffStart;
+        this.dateDayOffEnd = dateDayOffEnd;
+    }
 
     public DayOff(int num, int id, int dayOffNumber, String reason, Date dateDayOffStart, Date dateDayOffEnd, Date dateCreated) {
         this.num = num;
@@ -25,4 +37,6 @@ public class DayOff {
     public static String getHeader(){
         return Langs.DATA_FILE_HEADER_DAYOFF;
     }
+
+
 }

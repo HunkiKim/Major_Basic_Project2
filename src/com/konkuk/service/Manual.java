@@ -1,5 +1,10 @@
 package com.konkuk.service;
+import com.konkuk.asset.Langs;
+import com.konkuk.dto.DayOff;
+
 import java.util.*;
+
+import static com.konkuk.asset.Langs.*;
 
 public class Manual {
     private int mnum;  //메뉴 번호
@@ -12,8 +17,6 @@ public class Manual {
     private float fcount; //추가 혹은 차감된 연차개수
     private int day = 8;  //연차 시간
     private int halfday = 4;  //반차 시간
-    private float dcount = 1.0f;  //연차 개수
-    private float hdcount = 0.5f;  //반차 개수
     private int list_num = 1;  //연차 번호(db추가용)
 
     Scanner s = new Scanner(System.in);
@@ -51,7 +54,8 @@ public class Manual {
 
     }
 
-    private void use(){
+    private void use(){     //연차 사용
+
         System.out.println("------------------------------------------");
         System.out.println("1. 연차");
         System.out.println("2. 반차");
@@ -64,20 +68,18 @@ public class Manual {
         System.out.printf("연차 사용 시작 시간을 입력하세요: ");
         start_date = s.nextLine();
 
-        if(mnum2==1){       //연차 사용
-            //시간 입력 확인
+        //시작시간 입력 확인
 
-
+        if(mnum2==1){       //연차
             //end_date 계산
+
 
 
             //fcount 계산 (잔여 연차수)
             //fcount = Employee.getCount() - 1;         //getCount()는 임시함수. 사용자의 원래연차수 가져오는 함수
-        } else if(mnum2==2){        //반차 사용
-            //시간 입력 확인
-
-
+        } else if(mnum2==2){        //반차
             //end_date 계산
+
 
 
             //fcount 계산 (잔여 연차수)
@@ -88,14 +90,13 @@ public class Manual {
         //z 객체에 사용 내역 저장
         //Z z = new Z(list_num,name,reason,start_date,end_date,fcount);
 
-
         //사용list db?에 저장
 
 
         list_num += 1;
     }
 
-    private void add(){
+    private void add(){     //연차 추가
         System.out.printf("연차 추가 사유를 입력하세요: ");
         reason = s.nextLine();
         System.out.printf("연차 추가 개수를 입력하세요: ");
@@ -106,7 +107,7 @@ public class Manual {
 
     }
 
-    private void change_cancel(){
+    private void change_cancel(){       //연차 수정 및 취소
         System.out.println("------------------------------------------");
         System.out.println("1. 연차 수정");
         System.out.println("2. 연차 취소");
@@ -115,10 +116,10 @@ public class Manual {
         mnum2 = s.nextInt();
 
         //연차 사용 리스트 출력
+        System.out.printf("연차 번호를 입력하세요: ");
+        lnum = s.nextInt();
 
         if(mnum2==1){    //연차 수정
-            System.out.printf("연차 번호를 입력하세요: ");
-            lnum = s.nextInt();
             System.out.printf("연차 사유를 입력하세요(수정하지 않을 시 'p' 나 'P'를 입력하세요): ");
             reason = s.nextLine();
             System.out.printf("연차 시작 시간을 입력하세요(수정하지 않을 시 'p' 나 'P'를 입력하세요): ");
@@ -128,15 +129,13 @@ public class Manual {
 
 
         } else if(mnum2==2){     //연차 취소
-            System.out.printf("연차 번호를 입력하세요: ");
-            lnum = s.nextInt();
             //연차 사용정보 리스트에서 삭제하기
 
             System.out.println("연차 사용을 취소합니다.");
         }
     }
 
-    private void reduct(){
+    private void reduct(){      //연차 차감
         System.out.printf("연차 차감 사유를 입력하세요: ");
         reason = s.nextLine();
         System.out.printf("연차 차감 개수를 입력하세요: ");
