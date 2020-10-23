@@ -38,8 +38,8 @@ public class DayOffHistoryService {
         List<DayOff> subList = new ArrayList<>(this.dayOffList.subList(pageNumber*10, Math.min(listSize,pageNumber*10+9)));
         UI.print(Langs.DATA_FILE_HEADER_DAYOFF);
         for(DayOff data:subList){
-            record+=(data.num+" "+
-                    data.id+" "+
+            record+=(data.id+" "+
+                    data.employeeId+" "+
                     data.dayOffNumber+" "+
                     data.reason+" "+
                     data.dateDayOffStart+" "+
