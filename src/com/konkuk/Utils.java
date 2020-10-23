@@ -1,4 +1,4 @@
-package com.konkuk.service;
+package com.konkuk;
 
 import com.konkuk.asset.Settings;
 

@@ -1,4 +1,4 @@
-package com.konkuk.service;
+package com.konkuk;
 
 import com.konkuk.controller.Controller;
 import com.konkuk.controller.DayOffController;
