@@ -29,7 +29,7 @@ public class Repository {
     }
 
     protected void createEmptyDataFile(String header) {
-        Utils.debug("데이터 파일 생성");
+        Utils.debug("데이터 파일 생성: " + this.debugTitle);
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
             // BOM
@@ -96,9 +96,9 @@ public class Repository {
     }
 
     private String serialize(List<String> fieldsData) {
-        return fieldsData
+        return "\n" + fieldsData
                 .stream()
-                .map(s -> s.replaceAll("\"", "\"\""))
+                .map(s -> "\"" + s.replaceAll("\"", "\"\"") + "\"")
                 .collect(Collectors.joining(","));
     }
 

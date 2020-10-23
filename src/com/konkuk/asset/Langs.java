@@ -51,6 +51,7 @@ public final class Langs {
     public static final String DAY_OFF_FIRST_PAGE = "첫 페이지입니다.";
     public static final String DAY_OFF_LAST_PAGE = "마지막 페이지입니다.";
     public static final String DATA_FILE_HEADER_EMPLOYEE = "\"사번\",\"이름\",\"연봉\",\"잔여 연차\"";
+    public static final String DATA_FILE_HEADER_LOG = "\"번호\",\"분류\",\"내용\",\"생성 날짜\"";
     public static final String DATA_FILE_HEADER_DAYOFF_USE = "\"사번\",\"이름\",\"사유\",\"연차 시작\",\"연차 종료\",\"잔여 연차 수\"";
     public static final String DATA_FILE_HEADER_DAYOFF = "\"번호\",\"사번\",\"변동 연차 수\",\"사유\",\"연차 시작\",\"연차 종료\",\"생성 날짜\"";
 
