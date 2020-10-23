@@ -8,7 +8,7 @@ public class DayOff {
     public int num;
     public int id;
     public int dayOffNumber;
-    public int residualDayOff;
+    public float residualDayOff;
     public String name;
     public String reason;
     public String start;
@@ -19,7 +19,7 @@ public class DayOff {
 
     public DayOff() {}
 
-    public DayOff(int dayOffNumber, int id, String name, String reason, Date dateDayOffStart, Date dateDayOffEnd, int residualDayOff){
+    public DayOff(int dayOffNumber, int id, String name, String reason, Date dateDayOffStart, Date dateDayOffEnd, float residualDayOff){
         this.dayOffNumber = dayOffNumber;
         this.id = id;
         this.name = name;

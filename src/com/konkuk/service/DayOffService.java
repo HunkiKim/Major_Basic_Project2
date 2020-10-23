@@ -7,15 +7,20 @@ import com.konkuk.repository.DayOffRepository;
 public class DayOffService {
     DayOffRepository dayOffRepository = DayOffRepository.getInstance();
     private int list_num = 1;
+    private float fcount = 0;
 
-
-    public boolean use(Employee employee, String reason, String start, String end) {
+    public boolean use(Employee employee, int type ,String reason, String start, String end) {
 //        dayOffRepository.findByDate();
 //        dayOffRepository.findByEmployeeId();
 //        등의 기능을 사용해서 구현
         int id = employee.getId();
         String name = employee.getName();
-        int fcount = employee.getResidualDayOff();
+        if(type==0){    //연차
+            fcount = employee.getResidualDayOff() - 1.0f;
+        } else if(type==1){     //반차
+            fcount = employee.getResidualDayOff() - 0.5f;
+        }
+
 
         // 오류나서 변경해놨어여 / 단기
         DayOff dayOff = null;
@@ -25,8 +30,8 @@ public class DayOffService {
         return false;
     }
 
-    public boolean add(Employee employee, String reason, int count){
-        int fcount = employee.getResidualDayOff() + count;
+    public boolean add(Employee employee, String reason, float count){
+        fcount = employee.getResidualDayOff() + count;
         employee.setResidualDayOff(fcount);
         return false;
     }
@@ -44,8 +49,8 @@ public class DayOffService {
         return false;
     }
 
-    public boolean reduct(Employee employee, String reason, int count){
-        int fcount = employee.getResidualDayOff() - count;
+    public boolean reduct(Employee employee, String reason, float count){
+        fcount = employee.getResidualDayOff() - count;
         employee.setResidualDayOff(fcount);
         return false;
     }
