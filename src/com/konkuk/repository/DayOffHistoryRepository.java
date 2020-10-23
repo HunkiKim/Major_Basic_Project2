@@ -14,16 +14,19 @@ import java.util.*;
 
 public class DayOffHistoryRepository extends Repository implements IDayOffHistoryRepository {
 
-    List<DayOff> dayOffs = new ArrayList<>();
+    private List<DayOff> dayOffList = new ArrayList<>();
 
     private DayOffHistoryRepository(String dataFilePath) {
         super(dataFilePath);
         this.debugTitle = "DayOffHistory";
         if (isDataFileExists()) {
-            dayOffs = loadData((parsedData, uniquePolicy) -> {
+            dayOffList = loadData((parsedData, uniquePolicy) -> {
                 int id = Integer.parseInt(parsedData.get(0));
                 int employeeId = Integer.parseInt(parsedData.get(1));
                 int dayOffNumber = Integer.parseInt(parsedData.get(2));
+                if(uniquePolicy.contains(id)) {
+                    Utils.exit(Langs.VIOLATE_UNIQUE_KEY);
+                }
                 String reason = parsedData.get(4);
                 SimpleDateFormat transFormat = new SimpleDateFormat("yyyyMMdd HH:mm");
                 try{
@@ -57,7 +60,7 @@ public class DayOffHistoryRepository extends Repository implements IDayOffHistor
         int endYear = Integer.parseInt(simpleDate.format(end));
 
         Calendar calendar = Calendar.getInstance();
-        dayOffs.forEach((dayOff -> {
+        dayOffList.forEach((dayOff -> {
             calendar.setTime(dayOff.dateDayOffStart);
             int tempYear = calendar.get(Calendar.YEAR);
             if(dayOff.employeeId == employeeId && tempYear>=startYear&&tempYear<=endYear) {
