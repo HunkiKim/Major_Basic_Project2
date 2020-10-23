@@ -3,14 +3,12 @@ package com.konkuk.repository;
 import com.konkuk.Utils;
 import com.konkuk.asset.Langs;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -20,7 +18,7 @@ import java.util.stream.Collectors;
 public class Repository {
 
     public String debugTitle = "";
-    private final File file;
+    private File file;
 
     protected Repository(String dataFilePath) {
         file = new File(dataFilePath);
@@ -97,7 +95,7 @@ public class Repository {
         return result;
     }
 
-    protected String serialize(List<String> fieldsData) {
+    private String serialize(List<String> fieldsData) {
         return fieldsData
                 .stream()
                 .map(s -> s.replaceAll("\"", "\"\""))
@@ -108,7 +106,40 @@ public class Repository {
         T deserialize(List<String> parsedData, HashSet<Integer> uniquePolicy);
     }
 
-    protected void addDataLine(List<String> fieldsData) {
+    protected void addDataLine(List<String> fieldsData) throws IOException {
+        FileWriter writer = new FileWriter(file, true);
+        writer.write(serialize(fieldsData));
+        writer.flush();
+        writer.close();
+    }
+
+    protected void deleteDataLine(int id) throws IOException {
+        String tmpFilePath = file.getPath() + "_" + new Date().getTime();
+        File tmpFile = new File(tmpFilePath);
+
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(tmpFile));
+
+        String line = bufferedReader.readLine();
+        String parsedId = String.valueOf(id);
+        while((line != null)) {
+            try {
+                String dataId = parseDataLine(line).get(0);
+                if(!dataId.equals(parsedId)) {
+                    bufferedWriter.write(line + "\r\n");
+                    bufferedWriter.flush();
+                }
+            } catch (ParseException e) {
+                Utils.debug("데이터 파일 헤더 제거 or 잘못된 라인 삭제:" + line);
+            }
+            line = bufferedReader.readLine();
+        }
+        bufferedReader.close();
+        bufferedWriter.close();
+
+        //todo: 이거 실패했을때 처리
+        file.delete();
+        tmpFile.renameTo(file);
     }
 
     protected <T> List<T> loadData(Deserializer<T> deserializer) {
