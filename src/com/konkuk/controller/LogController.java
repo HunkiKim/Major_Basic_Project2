@@ -1,7 +1,7 @@
 package com.konkuk.controller;
 
 
-import com.konkuk.service.UI;
+import com.konkuk.UI;
 import com.konkuk.asset.Langs;
 import com.konkuk.dto.Log;
 import com.konkuk.service.LogService;
