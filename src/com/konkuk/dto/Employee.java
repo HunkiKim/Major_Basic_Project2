@@ -6,9 +6,9 @@ public class Employee {
     public int id;
     public String name;
     public int salary;
-    public int residualDayOff;
+    public float residualDayOff;
 
-    public Employee(int id, String name, int salary, int residualDayOff) {
+    public Employee(int id, String name, int salary, float residualDayOff) {
         this.id = id;
         this.name = name;
         this.salary = salary;
@@ -25,6 +25,6 @@ public class Employee {
     public void setName(String name) { this.name = name; }
     public int getSalary() { return salary; }
     public void setSalary(int salary) { this.salary = salary; }
-    public int getResidualDayOff() { return residualDayOff; }
-    public void setResidualDayOff(int num) { this.residualDayOff = num; }
+    public float getResidualDayOff() { return residualDayOff; }
+    public void setResidualDayOff(float num) { this.residualDayOff = num; }
 }

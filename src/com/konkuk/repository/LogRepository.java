@@ -1,6 +1,6 @@
 package com.konkuk.repository;
 
-import com.konkuk.Utils;
+import com.konkuk.service.Utils;
 import com.konkuk.asset.Langs;
 import com.konkuk.asset.Settings;
 import com.konkuk.dto.Log;
@@ -16,7 +16,7 @@ public class LogRepository extends Repository {
 
     private LogRepository(String dataFilePath) {
         super(dataFilePath);
-        this.debugTitle = "log";
+        this.debugTitle = "Log";
         if(isDataFileExists()) {
             logList = loadData((parsedData, uniquePolicy) -> {
                 int log_number = Integer.parseInt(parsedData.get(0));
@@ -28,6 +28,8 @@ public class LogRepository extends Repository {
                 }
                 return new Log(log_number, log_category, log_content, Day);
             });
+        } else {
+            createEmptyDataFile(Log.getHeader());
         }
     }
 
@@ -64,8 +66,6 @@ public class LogRepository extends Repository {
         String hour = Integer.toString(hour1);
         int min1 = cal.get(Calendar.MINUTE);
         String min = Integer.toString(min1);
-        int sec1 = cal.get(Calendar.SECOND);
-        String sec = Integer.toString(sec1);
 
         try {
             writer = new FileWriter(file, true);
