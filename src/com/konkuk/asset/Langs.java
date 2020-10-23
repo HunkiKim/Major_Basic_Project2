@@ -52,6 +52,7 @@ public final class Langs {
     public static final String DATA_FILE_HEADER_DAYOFF_USE = "\"사번\",\"이름\",\"사유\",\"연차 시작\",\"연차 종료\",\"잔여 연차 수\"";
     public static final String DATA_FILE_HEADER_DAYOFF = "\"번호\",\"사번\",\"변동 연차 수\",\"사유\",\"연차 시작\",\"연차 종료\",\"생성 날짜\"";
 
+
     public static final String DAY_OFF_HISTORY_MAIN = HORIZON +
             "1. 이번 연도 연차 조회\n" +
             "2. 상세 검색\n" +
@@ -60,6 +61,18 @@ public final class Langs {
     public static final String DAY_OFF_HISTORY_PAGE = "\n" +
             "1. 다음 연차 내역    " + "2. 이전 연차 내역\n"+
             HORIZON +
+            "입력: ";
+    public static final String DAY_OFF_INFO_PAGE = "\n" +
+            "연차를 초과 사용하였습니다. 차감액을 조회하시겠습니까?\n"+
+            "1.조회하기\n"+
+            "2.메인화면 이동\n"+
+            HORIZON +
+            "입력: ";
+    public static final String DAY_OFF_INFO_PAGE_REFUND = "\n" +
+            "연차를 초과 사용하였습니다. 차감액을 조회하시겠습니까?\n"+
+            HORIZON +
+            "1.조회하기\n"+
+            "2.메인화면 이동\n"+
             "입력: ";
     public static final String DAY_OFF_HISTORY_DATE_START = "\n연차 시작 날짜를 입력하세요: ";
     public static final String DAY_OFF_HISTORY_DATE_END = "\n연차 종료 날짜를 입력하세요: ";
