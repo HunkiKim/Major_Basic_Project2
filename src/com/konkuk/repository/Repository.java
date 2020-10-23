@@ -140,6 +140,7 @@ public class Repository {
         //todo: 이거 실패했을때 처리
         file.delete();
         tmpFile.renameTo(file);
+        file = tmpFile;
     }
 
     protected <T> List<T> loadData(Deserializer<T> deserializer) {
