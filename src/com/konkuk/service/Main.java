@@ -1,6 +1,7 @@
 package com.konkuk.service;
 
 import com.konkuk.controller.Controller;
+import com.konkuk.controller.DayOffController;
 import com.konkuk.controller.MainController;
 import com.konkuk.repository.DayOffHistoryRepository;
 import com.konkuk.repository.DayOffRepository;
