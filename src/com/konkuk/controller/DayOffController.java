@@ -39,6 +39,7 @@ public class DayOffController extends Controller {
 
     private void use() {
         int type;
+        String end = null;
 
         UI.print(Langs.DAY_OFF_USE);
         String menu = UI.getInput();
@@ -48,21 +49,27 @@ public class DayOffController extends Controller {
         UI.print(Langs.DAY_OFF_START);
         String start = UI.getInput();
 
-        //시작시간 확인
-        DateFormat sdf = new SimpleDateFormat("yyyymmdd hh:mm");
-        //Date d1 = sdf.parse(start);
-
+        //시간 입력 형태
+        SimpleDateFormat formatter = new SimpleDateFormat("YYYYMMDD HH:MM");
 
         DayOffService dayOffService = new DayOffService();
 
         // 오류나서 일단 넣어놨어여
-        String end = null;
         Employee employee = null;
         while (true) {
             if (menu.equals("1")) {         //연차
                 type = 0;
-                //종료시간
 
+                try{
+                    //시작시간
+                    Date st_date = formatter.parse(start);
+                    //종료시간
+                    long end1 = st_date.getTime() + 28800000;      //8시간
+                    end = formatter.format(new Date(end1));
+
+                } catch (ParseException e){
+                    System.out.println(Langs.INPUT_ERROR_TIME);
+                }
 
                 boolean isDone = dayOffService.use(employee, type, reason, start, end);
 
@@ -76,8 +83,16 @@ public class DayOffController extends Controller {
                 break;
             } else if (menu.equals("2")) {         //반차
                 type = 1;
-                //종료시간
-
+                //SimpleDateFormat formatter = new SimpleDateFormat("yyyymmdd hh:mm");
+                try{
+                    //시작시간
+                    Date st_date = formatter.parse(start);
+                    //종료시간
+                    long end2 = st_date.getTime() + 14400000;      //4시간
+                    end = formatter.format(new Date(end2));
+                } catch (ParseException e){
+                    System.out.println(Langs.INPUT_ERROR_TIME);
+                }
 
                 boolean isDone = dayOffService.use(employee, type, reason, start, end);
                 if (isDone) {
@@ -115,9 +130,9 @@ public class DayOffController extends Controller {
     }
 
     private void change_cancel() {
-        String reason = "";
-        String start = "";
-        String end = "";
+        String reason = null;
+        String start = null;
+        String end = null;
 
         UI.print(Langs.DAY_OFF_CC);
         String menu = UI.getInput();
@@ -148,12 +163,16 @@ public class DayOffController extends Controller {
                     start = dayOff.getStart();
                     end = dayOff.getEnd();
                 } else {
-                    //시작시간 확인
-
-
-                    //종료시간
-
-
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyymmdd hh:mm");
+                    try{
+                        //시작시간
+                        Date st_date = formatter.parse(start1);
+                        //종료시간
+                        long end3 = st_date.getTime() + 14400000;      //4시간
+                        end = formatter.format(new Date(end3));
+                    } catch (ParseException e){
+                        System.out.println(Langs.INPUT_ERROR_TIME);
+                    }
                 }
 
                 boolean isDone = dayOffService.change(dayOff, reason, start, end);
