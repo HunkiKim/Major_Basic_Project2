@@ -1,10 +1,11 @@
 package com.konkuk.repository;
 
-import com.konkuk.service.Utils;
+import com.konkuk.Utils;
 import com.konkuk.asset.Langs;
 import com.konkuk.asset.Settings;
 import com.konkuk.dto.Employee;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,10 +13,11 @@ public class EmployeeRepository extends Repository implements  IEmployeeReposito
 
     private List<Employee> employeeList;
 
-    private EmployeeRepository() {
+    private EmployeeRepository(String dataFilePath) {
+        super(dataFilePath);
         this.debugTitle = "Employee";
-        if (isDataFileExists(Settings.DATA_EMPLOYEE)) {
-            employeeList = loadData(Settings.DATA_EMPLOYEE, (parsedData, uniquePolicy) -> {
+        if (isDataFileExists()) {
+            employeeList = loadData((parsedData, uniquePolicy) -> {
                 int id = Integer.parseInt(parsedData.get(0));
                 String name = parsedData.get(1);
                 int salary = Integer.parseInt(parsedData.get(2));
@@ -26,63 +28,88 @@ public class EmployeeRepository extends Repository implements  IEmployeeReposito
                 return new Employee(id, name, salary, residualDayOff);
             });
         } else {
-            createEmptyDataFile(Settings.DATA_EMPLOYEE, Employee.getHeader());
+            createEmptyDataFile(Employee.getHeader());
         }
     }
 
     private static class Instance {
-        private static final EmployeeRepository instance = new EmployeeRepository();
+        private static final EmployeeRepository instance = new EmployeeRepository(Settings.DATA_EMPLOYEE);
     }
 
     public static EmployeeRepository getInstance() {
         return Instance.instance;
     }
 
-    // todo: 단기 - 껍데기만 만들어둠
+    private List<String> parseDtoToList(Employee employee) {
+        List<String> result = new ArrayList<>();
+        result.add(String.valueOf(employee.id));
+        result.add(employee.name);
+        result.add(String.valueOf(employee.salary));
+        result.add(String.valueOf(employee.residualDayOff));
+        return result;
+    }
+
     private int maxId = -1;
     @Override
-    public Employee add(Employee employee) {
+    public Employee add(Employee employee) throws IOException {
         if (maxId == -1) {
             employeeList.forEach((e -> maxId = Math.max(maxId, e.id)));
         }
         employee.id = ++maxId;
-        // employee save
+        addDataLine(parseDtoToList(employee));
+        employeeList.add(employee);
         return employee;
     }
 
     @Override
     public List<Employee> findByName(String name) {
         List<Employee> results = new ArrayList<>();
-        results.add(new Employee(0, "임시", 1000, 5));
+        employeeList.forEach((employee -> {
+            if(employee.name.contains(name)) results.add(employee);
+        }));
         return results;
     }
 
     @Override
     public List<Employee> findBySalary(int salary) {
         List<Employee> results = new ArrayList<>();
-        results.add(new Employee(0, "임시", 1000, 5));
+        employeeList.forEach((employee -> {
+            if(employee.salary == salary) results.add(employee);
+        }));
         return results;
     }
 
     @Override
     public List<Employee> findById(int id) {
         List<Employee> results = new ArrayList<>();
-        results.add(new Employee(0, "임시", 1000, 5));
+        employeeList.forEach((employee -> {
+            if(String.valueOf(employee.id).contains(String.valueOf(id))) results.add(employee);
+        }));
         return results;
     }
 
     @Override
     public Employee findByExactId(int id) {
-        return new Employee(0, "임시", 1000, 5);
+        Employee result = null;
+        for (Employee e : employeeList) {
+            if (e.id == id) {
+                result = e;
+                break;
+            }
+        }
+        return result;
     }
 
     @Override
-    public Employee update(int targetId, Employee datas) {
-        return datas;
+    public Employee update(int targetId, Employee employee) throws IOException {
+        deleteDataLine(targetId);
+        employee.id = targetId;
+        addDataLine(parseDtoToList(employee));
+        return employee;
     }
 
     @Override
-    public Boolean delete(int targetId) {
-        return true;
+    public void delete(int targetId) throws IOException {
+        deleteDataLine(targetId);
     }
 }

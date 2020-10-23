@@ -1,5 +1,7 @@
 package com.konkuk.dto;
 
+import com.konkuk.asset.Langs;
+
 public class Log {
     public int log_number;
     public String log_category;
@@ -11,5 +13,9 @@ public class Log {
         this.log_category = log_category;
         this.log_content = log_content;
         this.Day = Day;
+    }
+
+    public static String getHeader() {
+        return Langs.DATA_FILE_HEADER_LOG;
     }
 }

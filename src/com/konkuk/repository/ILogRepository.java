@@ -5,7 +5,7 @@ import com.konkuk.dto.Employee;
 import java.io.IOException;
 import java.util.List;
 
-public interface IEmployeeRepository {
+public interface ILogRepository {
     public Employee add(Employee employee) throws IOException;
     public List<Employee> findByName(String name);
     public List<Employee> findBySalary(int salary);

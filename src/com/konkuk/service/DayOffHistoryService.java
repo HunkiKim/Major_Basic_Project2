@@ -7,24 +7,39 @@ import com.konkuk.repository.DayOffHistoryRepository;
 import com.konkuk.repository.DayOffRepository;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 public class DayOffHistoryService {
     DayOffHistoryRepository dayOffHistoryRepository = DayOffHistoryRepository.getInstance();
     private List<DayOff> dayOffList;
-    public boolean annualHistory(int employeeId, int annualPage) {
-        // 해당 페이지의 연간 연차내역 출력
+
+    public boolean getHistory(int employeeId, int pageNumber, Date start, Date end){
         String record = "";
-        this.dayOffList = dayOffHistoryRepository.findByEmployeeId(employeeId);
-        // TODO: 생성 날짜 기준 내림차순 정렬
+        this.dayOffList = dayOffHistoryRepository.findByDate(employeeId, start, end);
+        dayOffList.sort(new Comparator<DayOff>() {
+            @Override
+            public int compare(DayOff o1, DayOff o2) {
+                // id값은 중복되지 않기 때문에 return 0은 따로 안 만들었습니다.
+                if (o1.id>o2.id){
+                    return -1;
+                }else{
+                    return 1;
+                }
+
+            }
+        });
 
         int listSize = this.dayOffList.size();
-        List<DayOff> subList = new ArrayList<>(this.dayOffList.subList(annualPage*10, Math.min(listSize,annualPage*10+9)));
+        if(listSize<=0){
+            return false;
+        }
+        List<DayOff> subList = new ArrayList<>(this.dayOffList.subList(pageNumber*10, Math.min(listSize,pageNumber*10+9)));
         UI.print(Langs.DATA_FILE_HEADER_DAYOFF);
         for(DayOff data:subList){
-            record+=(data.num+" "+
-                    data.id+" "+
+            record+=(data.id+" "+
+                    data.employeeId+" "+
                     data.dayOffNumber+" "+
                     data.reason+" "+
                     data.dateDayOffStart+" "+
@@ -33,11 +48,7 @@ public class DayOffHistoryService {
             UI.print(record);
         }
 
-        return false;
-    }
-
-    public boolean advancedSearch(int employeeId, int searchPage, Date start, Date end){
-        return false;
+        return true;
     }
 
     public boolean isNextPageExists(int annualPage) {

@@ -1,34 +1,36 @@
 package com.konkuk.repository;
 
-import com.konkuk.service.Utils;
+import com.konkuk.Utils;
 import com.konkuk.asset.Langs;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class Repository {
 
     public String debugTitle = "";
+    private File file;
 
-    protected boolean isDataFileExists(String path) {
-        File employee = new File(path);
-        return employee.exists();
+    protected Repository(String dataFilePath) {
+        file = new File(dataFilePath);
     }
 
-    protected void createEmptyDataFile(String path, String header) {
-        Utils.debug("데이터 파일 생성");
+    protected boolean isDataFileExists() {
+        return file.exists();
+    }
+
+    protected void createEmptyDataFile(String header) {
+        Utils.debug("데이터 파일 생성: " + this.debugTitle);
         try {
-            File file = new File(path);
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
             // BOM
             bw.write(65279);
@@ -93,23 +95,61 @@ public class Repository {
         return result;
     }
 
-    protected String serialize(List<String> fieldsData) {
-        String result = "";
-
-        return result;
+    private String serialize(List<String> fieldsData) {
+        return "\n" + fieldsData
+                .stream()
+                .map(s -> "\"" + s.replaceAll("\"", "\"\"") + "\"")
+                .collect(Collectors.joining(","));
     }
 
     protected interface Deserializer<T> {
         T deserialize(List<String> parsedData, HashSet<Integer> uniquePolicy);
     }
 
-    protected <T> List<T> loadData(String path, Deserializer<T> deserializer) {
+    protected void addDataLine(List<String> fieldsData) throws IOException {
+        FileWriter writer = new FileWriter(file, true);
+        writer.write(serialize(fieldsData));
+        writer.flush();
+        writer.close();
+    }
+
+    protected void deleteDataLine(int id) throws IOException {
+        String tmpFilePath = file.getPath() + "_" + new Date().getTime();
+        File tmpFile = new File(tmpFilePath);
+
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(tmpFile));
+
+        String line = bufferedReader.readLine();
+        String parsedId = String.valueOf(id);
+        while((line != null)) {
+            try {
+                String dataId = parseDataLine(line).get(0);
+                if(!dataId.equals(parsedId)) {
+                    bufferedWriter.write(line + "\r\n");
+                    bufferedWriter.flush();
+                }
+            } catch (ParseException e) {
+                Utils.debug("데이터 파일 헤더 제거 or 잘못된 라인 삭제:" + line);
+            }
+            line = bufferedReader.readLine();
+        }
+        bufferedReader.close();
+        bufferedWriter.close();
+
+        //todo: 이거 실패했을때 처리
+        file.delete();
+        tmpFile.renameTo(file);
+        file = tmpFile;
+    }
+
+    protected <T> List<T> loadData(Deserializer<T> deserializer) {
         Utils.debug("데이터 파일 (" + debugTitle + ") 로드");
         List<T> result = new ArrayList<>();
         HashSet<Integer> uniquePolicy = new HashSet<>();
         AtomicInteger ignoredData = new AtomicInteger();
         try {
-            List<String> lines = Files.readAllLines(Paths.get(path));
+            List<String> lines = Files.readAllLines(Paths.get(file.getPath()));
             AtomicBoolean isFirstLine = new AtomicBoolean(true);
             lines.forEach((line)-> {
                 // todo: 어차피 여기서 헤더 무시하긴 할껀데 BOM 처리가 필요할까?. 대신 이렇게하면 BOM 없어도 처리 잘 된다.
