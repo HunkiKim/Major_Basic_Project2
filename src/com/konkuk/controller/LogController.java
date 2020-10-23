@@ -1,13 +1,14 @@
 package com.konkuk.controller;
 
 
-import com.konkuk.UI;
+import com.konkuk.service.UI;
 import com.konkuk.asset.Langs;
 import com.konkuk.dto.Log;
 import com.konkuk.service.LogService;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.List;
-import java.util.Scanner;
 
 public class LogController extends Controller {
     public enum Menu {LOG}
@@ -44,10 +45,10 @@ public class LogController extends Controller {
     public void LogCheck() throws IOException, InterruptedException {
         while(true) {
             Print_Log();
-            Scanner s = new Scanner(System.in);
-            char confirm;
-            confirm = s.next().charAt(0);
-            if(confirm == 'B' || confirm == 'b') {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            String confirm;
+            confirm = br.readLine();
+            if(confirm.equals("B") || confirm.equals("b")) {
                 break;
             }
             else {

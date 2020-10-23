@@ -1,6 +1,6 @@
 package com.konkuk.repository;
 
-import com.konkuk.Utils;
+import com.konkuk.service.Utils;
 import com.konkuk.asset.Langs;
 
 import java.io.*;
