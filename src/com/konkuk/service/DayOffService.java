@@ -21,7 +21,6 @@ public class DayOffService {
             fcount = employee.getResidualDayOff() - 0.5f;
         }
 
-
         // 오류나서 변경해놨어여 / 단기
         DayOff dayOff = null;
 //        DayOff dayOff = new DayOff(list_num, id, name, reason, start, end, fcount);

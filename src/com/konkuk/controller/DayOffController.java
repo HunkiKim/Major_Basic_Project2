@@ -123,6 +123,9 @@ public class DayOffController extends Controller {
         String menu = UI.getInput();
 
         //연차 사용 리스트 출력
+        UI.print(Langs.DATA_FILE_HEADER_DAYOFF_USE);
+
+
 
         DayOffService dayOffService = new DayOffService();
         UI.print(Langs.INPUT_NUM);
