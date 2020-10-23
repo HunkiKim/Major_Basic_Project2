@@ -5,10 +5,10 @@ import com.konkuk.asset.Langs;
 import java.util.Date;
 
 public class DayOff {
-    public int num;
     public int id;
+    public int employeeId;
     public int dayOffNumber;
-    public float residualDayOff;
+    public int residualDayOff;
     public String name;
     public String reason;
     public String start;
@@ -19,9 +19,9 @@ public class DayOff {
 
     public DayOff() {}
 
-    public DayOff(int dayOffNumber, int id, String name, String reason, Date dateDayOffStart, Date dateDayOffEnd, float residualDayOff){
-        this.dayOffNumber = dayOffNumber;
+    public DayOff(int id, int employeeId, String name, String reason, Date dateDayOffStart, Date dateDayOffEnd, int residualDayOff){
         this.id = id;
+        this.employeeId = employeeId;
         this.name = name;
         this.reason = reason;
         this.dateDayOffStart = dateDayOffStart;
@@ -29,9 +29,9 @@ public class DayOff {
         this.residualDayOff = residualDayOff;
     }
 
-    public DayOff(int num, int id, int dayOffNumber, String reason, Date dateDayOffStart, Date dateDayOffEnd, Date dateCreated) {
-        this.num = num;
+    public DayOff(int id, int employeeId, int dayOffNumber, String reason, Date dateDayOffStart, Date dateDayOffEnd, Date dateCreated) {
         this.id = id;
+        this.employeeId = employeeId;
         this.dayOffNumber = dayOffNumber;
         this.reason = reason;
         this.dateDayOffStart = dateDayOffStart;

@@ -1,7 +1,7 @@
 package com.konkuk.asset;
 
 public final class Langs {
-    private static final String HORIZON = "------------------------------\n";
+    public static final String HORIZON = "------------------------------\n";
     public static final String MAIN = HORIZON +
             "1. 직원 선택 및 관리\n" +
             "2. 직원 추가\n" +
@@ -28,7 +28,8 @@ public final class Langs {
     public static final String EMPLOYEE_OF_USE = HORIZON +
             "대상 입력:";
 
-
+    public static final String LOG_TITLE = "[로그내역]";
+    public static final String INSERT_BACK = "이전 화면으로 돌아가시려면 'B', 'b'를 입력해주세요 : ";
     public static final String EMPLOYEE_ID = "사번: ";
     public static final String EMPLOYEE_NAME = "이름: ";
     public static final String EMPLOYEE_SALARY = "연봉: ";

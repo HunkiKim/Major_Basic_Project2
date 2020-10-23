@@ -6,6 +6,7 @@ import com.konkuk.dto.Employee;
 import com.konkuk.repository.EmployeeRepository;
 import com.konkuk.service.EmployeeService;
 
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class EmployeeController extends Controller {
@@ -104,7 +105,11 @@ public class EmployeeController extends Controller {
             UI.print2("위와 같이 저장하시겠습니까? ");
             yn = UI.getInput();
             if (new EmployeeService().check(yn) == 0) {
-                Erepositry.add(new Employee(Integer.parseInt(id), name, Integer.parseInt(salary), 0));
+                try{
+                    Erepositry.add(new Employee(Integer.parseInt(id), name, Integer.parseInt(salary), 0));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
             }
             else if(new EmployeeService().check(yn) == 1){
