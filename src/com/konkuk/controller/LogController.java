@@ -1,7 +1,7 @@
 package com.konkuk.controller;
 
 
-import com.konkuk.UI;
+import com.konkuk.service.UI;
 import com.konkuk.asset.Langs;
 import com.konkuk.dto.Log;
 import com.konkuk.service.LogService;
@@ -48,7 +48,7 @@ public class LogController extends Controller {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             String confirm;
             confirm = br.readLine();
-            if(confirm == "B" || confirm == "b") {
+            if(confirm.equals("B") || confirm.equals("b")) {
                 break;
             }
             else {
