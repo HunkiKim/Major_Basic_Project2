@@ -15,8 +15,12 @@ import java.util.Scanner;
 
 public class DayOffHistoryRepository extends Repository implements IDayOffHistoryRepository {
 
+    protected DayOffHistoryRepository(String dataFilePath) {
+        super(dataFilePath);
+    }
+
     private static class Instance {
-        private static final DayOffHistoryRepository instance = new DayOffHistoryRepository();
+        private static final DayOffHistoryRepository instance = new DayOffHistoryRepository(Settings.DATA_DAYOFF);
     }
     public static DayOffHistoryRepository getInstance() {
         return DayOffHistoryRepository.Instance.instance;

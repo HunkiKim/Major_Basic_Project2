@@ -12,10 +12,11 @@ public class EmployeeRepository extends Repository implements  IEmployeeReposito
 
     private List<Employee> employeeList;
 
-    private EmployeeRepository() {
+    private EmployeeRepository(String dataFilePath) {
+        super(dataFilePath);
         this.debugTitle = "Employee";
-        if (isDataFileExists(Settings.DATA_EMPLOYEE)) {
-            employeeList = loadData(Settings.DATA_EMPLOYEE, (parsedData, uniquePolicy) -> {
+        if (isDataFileExists()) {
+            employeeList = loadData((parsedData, uniquePolicy) -> {
                 int id = Integer.parseInt(parsedData.get(0));
                 String name = parsedData.get(1);
                 int salary = Integer.parseInt(parsedData.get(2));
@@ -26,12 +27,12 @@ public class EmployeeRepository extends Repository implements  IEmployeeReposito
                 return new Employee(id, name, salary, residualDayOff);
             });
         } else {
-            createEmptyDataFile(Settings.DATA_EMPLOYEE, Employee.getHeader());
+            createEmptyDataFile(Employee.getHeader());
         }
     }
 
     private static class Instance {
-        private static final EmployeeRepository instance = new EmployeeRepository();
+        private static final EmployeeRepository instance = new EmployeeRepository(Settings.DATA_EMPLOYEE);
     }
 
     public static EmployeeRepository getInstance() {

@@ -19,10 +19,11 @@ import com.konkuk.dto.Log;
 public class LogRepository extends Repository {
     private List<Log> logList;
 
-    private LogRepository() {
+    private LogRepository(String dataFilePath) {
+        super(dataFilePath);
         this.debugTitle = "log";
-        if(isDataFileExists(Settings.DATA_LOG)) {
-            logList = loadData(Settings.DATA_LOG, (parsedData, uniquePolicy) -> {
+        if(isDataFileExists()) {
+            logList = loadData((parsedData, uniquePolicy) -> {
                 int log_number = Integer.parseInt(parsedData.get(0));
                 String log_category = parsedData.get(1);
                 String log_content = parsedData.get(2);
@@ -36,15 +37,14 @@ public class LogRepository extends Repository {
     }
 
     private static class Instance {
-        private static final LogRepository instance = new LogRepository();
+        private static final LogRepository instance = new LogRepository(Settings.DATA_LOG);
     }
 
     public static LogRepository getInstance() {
         return Instance.instance;
     }
 
-    public static List<String> get_log () {
-        Repository rp = new Repository();
+    public List<String> get_log () {
         List<String> result = new ArrayList<>();
         try {
             File file = new File("log.txt");
@@ -52,10 +52,10 @@ public class LogRepository extends Repository {
             BufferedReader bufReader = new BufferedReader(filereader);
             String line = "";
             while((line = bufReader.readLine()) != null) {
-                result.add(rp.parseDataLine(line).get(0));
-                result.add(rp.parseDataLine(line).get(1));
-                result.add(rp.parseDataLine(line).get(2));
-                result.add(rp.parseDataLine(line).get(3));
+                result.add(parseDataLine(line).get(0));
+                result.add(parseDataLine(line).get(1));
+                result.add(parseDataLine(line).get(2));
+                result.add(parseDataLine(line).get(3));
             }
             bufReader.close();
 
@@ -70,7 +70,7 @@ public class LogRepository extends Repository {
         return result;
     }
 
-    public static int CountLine () { // 로그 번호를 저장하기 위해 log.txt 파일의 line 수를 count하여 return한다
+    public int CountLine () { // 로그 번호를 저장하기 위해 log.txt 파일의 line 수를 count하여 return한다
         int linecount = 0;
         File file = new File("logs.txt");
         try {
@@ -86,7 +86,7 @@ public class LogRepository extends Repository {
         return linecount;
     }
 
-    public static void Log_Storing(String category, String content) {
+    public void Log_Storing(String category, String content) {
 
         File file = new File("log.txt");
         FileWriter writer = null;

@@ -28,8 +28,8 @@ public class LogController extends Controller {
         return new MainController();
     }
 
-    private static void Print_Log() {
-        List<String> log_list = LogService.get_log();
+    private void Print_Log() {
+        List<String> log_list = (new LogService()).get_log();
         System.out.println("[로그내역]");
         System.out.println("-----------------------------------------------------------------------------------------");
         for (int i=0; i<log_list.size(); i += 4) {
@@ -52,7 +52,7 @@ public class LogController extends Controller {
     }
 
 
-    public static void LogCheck() throws IOException, InterruptedException {
+    public void LogCheck() throws IOException, InterruptedException {
         while(true) {
             Print_Log();
             Scanner s = new Scanner(System.in);

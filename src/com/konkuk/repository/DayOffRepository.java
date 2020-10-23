@@ -14,17 +14,18 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
 
     private List<DayOff> dayOffList;
 
-    private DayOffRepository() {
+    private DayOffRepository(String dataFilePath) {
+        super(dataFilePath);
         this.debugTitle = "DayOff";
-        if (isDataFileExists(Settings.DATA_DAYOFF)) {
+        if (isDataFileExists()) {
 //            dayOffList
         } else {
-            createEmptyDataFile(Settings.DATA_DAYOFF, DayOff.getHeader());
+            createEmptyDataFile(DayOff.getHeader());
         }
     }
 
     private static class Instance {
-        private static final DayOffRepository instance = new DayOffRepository();
+        private static final DayOffRepository instance = new DayOffRepository(Settings.DATA_DAYOFF);
     }
 
     public static DayOffRepository getInstance() {

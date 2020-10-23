@@ -15,20 +15,24 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class Repository {
 
     public String debugTitle = "";
+    private final File file;
 
-    protected boolean isDataFileExists(String path) {
-        File employee = new File(path);
-        return employee.exists();
+    protected Repository(String dataFilePath) {
+        file = new File(dataFilePath);
     }
 
-    protected void createEmptyDataFile(String path, String header) {
+    protected boolean isDataFileExists() {
+        return file.exists();
+    }
+
+    protected void createEmptyDataFile(String header) {
         Utils.debug("데이터 파일 생성");
         try {
-            File file = new File(path);
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
             // BOM
             bw.write(65279);
@@ -94,22 +98,26 @@ public class Repository {
     }
 
     protected String serialize(List<String> fieldsData) {
-        String result = "";
-
-        return result;
+        return fieldsData
+                .stream()
+                .map(s -> s.replaceAll("\"", "\"\""))
+                .collect(Collectors.joining(","));
     }
 
     protected interface Deserializer<T> {
         T deserialize(List<String> parsedData, HashSet<Integer> uniquePolicy);
     }
 
-    protected <T> List<T> loadData(String path, Deserializer<T> deserializer) {
+    protected void addDataLine(List<String> fieldsData) {
+    }
+
+    protected <T> List<T> loadData(Deserializer<T> deserializer) {
         Utils.debug("데이터 파일 (" + debugTitle + ") 로드");
         List<T> result = new ArrayList<>();
         HashSet<Integer> uniquePolicy = new HashSet<>();
         AtomicInteger ignoredData = new AtomicInteger();
         try {
-            List<String> lines = Files.readAllLines(Paths.get(path));
+            List<String> lines = Files.readAllLines(Paths.get(file.getPath()));
             AtomicBoolean isFirstLine = new AtomicBoolean(true);
             lines.forEach((line)-> {
                 // todo: 어차피 여기서 헤더 무시하긴 할껀데 BOM 처리가 필요할까?. 대신 이렇게하면 BOM 없어도 처리 잘 된다.

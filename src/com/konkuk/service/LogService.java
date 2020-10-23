@@ -4,8 +4,10 @@ import com.konkuk.repository.LogRepository;
 import java.util.List;
 
 public class LogService {
-    public static List<String> get_log() {
-        List<String> log_list = LogRepository.get_log();
+    LogRepository logRepository = LogRepository.getInstance();
+
+    public List<String> get_log() {
+        List<String> log_list = logRepository.get_log();
         return log_list;
     }
 }
