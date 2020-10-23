@@ -1,20 +1,15 @@
 package com.konkuk.repository;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.ParseException;
-import java.util.Calendar;
-import java.util.List;
 import com.konkuk.Utils;
 import com.konkuk.asset.Langs;
 import com.konkuk.asset.Settings;
-import java.util.ArrayList;
-
 import com.konkuk.dto.Log;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.List;
 
 public class LogRepository extends Repository {
     private List<Log> logList;
@@ -44,49 +39,15 @@ public class LogRepository extends Repository {
         return Instance.instance;
     }
 
-    public List<String> get_log () {
-        List<String> result = new ArrayList<>();
-        try {
-            File file = new File("log.txt");
-            FileReader filereader = new FileReader(file);
-            BufferedReader bufReader = new BufferedReader(filereader);
-            String line = "";
-            while((line = bufReader.readLine()) != null) {
-                result.add(parseDataLine(line).get(0));
-                result.add(parseDataLine(line).get(1));
-                result.add(parseDataLine(line).get(2));
-                result.add(parseDataLine(line).get(3));
-            }
-            bufReader.close();
-
-
-        }catch (FileNotFoundException e) {
-
-        }catch (ParseException e) {
-
-        }catch (IOException e) {
-
-        }
-        return result;
+    public List<Log> getLogs() {
+        return this.logList;
     }
 
-    public int CountLine () { // 로그 번호를 저장하기 위해 log.txt 파일의 line 수를 count하여 return한다
-        int linecount = 0;
-        File file = new File("logs.txt");
-        try {
-            BufferedReader in = new BufferedReader(new FileReader(file));
-
-            while(in.readLine() != null) {
-                linecount++;
-            }
-            in.close();
-        }catch(Exception e) {
-            e.printStackTrace();
+    private int maxId = -1;
+    public void addLog(String category, String content) {
+        if (maxId == -1) {
+            logList.forEach((e -> maxId = Math.max(maxId, e.log_number)));
         }
-        return linecount;
-    }
-
-    public void Log_Storing(String category, String content) {
 
         File file = new File("log.txt");
         FileWriter writer = null;
@@ -108,7 +69,7 @@ public class LogRepository extends Repository {
 
         try {
             writer = new FileWriter(file, true);
-            int log_number1 = CountLine() + 1; // log.txt 파일의 line 수를 불러와 +1 한 값을 로그번호로 지정
+            int log_number1 = ++maxId;; // log.txt 파일의 line 수를 불러와 +1 한 값을 로그번호로 지정
             String log_number = Integer.toString(log_number1);
             writer.write("\"" + log_number + "\",");
             writer.write("\"" + category + "\",");
