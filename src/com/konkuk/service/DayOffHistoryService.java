@@ -39,7 +39,7 @@ public class DayOffHistoryService {
         for(DayOff data:subList){
             record+=(data.id+" "+
                     data.employeeId+" "+
-                    data.dayOffNumber+" "+
+                    data.changedDayOffCount+" "+
                     data.reason+" "+
                     data.dateDayOffStart+" "+
                     data.dateDayOffEnd+" "+
