@@ -10,4 +10,5 @@ public interface IDayOffRepository {
     public boolean delete(DayOff dayoff);
     public List<DayOff> findByEmployeeId(int employeeId);
     public List<DayOff> findByDate(Date start, Date end);
+    List<DayOff> findByDate(int employeeId, Date start, Date end);
 }

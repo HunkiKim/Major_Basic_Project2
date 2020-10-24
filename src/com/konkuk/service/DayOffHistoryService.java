@@ -3,7 +3,6 @@ package com.konkuk.service;
 import com.konkuk.UI;
 import com.konkuk.asset.Langs;
 import com.konkuk.dto.DayOff;
-import com.konkuk.repository.DayOffHistoryRepository;
 import com.konkuk.repository.DayOffRepository;
 
 import java.util.ArrayList;
@@ -12,12 +11,12 @@ import java.util.Date;
 import java.util.List;
 
 public class DayOffHistoryService {
-    DayOffHistoryRepository dayOffHistoryRepository = DayOffHistoryRepository.getInstance();
+    DayOffRepository dayOffRepository = DayOffRepository.getInstance();
     private List<DayOff> dayOffList;
 
     public boolean getHistory(int employeeId, int pageNumber, Date start, Date end){
         String record = "";
-        this.dayOffList = dayOffHistoryRepository.findByDate(employeeId, start, end);
+        this.dayOffList = dayOffRepository.findByDate(employeeId, start, end);
         dayOffList.sort(new Comparator<DayOff>() {
             @Override
             public int compare(DayOff o1, DayOff o2) {

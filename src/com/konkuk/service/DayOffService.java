@@ -53,5 +53,4 @@ public class DayOffService {
         employee.setResidualDayOff(fcount);
         return false;
     }
-
 }

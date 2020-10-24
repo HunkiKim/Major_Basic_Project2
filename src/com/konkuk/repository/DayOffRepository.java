@@ -6,7 +6,10 @@ import com.konkuk.asset.Settings;
 import com.konkuk.dto.DayOff;
 import com.konkuk.dto.Employee;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -18,9 +21,27 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
         super(dataFilePath);
         this.debugTitle = "DayOff";
         if (isDataFileExists()) {
-//            dayOffList
+            dayOffList = loadData((parsedData, uniquePolicy) -> {
+                int id = Integer.parseInt(parsedData.get(0));
+                int employeeId = Integer.parseInt(parsedData.get(1));
+                int dayOffNumber = Integer.parseInt(parsedData.get(2));
+                if(uniquePolicy.contains(id)) {
+                    Utils.exit(Langs.VIOLATE_UNIQUE_KEY);
+                }
+                String reason = parsedData.get(4);
+                SimpleDateFormat transFormat = new SimpleDateFormat("yyyyMMdd HH:mm");
+                try{
+                    Date dateDayOffStart = transFormat.parse(parsedData.get(4));
+                    Date dateDayOffEnd = transFormat.parse(parsedData.get(5));
+                    Date dateCreated = transFormat.parse(parsedData.get(6));
+                    return new DayOff(id, employeeId, dayOffNumber, reason, dateDayOffStart, dateDayOffEnd, dateCreated);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            });
         } else {
-            createEmptyDataFile(DayOff.getHeader());
+            createEmptyDataFile(Employee.getHeader());
         }
     }
 
@@ -66,6 +87,25 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
                 new Date(0),
                 new Date(0),
                 new Date(0)));
+        return results;
+    }
+
+    @Override
+    public List<DayOff> findByDate(int employeeId, Date start, Date end){
+        // 해당 사번의 연차 시작 연도부터 끝나는 연도까지의 데이터 불러오기
+        List<DayOff> results = new ArrayList<>();;
+        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy");
+        int startYear = Integer.parseInt(simpleDate.format(start));
+        int endYear = Integer.parseInt(simpleDate.format(end));
+
+        Calendar calendar = Calendar.getInstance();
+        dayOffList.forEach((dayOff -> {
+            calendar.setTime(dayOff.dateDayOffStart);
+            int tempYear = calendar.get(Calendar.YEAR);
+            if(dayOff.employeeId == employeeId && tempYear>=startYear&&tempYear<=endYear) {
+                results.add(dayOff);
+            };
+        }));
         return results;
     }
 }
