@@ -21,7 +21,7 @@ public class EmployeeController extends Controller {
     public Controller start() {
 
         if (currentMenu == Menu.FIND) {
-            find();
+            return find();
         } else if (currentMenu == Menu.ADD) {
             add();
         }
@@ -29,58 +29,67 @@ public class EmployeeController extends Controller {
         return new MainController();
     }
 
-    private void find() {//직원 검색
-        List<Employee> EList;// find로 넘겨받은 리스트들
+    public Controller find() {//직원 검색
+
         String target;
         while(true) {
             UI.print2(Langs.EMPLOYEE_TARGET);
             target = UI.getInput();
 
-            if(new EmployeeService().lettercheck(target)){ // 숫
-                if(new EmployeeService().numletter(target)>-1){ //숫자 길이 확인
-                if(new EmployeeService().numletter(target)==1){ //사번
-                    for(int i=0; i<Erepositry.findById(Integer.parseInt(target)).size(); i++) {  //찾은거 복사
-                        UI.print("*"+Langs.EMPLOYEE_ID+Erepositry.findById(Integer.parseInt(target)).get(i).id);
-                        UI.print("*"+Langs.EMPLOYEE_NAME+Erepositry.findById(Integer.parseInt(target)).get(i).name);
-                        UI.print("*"+Langs.EMPLOYEE_SALARY+Erepositry.findById(Integer.parseInt(target)).get(i).salary+"\n");
+            if (new EmployeeService().lettercheck(target)) { // 숫
+                if (new EmployeeService().numletter(target) > -1) { //숫자 길이 확인
+                    if(Erepositry.findById(Integer.parseInt(target)).size()==0 && Erepositry.findBySalary(Integer.parseInt(target)).size()==0){
+                        UI.print(Langs.FIND_ERROR);
+                        continue;
                     }
-                }
-                else if(new EmployeeService().numletter(target)==2){ // 연봉
-                    for(int i=0; i<Erepositry.findBySalary(Integer.parseInt(target)).size(); i++) {  //찾은거 복사
-                        UI.print("*"+Langs.EMPLOYEE_ID+Erepositry.findBySalary(Integer.parseInt(target)).get(i).id);
-                        UI.print("*"+Langs.EMPLOYEE_NAME+Erepositry.findBySalary(Integer.parseInt(target)).get(i).name);
-                        UI.print("*"+Langs.EMPLOYEE_SALARY+Erepositry.findBySalary(Integer.parseInt(target)).get(i).salary+"\n");
+                    if (new EmployeeService().numletter(target) == 1) { //사번
+                        for (int i = 0; i < Erepositry.findById(Integer.parseInt(target)).size(); i++) {  //찾은거 복사
+                            UI.print("*" + Langs.EMPLOYEE_ID + Erepositry.findById(Integer.parseInt(target)).get(i).id);
+                            UI.print("*" + Langs.EMPLOYEE_NAME + Erepositry.findById(Integer.parseInt(target)).get(i).name);
+                            UI.print("*" + Langs.EMPLOYEE_SALARY + Erepositry.findById(Integer.parseInt(target)).get(i).salary + "\n");
+                        }
+                    } else if (new EmployeeService().numletter(target) == 2) { // 연봉
+                        for (int i = 0; i < Erepositry.findBySalary(Integer.parseInt(target)).size(); i++) {  //찾은거 복사
+                            UI.print("*" + Langs.EMPLOYEE_ID + Erepositry.findBySalary(Integer.parseInt(target)).get(i).id);
+                            UI.print("*" + Langs.EMPLOYEE_NAME + Erepositry.findBySalary(Integer.parseInt(target)).get(i).name);
+                            UI.print("*" + Langs.EMPLOYEE_SALARY + Erepositry.findBySalary(Integer.parseInt(target)).get(i).salary + "\n");
+                        }
                     }
-                }
-                break; // 숫자 종료
-                }
-                else if(new EmployeeService().numletter(target)==-1 || new EmployeeService().numletter(target)==-3){ // 길이가 안맞는 경우
-                UI.print(Langs.LENGTH_ERROR); //길이 오류
-                }else{ // 문자의 경우
-                    EList = Erepositry.findByName(target); // 이름으로찾기
-                    for(int i=0; i<Erepositry.findByName(target).size(); i++) {  //찾은거 복사
-                        UI.print("*"+Langs.EMPLOYEE_ID+Erepositry.findByName(target).get(i).id);
-                        UI.print("*"+Langs.EMPLOYEE_NAME+Erepositry.findByName(target).get(i).name);
-                        UI.print("*"+Langs.EMPLOYEE_SALARY+Erepositry.findByName(target).get(i).salary+"\n");
+                    break; // 숫자 종료
+                } else if (new EmployeeService().numletter(target) == -1 || new EmployeeService().numletter(target) == -3) { // 길이가 안맞는 경우
+                    UI.print(Langs.LENGTH_ERROR); //길이 오류
+                } else { // 문자의 경우
+                    if(Erepositry.findByName(target).size()==0){
+                        UI.print(Langs.FIND_ERROR);
+                        continue;
+                    }
+                    for (int i = 0; i < Erepositry.findByName(target).size(); i++) {  //찾은거 복사
+                        UI.print("*" + Langs.EMPLOYEE_ID + Erepositry.findByName(target).get(i).id);
+                        UI.print("*" + Langs.EMPLOYEE_NAME + Erepositry.findByName(target).get(i).name);
+                        UI.print("*" + Langs.EMPLOYEE_SALARY + Erepositry.findByName(target).get(i).salary + "\n");
                     }
                     break;
                 }
 
-            }
-            else{ // 문자가 섞여있는경우
-                if(new EmployeeService().salarmeasure(target)){ // 1000만 이런형식인지 확인ㅇ
-                 EList = Erepositry.findBySalary(new EmployeeService().salaryconversion(target)); // 맞다면 변환해서 찾기
-                    for(int i=0; i<Erepositry.findBySalary(new EmployeeService().salaryconversion(target)).size(); i++) {  //찾은거 복사
-                        UI.print("*"+Langs.EMPLOYEE_ID+Erepositry.findBySalary(new EmployeeService().salaryconversion(target)).get(i).id);
-                        UI.print("*"+Langs.EMPLOYEE_NAME+Erepositry.findBySalary(new EmployeeService().salaryconversion(target)).get(i).name);
-                        UI.print("*"+Langs.EMPLOYEE_SALARY+Erepositry.findBySalary(new EmployeeService().salaryconversion(target)).get(i).salary+"\n");
+            } else { // 문자가 섞여있는경우
+                if (new EmployeeService().salarmeasure(target)) { // 1000만 이런형식인지 확인ㅇ
+                   if(Erepositry.findBySalary(new EmployeeService().salaryconversion(target)).size()==0){
+                       UI.print(Langs.FIND_ERROR);
+                       continue;
+                   }
+                    for (int i = 0; i < Erepositry.findBySalary(new EmployeeService().salaryconversion(target)).size(); i++) {  //찾은거 복사
+                        UI.print("*" + Langs.EMPLOYEE_ID + Erepositry.findBySalary(new EmployeeService().salaryconversion(target)).get(i).id);
+                        UI.print("*" + Langs.EMPLOYEE_NAME + Erepositry.findBySalary(new EmployeeService().salaryconversion(target)).get(i).name);
+                        UI.print("*" + Langs.EMPLOYEE_SALARY + Erepositry.findBySalary(new EmployeeService().salaryconversion(target)).get(i).salary + "\n");
                     }
-                break; // 샐러리 만 형식 종료
+                    break; // 샐러리 만 형식 종료
                 }
+
 
 
                 UI.print(Langs.LETTER_ERROR); //문자섞임오류
             }
+        }
             //정상적으로 나왔다면 List들 출력후 y,n 할건지 출력!  y라면 관리자메뉴 n이라면 다시 메인메뉴!
             //repository완성후 마무리
 
@@ -96,23 +105,24 @@ public class EmployeeController extends Controller {
                     // 만약 올바르지 않은 숫자거나 문자라면
                     UI.print(Langs.LETTER_ERROR);
                     continue;
-                }// 올바른 숫자일경우
+                }   // 올바른 숫자일경우
 
                 UI.print2("위와 같이 저장하시겠습니까? ");
                 String yn = UI.getInput();
                 if (new EmployeeService().check(yn) == 0) {
-                    //관리자 메뉴로 정보넘겨주기
-                    break;
+                    return new ManagerController(Integer.parseInt(id));
                 }
                 else if(new EmployeeService().check(yn) == 1){
-                    break;
+                    return new MainController();
                 }
                 UI.print(Langs.LETTER_ERROR); // 문자 잘못입력시
             }
 
         }
 
-   }
+
+
+
 
     private void add() { // 직원 추가
         // Member 생성
