@@ -122,6 +122,9 @@ public class DayOffHistoryController extends Controller{
     private Controller history(String options) {
         boolean result = false;
 
+        String checkString;
+        String checkString1;
+
         Date startDate = new Date();
         Date endDate = new Date();
 
@@ -130,12 +133,32 @@ public class DayOffHistoryController extends Controller{
         if(options.equals(Option.ANNUAL.getMenu())){
             result = history.getHistory(this.employeeId, this.annualPage, startDate, endDate); // 기능 미완성
         }else if(options.equals(Option.RANGE.getMenu())){
-            UI.print(Langs.DAY_OFF_HISTORY_DATE_START);
-            startDate = Utils.stringToDate(UI.getInput());
-            UI.print(Langs.DAY_OFF_HISTORY_DATE_END);
-            endDate = Utils.stringToDate(UI.getInput());
-                // TODO: 올바른 형식으로 입력하지 않은 경우 에러 처리
-//            if(startDate == null || endDate == null) { 여기다 }
+            while(true){
+                UI.print(Langs.DAY_OFF_HISTORY_DATE_START);
+                checkString = UI.getInput();
+                startDate = Utils.stringToDate(checkString);
+
+                UI.print(Langs.DAY_OFF_HISTORY_DATE_END);
+                checkString1 = UI.getInput();
+                endDate = Utils.stringToDate(checkString1);
+
+                if(Utils.isValidationDate(checkString)||Utils.isValidationDate(checkString1)){
+                    UI.print("존재하지 않는 날짜입니다. 올바른 날짜를 입력해주세요."); // Langs에 추가
+                    continue;
+                }
+
+                if(checkString.length()!=8 || checkString1.length()!=8){
+                    UI.print("글자 수를 다시 확인해주세요.");// Langs에 추가
+                    continue;
+                }
+
+                if(startDate == null || endDate == null) {
+                    UI.print("숫자로만 이루어진 8자를 입력해주세요.");// Langs에 추가
+                    continue;
+                }
+                break;
+            }
+
             result = history.getHistory(this.employeeId,this.searchPage, startDate, endDate);
         }
 
