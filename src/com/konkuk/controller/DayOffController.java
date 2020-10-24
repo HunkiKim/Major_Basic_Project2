@@ -109,7 +109,6 @@ public class DayOffController extends Controller {
             }
         }
 
-        DayOffService dayOffService = new DayOffService();
         DayOffType dayOffType = type == 1 ? DayOffType.AllDay : DayOffType.HalfDay;
         Employee employee = dayOffService.use(employeeId, dayOffType, reason, start, end);
         if (employee != null) {
