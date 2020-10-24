@@ -30,7 +30,6 @@ public final class Langs {
 
     public static final String LOG_TITLE = "[로그내역]";
     public static final String INSERT_BACK = "이전 화면으로 돌아가시려면 'B', 'b'를 입력해주세요 : ";
-    public static final String FIND_ERROR = "검색한 내용이 없습니다. 다시 입력해주세요.";
     public static final String EMPLOYEE_ID = "사번: ";
     public static final String EMPLOYEE_NAME = "이름: ";
     public static final String EMPLOYEE_SALARY = "연봉: ";
@@ -61,11 +60,6 @@ public final class Langs {
     public static final String DATA_FILE_HEADER_DAYOFF = "\"번호\",\"사번\",\"변동 연차 수\",\"사유\",\"연차 시작\",\"연차 종료\",\"생성 날짜\"";
 
 
-    public static final String MANAGE_MAIN = HORIZON +
-            "1. 정보 수정 및 삭제\n"+
-            "2. 연차 사용 및 수정\n"+
-            "3. 연차 내역 조회\n"+
-            "4. 연차 정보 조회\n";
     public static final String DAY_OFF_HISTORY_MAIN = HORIZON +
             "1. 이번 연도 연차 조회\n" +
             "2. 상세 검색\n" +

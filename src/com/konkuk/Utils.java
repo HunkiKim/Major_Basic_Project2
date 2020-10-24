@@ -31,4 +31,12 @@ public class Utils {
         }
         return result;
     }
+
+    public static String dateToString(Date date) {
+        return dateToString(date, "yyyyMMdd HH:mm");
+    }
+    public static String dateToString(Date date, String format) {
+        SimpleDateFormat transFormat = new SimpleDateFormat(format);
+        return transFormat.format(date);
+    }
 }

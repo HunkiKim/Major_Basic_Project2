@@ -6,6 +6,7 @@ import com.konkuk.asset.Settings;
 import com.konkuk.dto.DayOff;
 import com.konkuk.dto.Employee;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
             dayOffList = loadData((parsedData, uniquePolicy) -> {
                 int id = Integer.parseInt(parsedData.get(0));
                 int employeeId = Integer.parseInt(parsedData.get(1));
-                int changedDayOffCount = Integer.parseInt(parsedData.get(2));
+                float changedDayOffCount = Float.parseFloat(parsedData.get(2));
                 if(uniquePolicy.contains(id)) {
                     Utils.exit(Langs.VIOLATE_UNIQUE_KEY);
                 }
@@ -59,46 +60,50 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
     }
 
 
+    private int maxId = -1;
     @Override
-    public DayOff add(DayOff dayoff) {
+    public DayOff add(DayOff dayoff) throws IOException {
+        if (maxId == -1) {
+            dayOffList.forEach((e -> maxId = Math.max(maxId, e.id)));
+        }
+        dayoff.id = ++maxId;
+        addDataLine(parseDtoToList(dayoff));
+        dayOffList.add(dayoff);
         return dayoff;
     }
 
     @Override
-    public boolean delete(DayOff dayoff) { return true; }
+    public DayOff findByExactId(int id) {
+        DayOff result = null;
+        for (DayOff e : dayOffList) {
+            if (e.id == id) {
+                result = e;
+                break;
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public void delete(DayOff dayoff) throws IOException {
+        deleteDataLine(dayoff.id);
+    }
 
     @Override
     public List<DayOff> findByEmployeeId(int employeeId) {
         List<DayOff> results = new ArrayList<>();
-//        results.add(new DayOff(
-//                0,
-//                1,
-//                3,
-//                "휴가사유",
-//                new Date(0),
-//                new Date(0),
-//                new Date(0)));
-        return results;
-    }
-
-    @Override
-    public List<DayOff> findByDate(Date start, Date end) {
-        List<DayOff> results = new ArrayList<>();
-//        results.add(new DayOff(
-//                0,
-//                1,
-//                3,
-//                "휴가사유",
-//                new Date(0),
-//                new Date(0),
-//                new Date(0)));
+        dayOffList.forEach((dayOff -> {
+           if(dayOff.employeeId == employeeId) {
+                results.add(dayOff);
+            };
+        }));
         return results;
     }
 
     @Override
     public List<DayOff> findByDate(int employeeId, Date start, Date end){
         // 해당 사번의 연차 시작 연도부터 끝나는 연도까지의 데이터 불러오기
-        List<DayOff> results = new ArrayList<>();;
+        List<DayOff> results = new ArrayList<>();
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy");
         int startYear = Integer.parseInt(simpleDate.format(start));
         int endYear = Integer.parseInt(simpleDate.format(end));
@@ -112,5 +117,17 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
             };
         }));
         return results;
+    }
+
+    private List<String> parseDtoToList(DayOff dayOff) {
+        List<String> result = new ArrayList<>();
+        result.add(String.valueOf(dayOff.id));
+        result.add(String.valueOf(dayOff.employeeId));
+        result.add(String.valueOf(dayOff.changedDayOffCount));
+        result.add(dayOff.reason);
+        result.add(Utils.dateToString(dayOff.dateDayOffStart));
+        result.add(Utils.dateToString(dayOff.dateDayOffEnd));
+        result.add(Utils.dateToString(dayOff.dateCreated));
+        return result;
     }
 }

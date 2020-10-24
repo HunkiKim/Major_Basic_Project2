@@ -49,13 +49,8 @@ public class EmployeeRepository extends Repository implements  IEmployeeReposito
         return result;
     }
 
-    private int maxId = -1;
     @Override
     public Employee add(Employee employee) throws IOException {
-        if (maxId == -1) {
-            employeeList.forEach((e -> maxId = Math.max(maxId, e.id)));
-        }
-        employee.id = ++maxId;
         addDataLine(parseDtoToList(employee));
         employeeList.add(employee);
         return employee;
