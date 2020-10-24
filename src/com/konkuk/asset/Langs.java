@@ -28,6 +28,11 @@ public final class Langs {
     public static final String EMPLOYEE_OF_USE = HORIZON +
             "대상 입력:";
 
+    public static final String MANAGE_MAIN = HORIZON +
+            "1. 정보 수정 및 삭제\n"+
+            "2. 연차 사용 및 수정\n"+
+            "3. 연차 내역 조회\n"+
+            "4. 연차 정보 조회\n";
     public static final String FIND_ERROR = "선택한 대상이 존재하지 않습니다. 다시 입력해주세요: ";
     public static final String LOG_TITLE = "[로그내역]";
     public static final String INSERT_BACK = "이전 화면으로 돌아가시려면 'B', 'b'를 입력해주세요 : ";
