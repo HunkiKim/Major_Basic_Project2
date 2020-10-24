@@ -32,7 +32,17 @@ public final class Langs {
             "1. 정보 수정 및 삭제\n"+
             "2. 연차 사용 및 수정\n"+
             "3. 연차 내역 조회\n"+
-            "4. 연차 정보 조회\n";
+            "4. 연차 정보 조회\n"
+            +HORIZON;
+
+    public static final String EMPLOYEE_MANAGE_MAIN = HORIZON +
+            "1. 정보 수정\n"+
+            "2. 정보 삭제\n"+
+            HORIZON;
+    public static final String DAY_OFF_INFO = "사번 이름 잔여 연차수";
+    public static final String COUNT_ERROR = "올바른 개수가 아닙니다. -30~30사이의 수로 다시 입력하세요.";
+    public static final String FCOUNT_ERROR = "문법적으로 올바른 연차는 -365 ~ 365 사이의 수입니다.";
+    public static final String REASON_ERROR = "올바른 입력이 아닙니다. 1byte이상 512byte미만으로 다시 입력하세요.";
     public static final String FIND_ERROR = "선택한 대상이 존재하지 않습니다. 다시 입력해주세요: ";
     public static final String LOG_TITLE = "[로그내역]";
     public static final String INSERT_BACK = "이전 화면으로 돌아가시려면 'B', 'b'를 입력해주세요 : ";

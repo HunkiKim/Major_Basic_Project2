@@ -35,7 +35,9 @@ public class EmployeeController extends Controller {
         while(true) {
             UI.print2(Langs.EMPLOYEE_TARGET);
             target = UI.getInput();
-
+            if(target.equals("B") || target.equals("b")){
+                return new MainController();
+            }
             if (new EmployeeService().lettercheck(target)) { // 숫
                 if (new EmployeeService().numletter(target) > -1) { //숫자 길이 확인
                     if(Erepositry.findById(Integer.parseInt(target)).size()==0 && Erepositry.findBySalary(Integer.parseInt(target)).size()==0){
@@ -97,6 +99,12 @@ public class EmployeeController extends Controller {
                 String id=""; //사번
                 UI.print2("검색 대상 선택: ");
                 id = UI.getInput();
+                if(id.equals("B") || id.equals("b")){
+                    return new MainController();
+                }
+
+
+
                 if(Integer.parseInt(id) == Erepositry.findByExactId(Integer.parseInt(id)).id){
                     UI.print("*"+Langs.EMPLOYEE_ID+Erepositry.findByExactId(Integer.parseInt(id)).id);
                     UI.print("*"+Langs.EMPLOYEE_NAME+Erepositry.findByExactId(Integer.parseInt(id)).name);
@@ -107,7 +115,7 @@ public class EmployeeController extends Controller {
                     continue;
                 }   // 올바른 숫자일경우
 
-                UI.print2("위와 같이 저장하시겠습니까? ");
+                UI.print2("검색한 대상을 선택하시겠습니까? ");
                 String yn = UI.getInput();
                 if (new EmployeeService().check(yn) == 0) {
                     return new ManagerController(Integer.parseInt(id));

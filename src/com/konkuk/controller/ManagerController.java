@@ -3,6 +3,9 @@ package com.konkuk.controller;
 import com.konkuk.UI;
 import com.konkuk.asset.Langs;
 import com.konkuk.dto.Employee;
+import com.konkuk.service.EmployeeService;
+
+import java.io.IOException;
 
 public class ManagerController extends Controller {
     int employeeid;
@@ -21,7 +24,7 @@ public class ManagerController extends Controller {
             String nextMenu = UI.getInput();
             switch (nextMenu) {
                 case "1":
-//                next = new EmployeeController(EmployeeController.Menu.FIND); 정보 수정 및 삭제 (미완성)
+                    next = new EmployeeManageController(employeeid); //정보 수정 및 삭제 (미완성)
                     break;
                 case "2": // 연차 사용 및 수정
                     next = new DayOffController(employeeid);
