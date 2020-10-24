@@ -11,7 +11,7 @@ public class UI {
     public static void print2(String msg){ System.out.print(msg);}
     public static String getInput() {
         Scanner scanner = new Scanner(System.in);
-        return scanner.next();
+        return scanner.nextLine();
     }
 
     public static float getInput1(){

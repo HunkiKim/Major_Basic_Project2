@@ -21,7 +21,7 @@ public class EmployeeRepository extends Repository implements  IEmployeeReposito
                 int id = Integer.parseInt(parsedData.get(0));
                 String name = parsedData.get(1);
                 int salary = Integer.parseInt(parsedData.get(2));
-                int residualDayOff = Integer.parseInt(parsedData.get(3));
+                float residualDayOff = Float.parseFloat(parsedData.get(3));
                 if (uniquePolicy.contains(id)) {
                     Utils.exit(Langs.VIOLATE_UNIQUE_KEY);
                 }
