@@ -6,6 +6,7 @@ import com.konkuk.asset.Langs;
 import com.konkuk.dto.DayOff;
 import com.konkuk.dto.Employee;
 import com.konkuk.service.DayOffService;
+import com.konkuk.service.DayOffService.DayOffType;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -102,22 +103,23 @@ public class DayOffController extends Controller {
         }
 
         DayOffService dayOffService = new DayOffService();
-//        boolean isDone = dayOffService.use(employeeId, type, reason, start, end);
-//        if (isDone) {
-//            //결과 출력
-//            UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT);
-//            UI.print(Langs.HORIZON);
-////            String result1 = employee.getId() + " " +
-////                    employee.getName() + " " +
-////                    reason + " " +
-////                    start + " " +
-////                    end + " " +
-////                    employee.getResidualDayOff();
-////            UI.print(result1);
-//        } else {
-//            // 실패한 것
-//            UI.print(Langs.DAY_OFF_ERROR);
-//        }
+        DayOffType dayOffType = type == 1 ? DayOffType.AllDay : DayOffType.HalfDay;
+        Employee employee = dayOffService.use(employeeId, dayOffType, reason, start, end);
+        if (employee != null) {
+            //결과 출력
+            UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT);
+            UI.print(Langs.HORIZON);
+            String result1 = employee.getId() + " " +
+                    employee.getName() + " " +
+                    reason + " " +
+                    start + " " +
+                    end + " " +
+                    employee.getResidualDayOff();
+            UI.print(result1);
+        } else {
+            // 실패한 것
+            UI.print(Langs.DAY_OFF_ERROR);
+        }
     }
 
     private void add() {

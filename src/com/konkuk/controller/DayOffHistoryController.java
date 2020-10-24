@@ -2,6 +2,7 @@ package com.konkuk.controller;
 
 import com.konkuk.Main;
 import com.konkuk.UI;
+import com.konkuk.Utils;
 import com.konkuk.asset.Langs;
 import com.konkuk.dto.DayOff;
 import com.konkuk.service.DayOffHistoryService;
@@ -126,23 +127,15 @@ public class DayOffHistoryController extends Controller{
 
         DayOffHistoryService history = new DayOffHistoryService();
 
-        SimpleDateFormat transFormat = new SimpleDateFormat("yyyyMMdd HH:mm");
-
         if(options.equals(Option.ANNUAL.getMenu())){
             result = history.getHistory(this.employeeId, this.annualPage, startDate, endDate); // 기능 미완성
         }else if(options.equals(Option.RANGE.getMenu())){
             UI.print(Langs.DAY_OFF_HISTORY_DATE_START);
-            try {
-                startDate = transFormat.parse(UI.getInput());
-            } catch (ParseException e) {
-                // TODO: 올바른 형식으로 입력하지 않은 경우 에러 처리
-            }
+            startDate = Utils.stringToDate(UI.getInput());
             UI.print(Langs.DAY_OFF_HISTORY_DATE_END);
-            try {
-                endDate = transFormat.parse(UI.getInput());
-            } catch (ParseException e) {
+            endDate = Utils.stringToDate(UI.getInput());
                 // TODO: 올바른 형식으로 입력하지 않은 경우 에러 처리
-            }
+//            if(startDate == null || endDate == null) { 여기다 }
             result = history.getHistory(this.employeeId,this.searchPage, startDate, endDate);
         }
 

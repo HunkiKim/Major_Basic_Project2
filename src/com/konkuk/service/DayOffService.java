@@ -1,9 +1,12 @@
 package com.konkuk.service;
 
+import com.konkuk.Utils;
 import com.konkuk.dto.DayOff;
 import com.konkuk.dto.Employee;
 import com.konkuk.repository.DayOffRepository;
 import com.konkuk.repository.EmployeeRepository;
+
+import java.util.Date;
 
 public class DayOffService {
     public enum DayOffType {AllDay, HalfDay}
@@ -13,33 +16,35 @@ public class DayOffService {
     private int list_num = 1;
     private float fcount = 0;
 
-    public boolean use(int employeeId, DayOffType dayOffType, String reason, String start, String end) {
-//        DayOff dayOff = new DayOff();
-//        dayOff.employeeId = employeeId;
-//        dayOff.residualDayOff =
-//        dayOff.reason = reason;
-//        dayOff.dateDayOffStart = start;
-//        dayOff.dateDayOffEnd = end;
-//        dayOff.dateCreated =
-//
-//
-//
-//        Employee employee = employeeRepository.findByExactId(employeeId);
-//        if(employee == null) return false;
-//
-//        if(dayOffType == DayOffType.AllDay){
-//            employee.residualDayOff--;
-//        } else if(dayOffType == DayOffType.HalfDay){
-//            employee.residualDayOff = employee.residualDayOff - 0.5f;
-//        }
-//
-//        DayOff dayOff = new DayOff();
-//        // 오류나서 변경해놨어여 / 단기
-//        DayOff dayOff = null;
-//        DayOff dayOff = new DayOff(list_num, id, name, reason, start, end, fcount);
-//        dayOffRepository.add(dayOff);
-        list_num++;
-        return false;
+    public Employee use(int employeeId, DayOffType dayOffType, String reason, String start, String end) {
+        DayOff dayOff = new DayOff();
+        dayOff.employeeId = employeeId;
+        dayOff.reason = reason;
+        dayOff.dateDayOffStart = Utils.stringToDate(start);
+        dayOff.dateDayOffEnd = Utils.stringToDate(end);
+        if(dayOff.dateDayOffStart == null || dayOff.dateDayOffEnd == null)
+            return null;
+        dayOff.dateCreated = new Date();
+        dayOff.changedDayOffCount = 0;
+
+        Employee employee = employeeRepository.findByExactId(employeeId);
+        if(employee == null) return null;
+
+        if(dayOffType == DayOffType.AllDay){
+            dayOff.changedDayOffCount = 1;
+            employee.residualDayOff--;
+        } else if(dayOffType == DayOffType.HalfDay){
+            dayOff.changedDayOffCount = 0.5f;
+            employee.residualDayOff = employee.residualDayOff - 0.5f;
+        }
+        try{
+            dayOffRepository.add(dayOff);
+            employeeRepository.update(employeeId, employee);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return employee;
     }
 
     public boolean add(Employee employee, String reason, float count){

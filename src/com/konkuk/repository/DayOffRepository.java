@@ -29,24 +29,21 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
                     Utils.exit(Langs.VIOLATE_UNIQUE_KEY);
                 }
                 String reason = parsedData.get(4);
-                SimpleDateFormat transFormat = new SimpleDateFormat("yyyyMMdd HH:mm");
-                try{
-                    Date dateDayOffStart = transFormat.parse(parsedData.get(4));
-                    Date dateDayOffEnd = transFormat.parse(parsedData.get(5));
-                    Date dateCreated = transFormat.parse(parsedData.get(6));
-                    DayOff dayOff = new DayOff();
-                    dayOff.id = id;
-                    dayOff.employeeId = employeeId;
-                    dayOff.changedDayOffCount = changedDayOffCount;
-                    dayOff.reason = reason;
-                    dayOff.dateDayOffStart = dateDayOffStart;
-                    dayOff.dateDayOffEnd = dateDayOffEnd;
-                    dayOff.dateCreated = dateCreated;
-                    return dayOff;
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                return null;
+                Date dateDayOffStart = Utils.stringToDate(parsedData.get(4));
+                Date dateDayOffEnd = Utils.stringToDate(parsedData.get(5));
+                Date dateCreated = Utils.stringToDate(parsedData.get(6));
+                if(dateDayOffStart == null || dateDayOffEnd == null || dateCreated == null)
+                    return null;
+
+                DayOff dayOff = new DayOff();
+                dayOff.id = id;
+                dayOff.employeeId = employeeId;
+                dayOff.changedDayOffCount = changedDayOffCount;
+                dayOff.reason = reason;
+                dayOff.dateDayOffStart = dateDayOffStart;
+                dayOff.dateDayOffEnd = dateDayOffEnd;
+                dayOff.dateCreated = dateCreated;
+                return dayOff;
             });
         } else {
             createEmptyDataFile(Employee.getHeader());
