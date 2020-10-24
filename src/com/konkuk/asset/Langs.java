@@ -44,6 +44,7 @@ public final class Langs {
     public static final String DAY_OFF_RED = "연차 차감 개수를 입력하세요: ";
     public static final String INPUT_NUM = "연차 번호를 입력하세요: ";
     public static final String DAY_OFF_DELETE = "연차 사용을 취소합니다.";
+    public static final String DAY_OFF_ERROR = "에러가 발생하였습니다.";
     public static final String INPUT_ERROR = "다시 입력하세요.";
     public static final String INPUT_ERROR_TIME = "올바른 입력이 아닙니다. 입력형식(YYYYMMDD HH:MM)을 준수하여 다시 입력하세요.";
     public static final String FAIL_TO_CREATE_DATA_FILE = "데이터 파일 생성에 실패했습니다.";

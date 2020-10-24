@@ -113,7 +113,7 @@ public class DayOffController extends Controller {
             UI.print(result1);
         } else {
             // 실패한 것
-            UI.print("실패 메시지, Langs에 넣");
+            UI.print(Langs.DAY_OFF_ERROR);
         }
     }
 
@@ -139,7 +139,7 @@ public class DayOffController extends Controller {
             UI.print(result2);
         } else {
             // 실패한 것
-            UI.print("실패 메시지, Langs에 넣");
+            UI.print(Langs.DAY_OFF_ERROR);
         }
     }
 
@@ -152,7 +152,8 @@ public class DayOffController extends Controller {
         String menu = UI.getInput();
 
         //연차 사용 리스트 출력
-        //UI.print(Langs.DATA_FILE_HEADER_DAYOFF_USE);
+        UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT3);
+
 
 
 
@@ -205,7 +206,7 @@ public class DayOffController extends Controller {
                     UI.print(result3);
                 } else {
                     // 실패한 것
-                    UI.print("실패 메시지, Langs에 넣");
+                    UI.print(Langs.DAY_OFF_ERROR);
                 }
                 break;
             } else if (menu.equals("2")) {        //취소
@@ -217,7 +218,7 @@ public class DayOffController extends Controller {
                     UI.print(Langs.DAY_OFF_DELETE);
                 } else {
                     // 실패한 것
-                    UI.print("실패 메시지, Langs에 넣");
+                    UI.print(Langs.DAY_OFF_ERROR);
                 }
                 break;
             } else {
@@ -249,7 +250,7 @@ public class DayOffController extends Controller {
             UI.print(result2);
         } else {
             // 실패한 것
-            UI.print("실패 메시지, Langs에 넣");
+            UI.print(Langs.DAY_OFF_ERROR);
         }
     }
 }
