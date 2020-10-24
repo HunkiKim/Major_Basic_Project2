@@ -108,7 +108,7 @@ public class Repository {
 
     protected void addDataLine(List<String> fieldsData) throws IOException {
         FileWriter writer = new FileWriter(file, true);
-        writer.write(serialize(fieldsData) + "\r\n");
+        writer.write(serialize(fieldsData));
         writer.flush();
         writer.close();
     }
@@ -123,17 +123,22 @@ public class Repository {
 
         String line = bufferedReader.readLine();
         String parsedId = String.valueOf(id);
-        while((line != null)) {
+        while(line != null) {
+            String next = bufferedReader.readLine();
             try {
                 String dataId = parseDataLine(line).get(0);
                 if(!dataId.equals(parsedId)) {
-                    bufferedWriter.write(line + "\r\n");
+                    bufferedWriter.write(line);
+                    // 다음행이 있고, 그게 삭제될 행이 아니면 개행 추가
+                    if(next != null &&
+                            !parseDataLine(next).get(0).equals(parsedId))
+                        bufferedWriter.write(System.getProperty("line.separator"));
                     bufferedWriter.flush();
                 }
             } catch (ParseException e) {
                 Utils.debug("데이터 파일 헤더 제거 or 잘못된 라인 삭제:" + line);
             }
-            line = bufferedReader.readLine();
+            line = next;
         }
         bufferedReader.close();
         bufferedWriter.close();

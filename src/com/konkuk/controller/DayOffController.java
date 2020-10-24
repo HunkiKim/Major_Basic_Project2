@@ -2,6 +2,7 @@ package com.konkuk.controller;
 
 import com.konkuk.Main;
 import com.konkuk.UI;
+import com.konkuk.Utils;
 import com.konkuk.asset.Langs;
 import com.konkuk.dto.DayOff;
 import com.konkuk.dto.Employee;
@@ -11,6 +12,7 @@ import com.konkuk.service.DayOffService.DayOffType;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -73,33 +75,22 @@ public class DayOffController extends Controller {
             UI.print(Langs.DAY_OFF_START);
             start = UI.getInput();
 
-            //시간 입력 형태
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd HH:mm");
+            Date startDate = Utils.stringToDate(start);
+            if(startDate == null) {
+                UI.print(Langs.INPUT_ERROR_TIME);
+            } else {
+                long endTime = startDate.getTime() + (type == 0 ? 28800000 : 14400000);
 
-            if(type==0){
-                try{
-                    //시작시간
-                    Date st_date = formatter.parse(start);
-                    //종료시간
-                    long end1 = st_date.getTime() + 28800000;      //8시간
-                    end = formatter.format(new Date(end1));
-                    break;
-                } catch (ParseException e){
-                    System.out.println(Langs.INPUT_ERROR_TIME);
+                Calendar tmpStart = Calendar.getInstance();
+                Calendar tmpEnd = Calendar.getInstance();
+                tmpStart.setTime(startDate);
+                tmpEnd.setTime(new Date(endTime));
+                if(tmpStart.get(Calendar.HOUR_OF_DAY) < 12 && tmpEnd.get(Calendar.HOUR_OF_DAY) > 12) {
+                    endTime += 3600000;
                 }
-            } else if(type==1){
-                try{
-                    //시작시간
-                    Date st_date = formatter.parse(start);
-                    //종료시간
-                    long end2 = st_date.getTime() + 14400000;      //4시간
-                    end = formatter.format(new Date(end2));
-                    break;
-                } catch (ParseException e){
-                    System.out.println(Langs.INPUT_ERROR_TIME);
-                }
+                end = Utils.dateToString(new Date(endTime));
+                break;
             }
-
         }
 
         DayOffService dayOffService = new DayOffService();
