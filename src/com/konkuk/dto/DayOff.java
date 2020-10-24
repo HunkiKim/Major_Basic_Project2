@@ -45,6 +45,10 @@ public class DayOff {
     public String getReason() { return reason; }
     public String getStart() { return start; }
     public String getEnd() { return end; }
+    public String getName() { return name; }
+    public int getId() { return id; }
+    public int getEmployeeId() { return employeeId; }
+    public float getResidualDayOff() { return residualDayOff; }
     public void setReason(String reason) { this.reason = reason; }
     public void setStart(String start) { this.start = start; }
     public void setEnd(String end) { this.end = end; }

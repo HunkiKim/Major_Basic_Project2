@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 public class DayOffController extends Controller {
     public Controller start() {
         UI.print(Langs.DAY_OFF_MAIN);
@@ -38,74 +39,81 @@ public class DayOffController extends Controller {
 
 
     private void use() {
-        int type;
+        int type = 0;
+        String start = null;
         String end = null;
 
         UI.print(Langs.DAY_OFF_USE);
         String menu = UI.getInput();
 
-        UI.print(Langs.DAY_OFF_REASON);
-        String reason = UI.getInput();
-        UI.print(Langs.DAY_OFF_START);
-        String start = UI.getInput();
-
-        //시간 입력 형태
-        SimpleDateFormat formatter = new SimpleDateFormat("YYYYMMDD HH:MM");
-
-        DayOffService dayOffService = new DayOffService();
-
-        // 오류나서 일단 넣어놨어여
-        Employee employee = null;
         while (true) {
             if (menu.equals("1")) {         //연차
                 type = 0;
+                break;
+            } else if (menu.equals("2")) {         //반차
+                type = 1;
+                break;
+            } else {
+                UI.print(Langs.INPUT_ERROR);
+            }
 
+        }
+
+        UI.print(Langs.DAY_OFF_REASON);
+        String reason = UI.getInput();
+
+        while(true){
+            UI.print(Langs.DAY_OFF_START);
+            start = UI.getInput();
+
+            //시간 입력 형태
+            SimpleDateFormat formatter = new SimpleDateFormat("YYYYMMDD HH:MM");
+
+            if(type==0){
                 try{
                     //시작시간
                     Date st_date = formatter.parse(start);
                     //종료시간
                     long end1 = st_date.getTime() + 28800000;      //8시간
                     end = formatter.format(new Date(end1));
-
+                    break;
                 } catch (ParseException e){
                     System.out.println(Langs.INPUT_ERROR_TIME);
                 }
-
-                boolean isDone = dayOffService.use(employee, type, reason, start, end);
-
-                if (isDone) {
-                    //결과 출력
-
-                } else {
-                    // 실패한 것
-                    UI.print("실패 메시지, Langs에 넣");
-                }
-                break;
-            } else if (menu.equals("2")) {         //반차
-                type = 1;
-                //SimpleDateFormat formatter = new SimpleDateFormat("yyyymmdd hh:mm");
+            } else if(type==1){
                 try{
                     //시작시간
                     Date st_date = formatter.parse(start);
                     //종료시간
                     long end2 = st_date.getTime() + 14400000;      //4시간
                     end = formatter.format(new Date(end2));
+                    break;
                 } catch (ParseException e){
                     System.out.println(Langs.INPUT_ERROR_TIME);
                 }
-
-                boolean isDone = dayOffService.use(employee, type, reason, start, end);
-                if (isDone) {
-                    //결과 출력
-
-                } else {
-                    // 실패한 것
-                    UI.print("실패 메시지, Langs에 넣");
-                }
-                break;
-            } else {
-                UI.print(Langs.INPUT_ERROR);
             }
+
+        }
+
+        // 오류나서 일단 넣어놨어여
+        Employee employee = null;
+
+        DayOffService dayOffService = new DayOffService();
+        boolean isDone = dayOffService.use(employee, type, reason, start, end);
+        if (isDone) {
+            //결과 출력
+            UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT);
+            UI.print(Langs.HORIZON);
+            String result1 = employee.getId() + " " +
+                    employee.getName() + " " +
+                    reason + " " +
+                    start + " " +
+                    end + " " +
+                    employee.getResidualDayOff();
+            UI.print(result1);
+        } else {
+            // 실패한 것
+            UI.print("실패 메시지, Langs에 넣");
         }
     }
 
@@ -123,6 +131,12 @@ public class DayOffController extends Controller {
 
         if(isDone) {
             //결과 출력
+            UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT2);
+            UI.print(Langs.HORIZON);
+            String result2 = employee.getId() + " " +
+                    employee.getName() + " " +
+                            employee.getResidualDayOff();
+            UI.print(result2);
         } else {
             // 실패한 것
             UI.print("실패 메시지, Langs에 넣");
@@ -138,7 +152,7 @@ public class DayOffController extends Controller {
         String menu = UI.getInput();
 
         //연차 사용 리스트 출력
-        UI.print(Langs.DATA_FILE_HEADER_DAYOFF_USE);
+        //UI.print(Langs.DATA_FILE_HEADER_DAYOFF_USE);
 
 
 
@@ -178,9 +192,17 @@ public class DayOffController extends Controller {
                 boolean isDone = dayOffService.change(dayOff, reason, start, end);
 
                 if (isDone) {
-                    //잘 된것
-                    // 다음처리
-
+                    //출력
+                    UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT3);
+                    UI.print(Langs.HORIZON);
+                    String result3 = dayOff.getId() + " " +
+                            dayOff.getEmployeeId() + " " +
+                            dayOff.getName() + " " +
+                            reason + " " +
+                            start + " " +
+                            end + " " +
+                            dayOff.getResidualDayOff();
+                    UI.print(result3);
                 } else {
                     // 실패한 것
                     UI.print("실패 메시지, Langs에 넣");
@@ -218,8 +240,13 @@ public class DayOffController extends Controller {
         boolean isDone = dayOffService.reduct(employee, reason, count);
 
         if(isDone) {
-            //잘 된것
-            // 다음처리
+            //출력
+            UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT2);
+            UI.print(Langs.HORIZON);
+            String result2 = employee.getId() + " " +
+                    employee.getName() + " " +
+                    employee.getResidualDayOff();
+            UI.print(result2);
         } else {
             // 실패한 것
             UI.print("실패 메시지, Langs에 넣");
