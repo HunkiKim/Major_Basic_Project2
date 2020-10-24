@@ -1,5 +1,4 @@
 package com.konkuk.asset;
-
 public final class Langs {
     public static final String HORIZON = "------------------------------\n";
     public static final String MAIN = HORIZON +
@@ -27,7 +26,6 @@ public final class Langs {
             "입력: ";
     public static final String EMPLOYEE_OF_USE = HORIZON +
             "대상 입력:";
-
     public static final String LOG_TITLE = "[로그내역]";
     public static final String INSERT_BACK = "이전 화면으로 돌아가시려면 'B', 'b'를 입력해주세요 : ";
     public static final String EMPLOYEE_ID = "사번: ";
@@ -61,8 +59,7 @@ public final class Langs {
     public static final String DATA_FILE_HEADER_DAYOFF_RESULT2 = "\"사번\",\"이름\",\"잔여 연차 수\"";
     public static final String DATA_FILE_HEADER_DAYOFF_RESULT3 = "\"번호\",\"사번\",\"이름\",\"사유\",\"연차 시작\",\"연차 종료\",\"잔여 연차 수\"";
     public static final String DATA_FILE_HEADER_DAYOFF = "\"번호\",\"사번\",\"변동 연차 수\",\"사유\",\"연차 시작\",\"연차 종료\",\"생성 날짜\"";
-
-
+    public static final String DAY_OFF_INFO = "사번 이름 잔여 연차수";
     public static final String DAY_OFF_HISTORY_MAIN = HORIZON +
             "1. 이번 연도 연차 조회\n" +
             "2. 상세 검색\n" +
@@ -74,15 +71,17 @@ public final class Langs {
             "입력: ";
     public static final String DAY_OFF_INFO_PAGE = "\n" +
             "연차를 초과 사용하였습니다. 차감액을 조회하시겠습니까?\n"+
+            HORIZON +
             "1.조회하기\n"+
-            "2.메인화면 이동\n"+
+            "2.메인 화면 이동\n"+
             HORIZON +
             "입력: ";
     public static final String DAY_OFF_INFO_PAGE_REFUND = "\n" +
-            "연차를 초과 사용하였습니다. 차감액을 조회하시겠습니까?\n"+
+            "미사용 연차가 있습니다. 환급액을 조회하시겠습니까?\n"+
             HORIZON +
-            "1.조회하기\n"+
-            "2.메인화면 이동\n"+
+            "1.환급액 조회하기\n"+
+            "2.메인 화면 이동\n"+
+            HORIZON +
             "입력: ";
     public static final String DAY_OFF_HISTORY_DATE_START = "\n연차 시작 날짜를 입력하세요: ";
     public static final String DAY_OFF_HISTORY_DATE_END = "\n연차 종료 날짜를 입력하세요: ";

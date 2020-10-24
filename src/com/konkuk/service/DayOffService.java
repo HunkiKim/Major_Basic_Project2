@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class DayOffService {
     public enum DayOffType {AllDay, HalfDay}
@@ -34,18 +35,21 @@ public class DayOffService {
     }
 
     public boolean reasonCheck(String reason){
+
         if(reason.getBytes().length<1 || reason.getBytes().length>512) {    //1~512바이트
             UI.print(Langs.REASON_ERROR);
             return false;
         }
 
         for (int i = 0; i < reason.length(); i++) { //알파벳이 아닐시, 이상한 문자일 경우 예외처리
-            if (reason.charAt(i) < 65 || reason.charAt(i) > 122 || (reason.charAt(i)>90 && reason.charAt(i)<97)) {
+            if ((reason.charAt(i)>=65 && reason.charAt(i)<=90) ||
+                    (reason.charAt(i)>=97 && reason.charAt(i)<=122) || (reason.charAt(i)>='가' && reason.charAt(i)<='힣')) {
+                return true;
+            } else {
                 UI.print(Langs.LETTER_ERROR);
                 return false;
             }
         }
-
         return true;
     }
 
