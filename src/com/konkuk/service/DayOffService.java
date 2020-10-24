@@ -8,6 +8,7 @@ import com.konkuk.dto.Employee;
 import com.konkuk.repository.DayOffRepository;
 import com.konkuk.repository.EmployeeRepository;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -108,8 +109,13 @@ public class DayOffService {
     }
 
     public boolean cancel(DayOff dayOff){
-        dayOffRepository.delete(dayOff);
-        return false;
+        try {
+            dayOffRepository.delete(dayOff);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     public boolean reduct(Employee employee, String reason, float count){

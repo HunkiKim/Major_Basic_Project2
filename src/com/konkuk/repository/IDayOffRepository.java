@@ -8,7 +8,8 @@ import java.util.List;
 
 public interface IDayOffRepository {
     public DayOff add(DayOff dayoff) throws IOException;
-    public boolean delete(DayOff dayoff);
+    public void delete(DayOff dayoff) throws IOException;
     public List<DayOff> findByEmployeeId(int employeeId);
+    DayOff findByExactId(int id);
     List<DayOff> findByDate(int employeeId, Date start, Date end);
 }

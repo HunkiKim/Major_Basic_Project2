@@ -73,7 +73,21 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
     }
 
     @Override
-    public boolean delete(DayOff dayoff) { return true; }
+    public DayOff findByExactId(int id) {
+        DayOff result = null;
+        for (DayOff e : dayOffList) {
+            if (e.id == id) {
+                result = e;
+                break;
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public void delete(DayOff dayoff) throws IOException {
+        deleteDataLine(dayoff.id);
+    }
 
     @Override
     public List<DayOff> findByEmployeeId(int employeeId) {
