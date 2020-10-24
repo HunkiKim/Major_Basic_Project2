@@ -16,6 +16,7 @@ public class EmployeeService {
         return false;
     }
 
+
     public int salaryconversion(String target){ // 만으로 된 문자 빼고 0000 추가해주기
         String str = "";
         for(int i=0; i<target.length()-1; i++){
