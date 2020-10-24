@@ -5,15 +5,31 @@ import com.konkuk.UI;
 import com.konkuk.asset.Langs;
 import com.konkuk.dto.DayOff;
 import com.konkuk.dto.Employee;
+import com.konkuk.repository.EmployeeRepository;
 import com.konkuk.service.DayOffService;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 
 public class DayOffController extends Controller {
+    int employeeId;
+    private int type = 0;
+    private String start = null;
+    private String end = null;
+    private String reason = null;
+    private float count = 0;
+
+    public DayOffController(int employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    EmployeeRepository employeeRepository = EmployeeRepository.getInstance();
+    Employee employee = employeeRepository.findByExactId(employeeId);
+
     public Controller start() {
         UI.print(Langs.DAY_OFF_MAIN);
         String menu = UI.getInput();
@@ -39,14 +55,12 @@ public class DayOffController extends Controller {
 
 
     private void use() {
-        int type = 0;
-        String start = null;
-        String end = null;
-
-        UI.print(Langs.DAY_OFF_USE);
-        String menu = UI.getInput();
+        DayOffService dayOffService = new DayOffService();
 
         while (true) {
+            UI.print(Langs.DAY_OFF_USE);
+            String menu = UI.getInput();
+
             if (menu.equals("1")) {         //연차
                 type = 0;
                 break;
@@ -59,8 +73,15 @@ public class DayOffController extends Controller {
 
         }
 
-        UI.print(Langs.DAY_OFF_REASON);
-        String reason = UI.getInput();
+        while(true){
+            UI.print(Langs.DAY_OFF_REASON);
+            reason = UI.getInput();
+
+            if(dayOffService.reasonCheck(reason)==true){
+                break;
+            }
+            else continue;
+        }
 
         while(true){
             UI.print(Langs.DAY_OFF_START);
@@ -95,10 +116,7 @@ public class DayOffController extends Controller {
 
         }
 
-        // 오류나서 일단 넣어놨어여
-        Employee employee = null;
 
-        DayOffService dayOffService = new DayOffService();
         boolean isDone = dayOffService.use(employee, type, reason, start, end);
         if (isDone) {
             //결과 출력
@@ -118,15 +136,28 @@ public class DayOffController extends Controller {
     }
 
     private void add() {
-        UI.print(Langs.DAY_OFF_REASON);
-        String reason = UI.getInput();
-        UI.print(Langs.DAY_OFF_ADD);
-        int count = UI.getInput1();
-
-
-        // 오류나서 일단 넣어놨어여
-        Employee employee = null;
         DayOffService dayOffService = new DayOffService();
+
+        while(true){
+            UI.print(Langs.DAY_OFF_REASON);
+            reason = UI.getInput();
+
+            if(dayOffService.reasonCheck(reason)==true){
+                break;
+            }
+            else continue;
+        }
+
+        while(true){
+            UI.print(Langs.DAY_OFF_ADD);
+            count = UI.getInput1();
+
+            if(dayOffService.countCheck(count)==true){
+                break;
+            }
+            else continue;
+        }
+
         boolean isDone = dayOffService.add(employee, reason, count);
 
         if(isDone) {
@@ -144,39 +175,65 @@ public class DayOffController extends Controller {
     }
 
     private void change_cancel() {
-        String reason = null;
-        String start = null;
-        String end = null;
-
-        UI.print(Langs.DAY_OFF_CC);
-        String menu = UI.getInput();
+        int m = 0;
+        DayOffService dayOffService = new DayOffService();
 
         //연차 사용 리스트 출력
+        UI.print(Langs.HORIZON);
         UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT3);
+        UI.print(Langs.HORIZON);
+        List<String> dayOffList = dayOffService.getList(employeeId);
+        for(String data : dayOffList){
+            System.out.println(data);
+        }
+
+        while(true){
+            UI.print(Langs.DAY_OFF_CC);
+            String menu = UI.getInput();
+
+            if(menu.equals("1")){
+                m = 1;
+                break;
+            } else if(menu.equals("2")){
+                m = 2;
+                break;
+            } else{
+                UI.print(Langs.INPUT_ERROR);
+                continue;
+            }
+        }
+
+        if(m==1){       //수정
+            while(true){    //연차번호 검색, 찾기
+                UI.print(Langs.INPUT_NUM);
+                int input_num = UI.getInput2();
 
 
+                break;
+            }
 
+            DayOff dayOff = new DayOff();       //연차번호에 해당하는 dayOff객체 찾기
 
-        DayOffService dayOffService = new DayOffService();
-        UI.print(Langs.INPUT_NUM);
-        int input_num = UI.getInput1();
-
-        DayOff dayOff = new DayOff();       //연차번호에 해당하는 dayOff객체 찾기
-
-        while (true) {
-            if (menu.equals("1")) {       //수정
+            while(true){
                 UI.print(Langs.DAY_OFF_CHANGE_REASON);
                 String reason1 = UI.getInput();
                 if(reason1 == "p" || reason1 == "P") {    //건너뛰기
                     reason = dayOff.getReason();
-                } else {
-                    reason = reason1;
+                    break;
                 }
+                if(dayOffService.reasonCheck(reason)==true){
+                    break;
+                }
+                else continue;
+            }
+
+            while(true){
                 UI.print(Langs.DAY_OFF_CHANGE_START);
                 String start1 = UI.getInput();
                 if(start1 == "p" || start1 == "P"){   //건너뛰기
                     start = dayOff.getStart();
                     end = dayOff.getEnd();
+                    break;
                 } else {
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyymmdd hh:mm");
                     try{
@@ -185,59 +242,81 @@ public class DayOffController extends Controller {
                         //종료시간
                         long end3 = st_date.getTime() + 14400000;      //4시간
                         end = formatter.format(new Date(end3));
+                        break;
                     } catch (ParseException e){
                         System.out.println(Langs.INPUT_ERROR_TIME);
+                        continue;
                     }
                 }
-
-                boolean isDone = dayOffService.change(dayOff, reason, start, end);
-
-                if (isDone) {
-                    //출력
-                    UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT3);
-                    UI.print(Langs.HORIZON);
-                    String result3 = dayOff.getId() + " " +
-                            dayOff.getEmployeeId() + " " +
-                            dayOff.getName() + " " +
-                            reason + " " +
-                            start + " " +
-                            end + " " +
-                            dayOff.getResidualDayOff();
-                    UI.print(result3);
-                } else {
-                    // 실패한 것
-                    UI.print(Langs.DAY_OFF_ERROR);
-                }
-                break;
-            } else if (menu.equals("2")) {        //취소
-
-                boolean isDone = dayOffService.cancel(dayOff);
-
-                if (isDone) {
-                    //잘 된것
-                    UI.print(Langs.DAY_OFF_DELETE);
-                } else {
-                    // 실패한 것
-                    UI.print(Langs.DAY_OFF_ERROR);
-                }
-                break;
-            } else {
-                UI.print(Langs.INPUT_ERROR);
             }
 
+            boolean isDone = dayOffService.change(dayOff, reason, start, end);
+
+            if (isDone) {
+                //출력
+                UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT3);
+                UI.print(Langs.HORIZON);
+                String result3 = dayOff.getId() + " " +
+                        dayOff.getEmployeeId() + " " +
+                        dayOff.getName() + " " +
+                        reason + " " +
+                        start + " " +
+                        end + " " +
+                        dayOff.getResidualDayOff();
+                UI.print(result3);
+            } else {
+                // 실패한 것
+                UI.print(Langs.DAY_OFF_ERROR);
+            }
+
+        } else if (m==2){       //취소
+            while(true){    //연차번호 검색, 찾기
+                UI.print(Langs.INPUT_NUM);
+                int input_num = UI.getInput2();
+
+
+                break;
+            }
+
+            DayOff dayOff = new DayOff();       //연차번호에 해당하는 dayOff객체 찾기
+
+            boolean isDone = dayOffService.cancel(dayOff);
+
+            if (isDone) {
+                //잘 된것
+                UI.print(Langs.DAY_OFF_DELETE);
+            } else {
+                // 실패한 것
+                UI.print(Langs.DAY_OFF_ERROR);
+            }
         }
+
     }
 
 
     private void reduct(){
-        UI.print(Langs.DAY_OFF_REASON);
-        String reason = UI.getInput();
-        UI.print(Langs.DAY_OFF_RED);
-        float count = UI.getInput1();
-
         DayOffService dayOffService = new DayOffService();
-        // 얘도 오류낫 ㅓ일단 넣었어여
-        Employee employee = null;
+
+        while(true){
+            UI.print(Langs.DAY_OFF_REASON);
+            reason = UI.getInput();
+
+            if(dayOffService.reasonCheck(reason)==true){
+                break;
+            }
+            else continue;
+        }
+
+        while(true){
+            UI.print(Langs.DAY_OFF_ADD);
+            count = UI.getInput1();
+
+            if(dayOffService.countCheck(count)==true){
+                break;
+            }
+            else continue;
+        }
+
         boolean isDone = dayOffService.reduct(employee, reason, count);
 
         if(isDone) {
