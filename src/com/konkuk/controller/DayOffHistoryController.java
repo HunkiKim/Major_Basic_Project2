@@ -143,17 +143,17 @@ public class DayOffHistoryController extends Controller{
                 endDate = Utils.stringToDate(checkString1);
 
                 if(Utils.isValidationDate(checkString)||Utils.isValidationDate(checkString1)){
-                    UI.print("존재하지 않는 날짜입니다. 올바른 날짜를 입력해주세요."); // Langs에 추가
+                    UI.print(Langs.DAY_OFF_INVALIDATION_DATE);
                     continue;
                 }
 
                 if(checkString.length()!=8 || checkString1.length()!=8){
-                    UI.print("글자 수를 다시 확인해주세요.");// Langs에 추가
+                    UI.print(Langs.DAY_OFF_LENGTH_ERROR);
                     continue;
                 }
 
                 if(startDate == null || endDate == null) {
-                    UI.print("숫자로만 이루어진 8자를 입력해주세요.");// Langs에 추가
+                    UI.print(Langs.DAY_OFF_LETTER_ERROR);
                     continue;
                 }
                 break;
