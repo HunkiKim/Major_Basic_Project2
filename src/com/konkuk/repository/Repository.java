@@ -108,12 +108,13 @@ public class Repository {
 
     protected void addDataLine(List<String> fieldsData) throws IOException {
         FileWriter writer = new FileWriter(file, true);
-        writer.write(serialize(fieldsData));
+        writer.write(serialize(fieldsData) + "\r\n");
         writer.flush();
         writer.close();
     }
 
     protected void deleteDataLine(int id) throws IOException {
+        String originPath = file.getPath();
         String tmpFilePath = file.getPath() + "_" + new Date().getTime();
         File tmpFile = new File(tmpFilePath);
 
@@ -140,7 +141,7 @@ public class Repository {
         //todo: 이거 실패했을때 처리
         file.delete();
         tmpFile.renameTo(file);
-        file = tmpFile;
+        file = new File(originPath);
     }
 
     protected <T> List<T> loadData(Deserializer<T> deserializer) {
