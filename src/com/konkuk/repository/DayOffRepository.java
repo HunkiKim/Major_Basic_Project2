@@ -25,7 +25,7 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
             dayOffList = loadData((parsedData, uniquePolicy) -> {
                 int id = Integer.parseInt(parsedData.get(0));
                 int employeeId = Integer.parseInt(parsedData.get(1));
-                int changedDayOffCount = Integer.parseInt(parsedData.get(2));
+                float changedDayOffCount = Float.parseFloat(parsedData.get(2));
                 if(uniquePolicy.contains(id)) {
                     Utils.exit(Langs.VIOLATE_UNIQUE_KEY);
                 }
