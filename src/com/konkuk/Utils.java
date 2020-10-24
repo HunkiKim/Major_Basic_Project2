@@ -39,4 +39,16 @@ public class Utils {
         SimpleDateFormat transFormat = new SimpleDateFormat(format);
         return transFormat.format(date);
     }
+
+    public static boolean isValidationDate(String checkDate){
+        try{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+
+            dateFormat.setLenient(false);
+            dateFormat.parse(checkDate);
+            return true;
+        }catch (ParseException e){
+            return false;
+        }
+    }
 }
