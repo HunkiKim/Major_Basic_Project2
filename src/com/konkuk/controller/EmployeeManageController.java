@@ -20,16 +20,23 @@ public class EmployeeManageController extends Controller {
 
     public Controller start() {
         UI.print(Langs.EMPLOYEE_MANAGE_MAIN);
-        UI.print2("입력: ");
-        String menu = UI.getInput();
-        while(true) {
-            UI.print2(Langs.HORIZON);
 
+
+        while(true) {
+            UI.print2("입력: ");
+            String menu = UI.getInput();
+            UI.print2(Langs.HORIZON);
+            if(menu.equals("B") || menu.equals("b")){
+                return new MainController();
+            }
             if(menu.equals("2")) { // 삭제 이용
                 while(true) {
                     String yn;
                     UI.print2("선택한 대상을 삭제하시겠습니까? ");
                     yn = UI.getInput();
+                    if(yn.equals("b") || yn.equals("B")){
+                        return new MainController();
+                    }
                     if (new EmployeeService().check(yn) == 0) {
                         try{
                             Erepository.delete(employeeId);
@@ -50,6 +57,9 @@ public class EmployeeManageController extends Controller {
                 while(true) {//id 입력
                     UI.print2(Langs.EMPLOYEE_ID);
                     id = UI.getInput();
+                    if(id.equals("B") || id.equals("b")){
+                        return new MainController();
+                    }
                     if(new EmployeeService().idcheck(id)) // 체크에서 올바르다면(true) 반복문 빠져가가기
                         break;
                 }// id 종료
@@ -58,6 +68,9 @@ public class EmployeeManageController extends Controller {
 
                     UI.print2(Langs.EMPLOYEE_NAME);
                     name = UI.getInput();
+                    if(name.equals("B") || name.equals("b")){
+                        return new MainController();
+                    }
                     if(new EmployeeService().namecheck(name)) // 체크에서 올바르다면(true) 반복문 빠져가가기
                         break;
                 }
@@ -66,6 +79,9 @@ public class EmployeeManageController extends Controller {
 
                     UI.print2(Langs.EMPLOYEE_SALARY);
                     salary = UI.getInput();
+                    if(salary.equals("B") || salary.equals("b")){
+                        return new MainController();
+                    }
                     if(new EmployeeService().salarycheck(salary))// 체크에서 올바르다면(true) 반복문 빠져가가기
                         break;
                 }

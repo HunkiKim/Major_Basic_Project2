@@ -4,6 +4,7 @@ import com.konkuk.UI;
 import com.konkuk.asset.Langs;
 import com.konkuk.dto.Employee;
 import com.konkuk.repository.EmployeeRepository;
+import com.konkuk.repository.LogRepository;
 import com.konkuk.service.EmployeeService;
 import com.sun.security.auth.callback.TextCallbackHandler;
 
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class EmployeeController extends Controller {
+    LogRepository L = LogRepository.getInstance();
     EmployeeRepository Erepositry = EmployeeRepository.getInstance();
     public enum Menu {FIND, ADD}
     protected Menu currentMenu;
@@ -135,6 +137,9 @@ public class EmployeeController extends Controller {
 
                 UI.print2("검색한 대상을 선택하시겠습니까? ");
                 String yn = UI.getInput();
+                if(yn.equals("B") || yn.equals("b")){
+                    return new MainController();
+                }
                 if (new EmployeeService().check(yn) == 0) {
                     return new ManagerController(Integer.parseInt(id));
                 }
@@ -155,18 +160,38 @@ public class EmployeeController extends Controller {
 
         String id,name,salary,yn;
 
+        ArrayList findid = new ArrayList();
 
         while(true) {//id 입력
+            int check=0; //find 체크
             UI.print2(Langs.EMPLOYEE_ID);
             id = UI.getInput();
-            if(new EmployeeService().idcheck(id)) // 체크에서 올바르다면(true) 반복문 빠져가가기
+            if(id.equals("B") || id.equals("b")){
+                return;
+            }// 체크에서 올바르다면(true) 반복문 빠져가가기
+            if(new EmployeeService().idcheck(id)) {
+                for(int i=0; i<Erepositry.findById(Integer.parseInt(id)).size(); i++){
+                    if(Erepositry.findById(Integer.parseInt(id)).get(i).id==Integer.parseInt(id)){
+                        check=1;
+                    }
+                }
+                if(check==1){
+                    UI.print("이미 같은 사번이 존재합니다. 다시 입력해주세요");
+                    continue;
+                }
+
                 break;
+            }
+
         }// id 종료
         //이름 시작
         while(true) {
 
             UI.print2(Langs.EMPLOYEE_NAME);
             name = UI.getInput();
+            if(name.equals("B") || name.equals("b")){
+                return;
+            }
             if(new EmployeeService().namecheck(name)) // 체크에서 올바르다면(true) 반복문 빠져가가기
                 break;
         }
@@ -175,6 +200,9 @@ public class EmployeeController extends Controller {
 
             UI.print2(Langs.EMPLOYEE_SALARY);
             salary = UI.getInput();
+            if(salary.equals("B") || salary.equals("b")){
+                return;
+            }
             if(new EmployeeService().salarycheck(salary))// 체크에서 올바르다면(true) 반복문 빠져가가기
                 break;
         }
@@ -185,6 +213,9 @@ public class EmployeeController extends Controller {
         while(true) {
             UI.print2("위와 같이 저장하시겠습니까? ");
             yn = UI.getInput();
+            if(yn.equals("B") || yn.equals("b")){
+                return;
+            }
             if (new EmployeeService().check(yn) == 0) {
                 try{
                     Erepositry.add(new Employee(Integer.parseInt(id), name, Integer.parseInt(salary), 0));
