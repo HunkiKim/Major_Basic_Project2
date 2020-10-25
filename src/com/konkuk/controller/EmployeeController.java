@@ -16,6 +16,8 @@ import java.util.regex.Pattern;
 public class EmployeeController extends Controller {
     LogRepository L = LogRepository.getInstance();
     EmployeeRepository Erepositry = EmployeeRepository.getInstance();
+    EmployeeService employeeService = new EmployeeService();
+
     public enum Menu {FIND, ADD}
     protected Menu currentMenu;
 
@@ -44,20 +46,20 @@ public class EmployeeController extends Controller {
             if(target.equals("B") || target.equals("b")){
                 return new MainController();
             }
-            if (new EmployeeService().lettercheck(target)) { // 숫
-                if (new EmployeeService().numletter(target) > -1) { //숫자 길이 확인
+            if (employeeService.lettercheck(target)) { // 숫
+                if (employeeService.numletter(target) > -1) { //숫자 길이 확인
                     if(Erepositry.findById(Integer.parseInt(target)).size()==0 && Erepositry.findBySalary(Integer.parseInt(target)).size()==0){
                         UI.print(Langs.FIND_ERROR);
                         continue;
                     }
-                    if (new EmployeeService().numletter(target) == 1) { //사번
+                    if (employeeService.numletter(target) == 1) { //사번
                         for (int i = 0; i < Erepositry.findById(Integer.parseInt(target)).size(); i++) {  //찾은거 복사
                             UI.print("*" + Langs.EMPLOYEE_ID + Erepositry.findById(Integer.parseInt(target)).get(i).id);
                             UI.print("*" + Langs.EMPLOYEE_NAME + Erepositry.findById(Integer.parseInt(target)).get(i).name);
                             UI.print("*" + Langs.EMPLOYEE_SALARY + Erepositry.findById(Integer.parseInt(target)).get(i).salary + "\n");
                             exactfind.add(Erepositry.findById(Integer.parseInt(target)).get(i).id);
                         }
-                    } else if (new EmployeeService().numletter(target) == 2) { // 연봉
+                    } else if (employeeService.numletter(target) == 2) { // 연봉
                         for (int i = 0; i < Erepositry.findBySalary(Integer.parseInt(target)).size(); i++) {  //찾은거 복사
                             UI.print("*" + Langs.EMPLOYEE_ID + Erepositry.findBySalary(Integer.parseInt(target)).get(i).id);
                             UI.print("*" + Langs.EMPLOYEE_NAME + Erepositry.findBySalary(Integer.parseInt(target)).get(i).name);
@@ -66,7 +68,7 @@ public class EmployeeController extends Controller {
                         }
                     }
                     break; // 숫자 종료
-                } else if (new EmployeeService().numletter(target) == -1 || new EmployeeService().numletter(target) == -3) { // 길이가 안맞는 경우
+                } else if (employeeService.numletter(target) == -1 || employeeService.numletter(target) == -3) { // 길이가 안맞는 경우
                     UI.print(Langs.LENGTH_ERROR); //길이 오류
                 } else { // 문자의 경우
                     if(Erepositry.findByName(target).size()==0){
@@ -83,22 +85,19 @@ public class EmployeeController extends Controller {
                 }
 
             } else { // 문자가 섞여있는경우
-                if (new EmployeeService().salarmeasure(target)) { // 1000만 이런형식인지 확인ㅇ
-                   if(Erepositry.findBySalary(new EmployeeService().salaryconversion(target)).size()==0){
+                if (employeeService.salarmeasure(target)) { // 1000만 이런형식인지 확인ㅇ
+                   if(Erepositry.findBySalary(employeeService.salaryconversion(target)).size()==0){
                        UI.print(Langs.FIND_ERROR);
                        continue;
                    }
-                    for (int i = 0; i < Erepositry.findBySalary(new EmployeeService().salaryconversion(target)).size(); i++) {  //찾은거 복사
-                        UI.print("*" + Langs.EMPLOYEE_ID + Erepositry.findBySalary(new EmployeeService().salaryconversion(target)).get(i).id);
-                        UI.print("*" + Langs.EMPLOYEE_NAME + Erepositry.findBySalary(new EmployeeService().salaryconversion(target)).get(i).name);
-                        UI.print("*" + Langs.EMPLOYEE_SALARY + Erepositry.findBySalary(new EmployeeService().salaryconversion(target)).get(i).salary + "\n");
+                    for (int i = 0; i < Erepositry.findBySalary(employeeService.salaryconversion(target)).size(); i++) {  //찾은거 복사
+                        UI.print("*" + Langs.EMPLOYEE_ID + Erepositry.findBySalary(employeeService.salaryconversion(target)).get(i).id);
+                        UI.print("*" + Langs.EMPLOYEE_NAME + Erepositry.findBySalary(employeeService.salaryconversion(target)).get(i).name);
+                        UI.print("*" + Langs.EMPLOYEE_SALARY + Erepositry.findBySalary(employeeService.salaryconversion(target)).get(i).salary + "\n");
                         exactfind.add(Erepositry.findBySalary(Integer.parseInt(target)).get(i).id);
                     }
                     break; // 샐러리 만 형식 종료
                 }
-
-
-
                 UI.print(Langs.LETTER_ERROR); //문자섞임오류
             }
         }
@@ -113,7 +112,7 @@ public class EmployeeController extends Controller {
                 if(id.equals("B") || id.equals("b")){
                     return new MainController();
                 }
-                if(!new EmployeeService().idcheck(id)){// 숫자가 아니면 다시
+                if(!employeeService.idcheck(id)){// 숫자가 아니면 다시
                     continue;
                 }
 
@@ -143,11 +142,11 @@ public class EmployeeController extends Controller {
                 if(yn.equals("B") || yn.equals("b")){
                     return new MainController();
                 }
-                if (new EmployeeService().check(yn) == 0) {
+                if (employeeService.check(yn) == 0) {
 
                     return new ManagerController(Integer.parseInt(id));
                 }
-                else if(new EmployeeService().check(yn) == 1){
+                else if(employeeService.check(yn) == 1){
                     return new MainController();
                 }
                 UI.print(Langs.LETTER_ERROR); // 문자 잘못입력시
@@ -173,7 +172,7 @@ public class EmployeeController extends Controller {
             if(id.equals("B") || id.equals("b")){
                 return;
             }// 체크에서 올바르다면(true) 반복문 빠져가가기
-            if(new EmployeeService().idcheck(id)) {
+            if(employeeService.idcheck(id)) {
                 for(int i=0; i<Erepositry.findById(Integer.parseInt(id)).size(); i++){
                     if(Erepositry.findById(Integer.parseInt(id)).get(i).id==Integer.parseInt(id)){
                         check=1;
@@ -196,7 +195,7 @@ public class EmployeeController extends Controller {
             if(name.equals("B") || name.equals("b")){
                 return;
             }
-            if(new EmployeeService().namecheck(name)) // 체크에서 올바르다면(true) 반복문 빠져가가기
+            if(employeeService.namecheck(name)) // 체크에서 올바르다면(true) 반복문 빠져가가기
                 break;
         }
 
@@ -207,7 +206,7 @@ public class EmployeeController extends Controller {
             if(salary.equals("B") || salary.equals("b")){
                 return;
             }
-            if(new EmployeeService().salarycheck(salary))// 체크에서 올바르다면(true) 반복문 빠져가가기
+            if(employeeService.salarycheck(salary))// 체크에서 올바르다면(true) 반복문 빠져가가기
                 break;
         }
         UI.print("*"+Langs.EMPLOYEE_ID+id);
@@ -220,7 +219,7 @@ public class EmployeeController extends Controller {
             if(yn.equals("B") || yn.equals("b")){
                 return;
             }
-            if (new EmployeeService().check(yn) == 0) {
+            if (employeeService.check(yn) == 0) {
                 try{
                     L.addLog("[사원추가] " , "사원번호 : "+id +" 사원이름 : "+name+ "연봉 : "+ salary + " 잔여연차 : "+"0");
                     Erepositry.add(new Employee(Integer.parseInt(id), name, Integer.parseInt(salary), 0));
@@ -229,7 +228,7 @@ public class EmployeeController extends Controller {
                 }
                 break;
             }
-            else if(new EmployeeService().check(yn) == 1){
+            else if(employeeService.check(yn) == 1){
                 break;
             }
             UI.print(Langs.LETTER_ERROR);
@@ -241,7 +240,7 @@ public class EmployeeController extends Controller {
         // member.id ....
 
         // 모든 service, repository 는 임시로 new 만들어쓰기
-//        boolean result = new EmployeeService().add(employee);
+//        boolean result = employeeService.add(employee);
         // 성공과 실패의 처리
     }
 }
