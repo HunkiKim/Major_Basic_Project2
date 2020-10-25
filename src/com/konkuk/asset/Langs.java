@@ -54,6 +54,8 @@ public final class Langs {
     public static final String LETTER_ERROR = "문법규칙에 맞지 않는 문자가 있습니다. 다시 입력해주세요.";
     public static final String DAY_OFF_REASON = "연차 사용 사유를 입력하세요: ";
     public static final String DAY_OFF_START = "연차 사용 시작 시간을 입력하세요(YYYYMMDD HH:MM): ";
+    public static final String DAY_OFF_USED = "해당 날짜의 연차를 이미 사용하였습니다.";
+    public static final String DAY_OFF_USED2 = "입력받은 날짜에 해당하는 연차를 사용했습니다";
     public static final String DAY_OFF_CHANGE_REASON = "연차 사유를 입력하세요(수정하지 않을 시 'p' 나 'P'를 입력하세요): ";
     public static final String DAY_OFF_CHANGE_START = "연차 시작 시간(YYYYMMDD HH:MM)을 입력하세요(수정하지 않을 시 'p' 나 'P'를 입력하세요): ";
     public static final String DAY_OFF_ADD = "연차 추가 개수를 입력하세요: ";

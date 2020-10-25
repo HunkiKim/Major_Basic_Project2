@@ -11,9 +11,6 @@ import com.konkuk.repository.EmployeeRepository;
 import com.konkuk.service.DayOffService;
 import com.konkuk.service.DayOffService.DayOffType;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -95,6 +92,13 @@ public class DayOffController extends Controller {
             start = UI.getInput();
 
             Date startDate = Utils.stringToDate(start);
+
+            dayOff = DayOffRepository.getInstance().findByStart(startDate);  //이미 사용한 날짜를 중복해서 입력 예외
+            if(dayOff!=null){
+                System.out.print(Langs.DAY_OFF_USED);
+                continue;
+            }
+
             if(startDate == null) {
                 UI.print(Langs.INPUT_ERROR_TIME);
             } else {
@@ -118,12 +122,12 @@ public class DayOffController extends Controller {
             //결과 출력
             UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT);
             UI.print(Langs.HORIZON);
-            String result1 = employee.getId() + " " +
-                    employee.getName() + " " +
+            String result1 = employee.id + " " +
+                    employee.name + " " +
                     reason + " " +
                     start + " " +
                     end + " " +
-                    employee.getResidualDayOff();
+                    employee.residualDayOff;
             UI.print(result1);
         } else {
             // 실패한 것
@@ -160,9 +164,9 @@ public class DayOffController extends Controller {
             //결과 출력
             UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT2);
             UI.print(Langs.HORIZON);
-            String result2 = employee.getId() + " " +
-                            employee.getName() + " " +
-                            employee.getResidualDayOff();
+            String result2 = employee.id + " " +
+                            employee.name + " " +
+                            employee.residualDayOff;
             UI.print(result2);
         } else {
             // 실패한 것
@@ -225,10 +229,17 @@ public class DayOffController extends Controller {
             }
 
             while(true){
-                UI.print(Langs.DAY_OFF_START);
+                UI.print(Langs.DAY_OFF_CHANGE_START);
                 start1 = UI.getInput();
 
                 Date startDate = Utils.stringToDate(start);
+
+                dayOff = DayOffRepository.getInstance().findByStart(startDate);  //이미 사용한 날짜를 중복해서 입력 예외
+                if(dayOff!=null){
+                    System.out.print(Langs.DAY_OFF_USED2);
+                    continue;
+                }
+
                 if(startDate == null) {
                     UI.print(Langs.INPUT_ERROR_TIME);
                 } else {
@@ -311,7 +322,7 @@ public class DayOffController extends Controller {
         }
 
         while(true){
-            UI.print(Langs.DAY_OFF_ADD);
+            UI.print(Langs.DAY_OFF_RED);
             count = UI.getInput1();
 
             if(dayOffService.countCheck(count)==true){
@@ -326,9 +337,9 @@ public class DayOffController extends Controller {
             //출력
             UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT2);
             UI.print(Langs.HORIZON);
-            String result2 = employee.getId() + " " +
-                    employee.getName() + " " +
-                    employee.getResidualDayOff();
+            String result2 = employee.id + " " +
+                            employee.name + " " +
+                            employee.residualDayOff;
             UI.print(result2);
         } else {
             // 실패한 것
