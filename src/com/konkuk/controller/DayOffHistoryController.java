@@ -127,9 +127,9 @@ public class DayOffHistoryController extends Controller{
             }
 
         }else if(menu.equals(PageMenu.BACK_PAGE1.getMenu())||menu.equals(PageMenu.BACK_PAGE2.getMenu())){
-            return new DayOffHistoryController(this.employeeId);
+            return this.start();
         }
-        return new DayOffHistoryController(this.employeeId);
+        return this.start();
     }
     private Controller history(String options) {
         boolean result = false;
@@ -150,12 +150,12 @@ public class DayOffHistoryController extends Controller{
                 UI.print(Langs.DAY_OFF_HISTORY_DATE_START);
                 checkString = UI.getInput();
                 if(checkString.equals("b")||checkString.equals("B")){
-                    return new DayOffHistoryController(this.employeeId);
+                    return this.start();
                 }
                 UI.print(Langs.DAY_OFF_HISTORY_DATE_END);
                 checkString1 = UI.getInput();
                 if(checkString1.equals("b")||checkString1.equals("B")){
-                    return new DayOffHistoryController(this.employeeId);
+                    return this.start();
                 }
                 if(startDate == null || endDate == null) {
                     UI.print(Langs.DAY_OFF_LETTER_ERROR);
@@ -184,10 +184,10 @@ public class DayOffHistoryController extends Controller{
 
         if(!result){
             UI.print(Langs.DAY_OFF_DSNT_EXIST);
-            return new DayOffHistoryController(this.employeeId);
+            return this.start();
         }
         this.pageMenu(options, history);
-        return new DayOffHistoryController(this.employeeId);
+        return this.start();
 
     }
 }
