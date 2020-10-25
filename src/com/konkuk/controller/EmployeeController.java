@@ -5,6 +5,9 @@ import com.konkuk.asset.Langs;
 import com.konkuk.dto.Employee;
 import com.konkuk.repository.EmployeeRepository;
 import com.konkuk.service.EmployeeService;
+import com.sun.security.auth.callback.TextCallbackHandler;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
 import java.util.regex.Pattern;
@@ -31,6 +34,7 @@ public class EmployeeController extends Controller {
 
     public Controller find() {//직원 검색
 
+        ArrayList exactfind = new ArrayList();
         String target;
         while(true) {
             UI.print2(Langs.EMPLOYEE_TARGET);
@@ -49,12 +53,14 @@ public class EmployeeController extends Controller {
                             UI.print("*" + Langs.EMPLOYEE_ID + Erepositry.findById(Integer.parseInt(target)).get(i).id);
                             UI.print("*" + Langs.EMPLOYEE_NAME + Erepositry.findById(Integer.parseInt(target)).get(i).name);
                             UI.print("*" + Langs.EMPLOYEE_SALARY + Erepositry.findById(Integer.parseInt(target)).get(i).salary + "\n");
+                            exactfind.add(Erepositry.findById(Integer.parseInt(target)).get(i).id);
                         }
                     } else if (new EmployeeService().numletter(target) == 2) { // 연봉
                         for (int i = 0; i < Erepositry.findBySalary(Integer.parseInt(target)).size(); i++) {  //찾은거 복사
                             UI.print("*" + Langs.EMPLOYEE_ID + Erepositry.findBySalary(Integer.parseInt(target)).get(i).id);
                             UI.print("*" + Langs.EMPLOYEE_NAME + Erepositry.findBySalary(Integer.parseInt(target)).get(i).name);
                             UI.print("*" + Langs.EMPLOYEE_SALARY + Erepositry.findBySalary(Integer.parseInt(target)).get(i).salary + "\n");
+                            exactfind.add(Erepositry.findBySalary(Integer.parseInt(target)).get(i).id);
                         }
                     }
                     break; // 숫자 종료
@@ -69,6 +75,7 @@ public class EmployeeController extends Controller {
                         UI.print("*" + Langs.EMPLOYEE_ID + Erepositry.findByName(target).get(i).id);
                         UI.print("*" + Langs.EMPLOYEE_NAME + Erepositry.findByName(target).get(i).name);
                         UI.print("*" + Langs.EMPLOYEE_SALARY + Erepositry.findByName(target).get(i).salary + "\n");
+                        exactfind.add(Erepositry.findBySalary(Integer.parseInt(target)).get(i).id);
                     }
                     break;
                 }
@@ -83,6 +90,7 @@ public class EmployeeController extends Controller {
                         UI.print("*" + Langs.EMPLOYEE_ID + Erepositry.findBySalary(new EmployeeService().salaryconversion(target)).get(i).id);
                         UI.print("*" + Langs.EMPLOYEE_NAME + Erepositry.findBySalary(new EmployeeService().salaryconversion(target)).get(i).name);
                         UI.print("*" + Langs.EMPLOYEE_SALARY + Erepositry.findBySalary(new EmployeeService().salaryconversion(target)).get(i).salary + "\n");
+                        exactfind.add(Erepositry.findBySalary(Integer.parseInt(target)).get(i).id);
                     }
                     break; // 샐러리 만 형식 종료
                 }
@@ -97,13 +105,23 @@ public class EmployeeController extends Controller {
 
             while(true){ // 찾은 애들중 선택
                 String id=""; //사번
+                int check=0; // exactfind가 있는지 체크
                 UI.print2("검색 대상 선택: ");
                 id = UI.getInput();
                 if(id.equals("B") || id.equals("b")){
                     return new MainController();
                 }
 
+                for(int i=0; i<exactfind.size(); i++){
+                    if(Integer.parseInt(id)==(int)exactfind.get(i)){
+                        check=1;
+                    }
+                }
 
+                if(check==0){
+                    UI.print(Langs.FIND_ERROR);
+                    continue;
+                }
 
                 if(Integer.parseInt(id) == Erepositry.findByExactId(Integer.parseInt(id)).id){
                     UI.print("*"+Langs.EMPLOYEE_ID+Erepositry.findByExactId(Integer.parseInt(id)).id);
