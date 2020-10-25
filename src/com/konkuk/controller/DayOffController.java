@@ -93,7 +93,7 @@ public class DayOffController extends Controller {
 
             Date startDate = Utils.stringToDate(start);
 
-            dayOff = DayOffRepository.getInstance().findByStart(startDate);  //이미 사용한 날짜를 중복해서 입력 예외
+            dayOff = DayOffRepository.getInstance().findByDate(employeeId, startDate);  //이미 사용한 날짜를 중복해서 입력 예외
             if(dayOff!=null){
                 System.out.print(Langs.DAY_OFF_USED);
                 continue;
@@ -234,7 +234,7 @@ public class DayOffController extends Controller {
 
                 Date startDate = Utils.stringToDate(start);
 
-                dayOff = DayOffRepository.getInstance().findByStart(startDate);  //이미 사용한 날짜를 중복해서 입력 예외
+                dayOff = DayOffRepository.getInstance().findByDate(employeeId, startDate);  //이미 사용한 날짜를 중복해서 입력 예외
                 if(dayOff!=null){
                     System.out.print(Langs.DAY_OFF_USED2);
                     continue;

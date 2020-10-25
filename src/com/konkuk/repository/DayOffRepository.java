@@ -84,18 +84,6 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
         return result;
     }
 
-
-    public DayOff findByStart(Date start){      //시작시간으로 find
-        DayOff result = null;
-        for(DayOff e : dayOffList) {
-            if(e.dateDayOffStart == start) {
-                result = e;
-                break;
-            }
-        }
-        return result;
-    }
-
     // todo: 이거 id로 수정
     @Override
     public void delete(DayOff dayoff) throws IOException {
@@ -117,6 +105,18 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
             };
         }));
         return results;
+    }
+
+    @Override
+    public DayOff findByDate(int employeeId, Date start){
+        DayOff result = null;
+        for(DayOff e : dayOffList) {
+            if(e.employeeId == employeeId && e.dateDayOffStart == start) {
+                result = e;
+                break;
+            }
+        }
+        return result;
     }
 
     @Override
