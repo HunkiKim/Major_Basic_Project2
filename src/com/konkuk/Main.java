@@ -15,7 +15,7 @@ public class Main {
         DayOffRepository.getInstance();
         LogRepository.getInstance();
 
-        Controller controller = new DayOffController(1);
+        Controller controller = new MainController();
         while(true) {
             if(exit) break;
             controller = controller.start();
