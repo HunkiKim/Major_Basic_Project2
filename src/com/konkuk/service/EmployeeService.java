@@ -1,10 +1,16 @@
 package com.konkuk.service;
 
 import com.konkuk.UI;
+import com.konkuk.Utils;
+import com.konkuk.Utils.InputType;
 import com.konkuk.asset.Langs;
 import com.konkuk.dto.Employee;
+import com.konkuk.exception.IllegalLengthException;
+import com.konkuk.exception.IllegalLetterException;
 import com.konkuk.repository.EmployeeRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class EmployeeService {
@@ -16,6 +22,36 @@ public class EmployeeService {
         return false;
     }
 
+    public List<Employee> getEmployees(String input) throws IllegalLengthException, IllegalLetterException {
+        int len = input.length();
+        int byteLen = input.getBytes().length;
+        InputType inputType = Utils.getInputType(input);
+
+        if(inputType == InputType.NUMERIC) {
+            int parsedInput = Integer.parseInt(input);
+            if(len>=1 && len<=7) {
+                return Erepositry.findById(parsedInput);
+            } else if(len>=8 && len<=10){
+                return Erepositry.findBySalary(parsedInput);
+            } else {
+                throw new IllegalLengthException();
+            }
+        } else if (inputType == InputType.LETTER) {
+            if (byteLen<1 || byteLen>32) {
+                throw new IllegalLengthException();
+            } else {
+                return Erepositry.findByName(input);
+            }
+        } else {
+            // inputType == MIXED
+            if(salarmeasure(input)) {
+                int conversionSalary = salaryconversion(input);
+                return Erepositry.findBySalaryBetween(conversionSalary, conversionSalary + 10000);
+            } else {
+                throw new IllegalLetterException();
+            }
+        }
+    }
 
     public int salaryconversion(String target){ // 만으로 된 문자 빼고 0000 추가해주기
         String str = "";
@@ -56,27 +92,6 @@ public class EmployeeService {
         }
 
     }
-
-    public boolean lettercheck(String target) { //숫자와 문자가 섞여있는지 홧인
-        if(target.charAt(0) >= 48 && target.charAt(0) <= 57) { //첫 문자가 숫자일경우
-            for (int i = 1; i < target.length(); i++) {
-                if (target.charAt(i) < 48 || target.charAt(i) > 58) { // 범위내에 숫자만 있는지 확인
-                    return false;// 숫자사이에 문자가 껴있다면
-                }
-            }
-        }//숫자인지 확인 끝
-        else { //문자일경우
-            for (int i = 1; i < target.length(); i++) {
-                if (target.charAt(i) >= 48 && target.charAt(i) <= 57) { // 문자인지
-                    return false; // 문자사잉에 숫자가 껴있다면
-                }
-            }
-        }
-
-            return true;
-            //여기까지 숫자와 문자가 섞여있는지 확인
-    }
-
 
     public boolean idcheck(String id){
         for (int i = 0; i < id.length(); i++) { //숫자가 아닐시

@@ -1,8 +1,12 @@
 package com.konkuk.controller;
 
 import com.konkuk.UI;
+import com.konkuk.Utils;
+import com.konkuk.Utils.InputType;
 import com.konkuk.asset.Langs;
 import com.konkuk.dto.Employee;
+import com.konkuk.exception.IllegalLengthException;
+import com.konkuk.exception.IllegalLetterException;
 import com.konkuk.repository.EmployeeRepository;
 import com.konkuk.repository.LogRepository;
 import com.konkuk.service.EmployeeService;
@@ -37,68 +41,32 @@ public class EmployeeController extends Controller {
     }
 
     public Controller find() {//직원 검색
-
-        ArrayList exactfind = new ArrayList();
-        String target;
+        List<Employee> exactfind = null;
+        String input;
         while(true) {
             UI.print2(Langs.EMPLOYEE_TARGET);
-            target = UI.getInput();
-            if(target.equals("B") || target.equals("b")){
+            input = UI.getInput();
+            if(input.equals("B") || input.equals("b")){
                 return new MainController();
             }
-            if (employeeService.lettercheck(target)) { // 숫
-                if (employeeService.numletter(target) > -1) { //숫자 길이 확인
-                    if(Erepositry.findById(Integer.parseInt(target)).size()==0 && Erepositry.findBySalary(Integer.parseInt(target)).size()==0){
-                        UI.print(Langs.FIND_ERROR);
-                        continue;
-                    }
-                    if (employeeService.numletter(target) == 1) { //사번
-                        for (int i = 0; i < Erepositry.findById(Integer.parseInt(target)).size(); i++) {  //찾은거 복사
-                            UI.print("*" + Langs.EMPLOYEE_ID + Erepositry.findById(Integer.parseInt(target)).get(i).id);
-                            UI.print("*" + Langs.EMPLOYEE_NAME + Erepositry.findById(Integer.parseInt(target)).get(i).name);
-                            UI.print("*" + Langs.EMPLOYEE_SALARY + Erepositry.findById(Integer.parseInt(target)).get(i).salary + "\n");
-                            exactfind.add(Erepositry.findById(Integer.parseInt(target)).get(i).id);
-                        }
-                    } else if (employeeService.numletter(target) == 2) { // 연봉
-                        for (int i = 0; i < Erepositry.findBySalary(Integer.parseInt(target)).size(); i++) {  //찾은거 복사
-                            UI.print("*" + Langs.EMPLOYEE_ID + Erepositry.findBySalary(Integer.parseInt(target)).get(i).id);
-                            UI.print("*" + Langs.EMPLOYEE_NAME + Erepositry.findBySalary(Integer.parseInt(target)).get(i).name);
-                            UI.print("*" + Langs.EMPLOYEE_SALARY + Erepositry.findBySalary(Integer.parseInt(target)).get(i).salary + "\n");
-                            exactfind.add(Erepositry.findBySalary(Integer.parseInt(target)).get(i).id);
-                        }
-                    }
-                    break; // 숫자 종료
-                } else if (employeeService.numletter(target) == -1 || employeeService.numletter(target) == -3) { // 길이가 안맞는 경우
-                    UI.print(Langs.LENGTH_ERROR); //길이 오류
-                } else { // 문자의 경우
-                    if(Erepositry.findByName(target).size()==0){
-                        UI.print(Langs.FIND_ERROR);
-                        continue;
-                    }
-                    for (int i = 0; i < Erepositry.findByName(target).size(); i++) {  //찾은거 복사
-                        UI.print("*" + Langs.EMPLOYEE_ID + Erepositry.findByName(target).get(i).id);
-                        UI.print("*" + Langs.EMPLOYEE_NAME + Erepositry.findByName(target).get(i).name);
-                        UI.print("*" + Langs.EMPLOYEE_SALARY + Erepositry.findByName(target).get(i).salary + "\n");
-                        exactfind.add(Erepositry.findBySalary(Integer.parseInt(target)).get(i).id);
-                    }
-                    break;
-                }
-
-            } else { // 문자가 섞여있는경우
-                if (employeeService.salarmeasure(target)) { // 1000만 이런형식인지 확인ㅇ
-                   if(Erepositry.findBySalary(employeeService.salaryconversion(target)).size()==0){
-                       UI.print(Langs.FIND_ERROR);
-                       continue;
-                   }
-                    for (int i = 0; i < Erepositry.findBySalary(employeeService.salaryconversion(target)).size(); i++) {  //찾은거 복사
-                        UI.print("*" + Langs.EMPLOYEE_ID + Erepositry.findBySalary(employeeService.salaryconversion(target)).get(i).id);
-                        UI.print("*" + Langs.EMPLOYEE_NAME + Erepositry.findBySalary(employeeService.salaryconversion(target)).get(i).name);
-                        UI.print("*" + Langs.EMPLOYEE_SALARY + Erepositry.findBySalary(employeeService.salaryconversion(target)).get(i).salary + "\n");
-                        exactfind.add(Erepositry.findBySalary(Integer.parseInt(target)).get(i).id);
-                    }
-                    break; // 샐러리 만 형식 종료
-                }
-                UI.print(Langs.LETTER_ERROR); //문자섞임오류
+            try {
+                exactfind = employeeService.getEmployees(input);
+            } catch (IllegalLetterException e) {
+                UI.print(Langs.LETTER_ERROR);
+                continue;
+            } catch (IllegalLengthException e) {
+                UI.print(Langs.LENGTH_ERROR);
+                continue;
+            }
+            if(exactfind == null || exactfind.size() == 0) {
+                UI.print(Langs.FIND_ERROR);
+            } else {
+                exactfind.forEach(employee -> {
+                    UI.print("*" + Langs.EMPLOYEE_ID + employee.id);
+                    UI.print("*" + Langs.EMPLOYEE_NAME + employee.name);
+                    UI.print("*" + Langs.EMPLOYEE_SALARY + employee.salary + "\n");
+                });
+                break;
             }
         }
             //정상적으로 나왔다면 List들 출력후 y,n 할건지 출력!  y라면 관리자메뉴 n이라면 다시 메인메뉴!
@@ -117,7 +85,7 @@ public class EmployeeController extends Controller {
                 }
 
                 for(int i=0; i<exactfind.size(); i++){
-                    if(Integer.parseInt(id)==(int)exactfind.get(i)){
+                    if(Integer.parseInt(id)==exactfind.get(i).id){
                         check=1;
                     }
                 }

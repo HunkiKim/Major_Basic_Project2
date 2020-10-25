@@ -75,6 +75,15 @@ public class EmployeeRepository extends Repository implements  IEmployeeReposito
     }
 
     @Override
+    public List<Employee> findBySalaryBetween(int salary, int salary2) {
+        List<Employee> results = new ArrayList<>();
+        employeeList.forEach((employee -> {
+            if(employee.salary >= salary && employee.salary < salary2) results.add(employee);
+        }));
+        return results;
+    }
+
+    @Override
     public List<Employee> findById(int id) {
         List<Employee> results = new ArrayList<>();
         employeeList.forEach((employee -> {
