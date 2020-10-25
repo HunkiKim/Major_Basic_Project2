@@ -222,7 +222,7 @@ public class EmployeeController extends Controller {
             }
             if (new EmployeeService().check(yn) == 0) {
                 try{
-//                    L.addLog("[직원추가] " , "사원번호: "+id +" 사원이름: "+name+ "연봉: "+ salary + " 잔여연차: "+"0");
+                    L.addLog("[사원추가] " , "사원번호 : "+id +" 사원이름 : "+name+ "연봉 : "+ salary + " 잔여연차 : "+"0");
                     Erepositry.add(new Employee(Integer.parseInt(id), name, Integer.parseInt(salary), 0));
                 } catch (IOException e) {
                     e.printStackTrace();
