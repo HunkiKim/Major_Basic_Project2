@@ -237,7 +237,7 @@ public class DayOffController extends Controller {
                         end = Utils.dateToString(dayOff.dateDayOffEnd);
                         break;
                     } else{
-                        long endTime = startDate.getTime() + (type == 0 ? 28800000 : 14400000);
+                        long endTime = startDate.getTime() + 14400000;  //연차 수정은 4시간 고정
 
                         Calendar tmpStart = Calendar.getInstance();
                         Calendar tmpEnd = Calendar.getInstance();
