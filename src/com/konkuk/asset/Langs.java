@@ -46,6 +46,7 @@ public final class Langs {
     public static final String FCOUNT_ERROR = "문법적으로 올바른 연차는 -365 ~ 365 사이의 수입니다.";
     public static final String REASON_ERROR = "올바른 입력이 아닙니다. 1byte이상 512byte미만으로 다시 입력하세요.";
     public static final String INPUT_NUM = "연차 번호를 입력하세요: ";
+    public static final String DAY_OFF_NOT_EXIST = "입력받은 연차 번호에 해당하는 연차 사용 기록이 없습니다.";
     public static final String DAY_OFF_DELETE = "연차 사용을 취소합니다.";
     public static final String DAY_OFF_ERROR = "에러가 발생하였습니다.";
     public static final String INPUT_ERROR = "다시 입력하세요.";

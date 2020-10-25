@@ -6,6 +6,7 @@ import com.konkuk.Utils;
 import com.konkuk.asset.Langs;
 import com.konkuk.dto.DayOff;
 import com.konkuk.dto.Employee;
+import com.konkuk.repository.DayOffRepository;
 import com.konkuk.repository.EmployeeRepository;
 import com.konkuk.service.DayOffService;
 import com.konkuk.service.DayOffService.DayOffType;
@@ -27,12 +28,14 @@ public class DayOffController extends Controller {
 
     private int type = 0;
     private String start = null;
+    private String start1 = null;
     private String end = null;
     private String reason = null;
     private float count = 0;
 
     EmployeeRepository employeeRepository = EmployeeRepository.getInstance();
     Employee employee = employeeRepository.findByExactId(employeeId);
+    DayOff dayOff = null;
 
     public Controller start() {
         UI.print(Langs.DAY_OFF_MAIN);
@@ -158,7 +161,7 @@ public class DayOffController extends Controller {
             UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT2);
             UI.print(Langs.HORIZON);
             String result2 = employee.getId() + " " +
-                    employee.getName() + " " +
+                            employee.getName() + " " +
                             employee.getResidualDayOff();
             UI.print(result2);
         } else {
@@ -199,13 +202,14 @@ public class DayOffController extends Controller {
         if(m==1){       //수정
             while(true){    //연차번호 검색, 찾기
                 UI.print(Langs.INPUT_NUM);
-                int input_num = UI.getInput2();
+                int num = UI.getInput2();
 
-
-                break;
+                dayOff = DayOffRepository.getInstance().findByExactId(num);
+                if(dayOff==null){
+                    System.out.print(Langs.DAY_OFF_NOT_EXIST);
+                    continue;
+                } else break;
             }
-
-            DayOff dayOff = new DayOff();       //연차번호에 해당하는 dayOff객체 찾기
 
             while(true){
                 UI.print(Langs.DAY_OFF_CHANGE_REASON);
@@ -221,24 +225,29 @@ public class DayOffController extends Controller {
             }
 
             while(true){
-                UI.print(Langs.DAY_OFF_CHANGE_START);
-                String start1 = UI.getInput();
-                if(start1 == "p" || start1 == "P"){   //건너뛰기
-//                  start = dayOff.dateDayOffStart;
-//                  end = dayOff.dateDayOffEnd;
-                    break;
+                UI.print(Langs.DAY_OFF_START);
+                start1 = UI.getInput();
+
+                Date startDate = Utils.stringToDate(start);
+                if(startDate == null) {
+                    UI.print(Langs.INPUT_ERROR_TIME);
                 } else {
-                    SimpleDateFormat formatter = new SimpleDateFormat("yyyymmdd hh:mm");
-                    try{
-                        //시작시간
-                        Date st_date = formatter.parse(start1);
-                        //종료시간
-                        long end3 = st_date.getTime() + 14400000;      //4시간
-                        end = formatter.format(new Date(end3));
+                    if(start1 == "p" || start1 == "P"){
+                        start = Utils.dateToString(dayOff.dateDayOffStart);
+                        end = Utils.dateToString(dayOff.dateDayOffEnd);
                         break;
-                    } catch (ParseException e){
-                        System.out.println(Langs.INPUT_ERROR_TIME);
-                        continue;
+                    } else{
+                        long endTime = startDate.getTime() + (type == 0 ? 28800000 : 14400000);
+
+                        Calendar tmpStart = Calendar.getInstance();
+                        Calendar tmpEnd = Calendar.getInstance();
+                        tmpStart.setTime(startDate);
+                        tmpEnd.setTime(new Date(endTime));
+                        if(tmpStart.get(Calendar.HOUR_OF_DAY) < 12 && tmpEnd.get(Calendar.HOUR_OF_DAY) > 12) {
+                            endTime += 3600000;
+                        }
+                        end = Utils.dateToString(new Date(endTime));
+                        break;
                     }
                 }
             }
@@ -265,13 +274,14 @@ public class DayOffController extends Controller {
         } else if (m==2){       //취소
             while(true){    //연차번호 검색, 찾기
                 UI.print(Langs.INPUT_NUM);
-                int input_num = UI.getInput2();
+                int num = UI.getInput2();
 
-
-                break;
+                dayOff = DayOffRepository.getInstance().findByExactId(num);
+                if(dayOff==null){
+                    System.out.print(Langs.DAY_OFF_NOT_EXIST);
+                    continue;
+                } else break;
             }
-
-            DayOff dayOff = new DayOff();       //연차번호에 해당하는 dayOff객체 찾기
 
             boolean isDone = dayOffService.cancel(dayOff);
 

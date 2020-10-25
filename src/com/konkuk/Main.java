@@ -1,6 +1,7 @@
 package com.konkuk;
 
 import com.konkuk.controller.Controller;
+import com.konkuk.controller.DayOffController;
 import com.konkuk.controller.MainController;
 import com.konkuk.repository.DayOffRepository;
 import com.konkuk.repository.EmployeeRepository;
@@ -14,7 +15,7 @@ public class Main {
         DayOffRepository.getInstance();
         LogRepository.getInstance();
 
-        Controller controller = new MainController();
+        Controller controller = new DayOffController(1);
         while(true) {
             if(exit) break;
             controller = controller.start();
