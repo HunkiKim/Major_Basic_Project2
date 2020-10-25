@@ -100,11 +100,23 @@ public class EmployeeRepository extends Repository implements  IEmployeeReposito
         deleteDataLine(targetId);
         employee.id = targetId;
         addDataLine(parseDtoToList(employee));
+        for(int i = 0; i < employeeList.size(); i++) {
+            if(employeeList.get(i).id == targetId) {
+                employeeList.set(i, employee);
+                break;
+            }
+        }
         return employee;
     }
 
     @Override
     public void delete(int targetId) throws IOException {
         deleteDataLine(targetId);
+        for(int i = 0; i < employeeList.size(); i++) {
+            if(employeeList.get(i).id == targetId) {
+                employeeList.remove(i);
+                break;
+            }
+        }
     }
 }

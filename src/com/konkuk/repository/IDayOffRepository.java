@@ -11,5 +11,6 @@ public interface IDayOffRepository {
     public void delete(DayOff dayoff) throws IOException;
     public List<DayOff> findByEmployeeId(int employeeId);
     DayOff findByExactId(int id);
+    DayOff findByDate(int employeeId, Date start);
     List<DayOff> findByDate(int employeeId, Date start, Date end);
 }

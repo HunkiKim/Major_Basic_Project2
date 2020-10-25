@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 public class Repository {
 
     public String debugTitle = "";
+    private final String NEW_LINE = System.getProperty("line.separator");
     private File file;
 
     protected Repository(String dataFilePath) {
@@ -130,9 +131,8 @@ public class Repository {
                 if(!dataId.equals(parsedId)) {
                     bufferedWriter.write(line);
                     // 다음행이 있고, 그게 삭제될 행이 아니면 개행 추가
-                    if(next != null &&
-                            !parseDataLine(next).get(0).equals(parsedId))
-                        bufferedWriter.write(System.getProperty("line.separator"));
+                    // todo: 개행 버그 수정
+                    if(next != null) bufferedWriter.write(System.getProperty("line.separator"));
                     bufferedWriter.flush();
                 }
             } catch (ParseException e) {

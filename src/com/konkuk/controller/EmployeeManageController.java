@@ -18,7 +18,7 @@ public class EmployeeManageController extends Controller {
 
     }
 
-    public Controller start() throws IOException {
+    public Controller start() {
         UI.print(Langs.EMPLOYEE_MANAGE_MAIN);
         UI.print2("입력: ");
         String menu = UI.getInput();
