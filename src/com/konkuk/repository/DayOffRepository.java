@@ -120,20 +120,32 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
     }
 
     @Override
-    public List<DayOff> findByDate(int employeeId, Date start, Date end){
+    public List<DayOff> findByDate(int employeeId, Date start, Date end, int option){
         // 해당 사번의 연차 시작 연도부터 끝나는 연도까지의 데이터 불러오기
         List<DayOff> results = new ArrayList<>();
-        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy");
-        int startYear = Integer.parseInt(simpleDate.format(start));
-        int endYear = Integer.parseInt(simpleDate.format(end));
+        int startYear;
+        int endYear;
+        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyyMMdd");
+
+        startYear = Integer.parseInt(simpleDate.format(start));
+        endYear = Integer.parseInt(simpleDate.format(end));
+
+        if(option==1){
+            simpleDate = new SimpleDateFormat("yyyy");
+            startYear = Integer.parseInt(simpleDate.format(start)+"0000");
+            endYear = Integer.parseInt(simpleDate.format(end)+"0000");
+        }
 
         Calendar calendar = Calendar.getInstance();
+        int finalStartYear = startYear;
+        int finalEndYear = endYear+10000;
         dayOffList.forEach((dayOff -> {
             calendar.setTime(dayOff.dateDayOffStart);
-            int tempYear = calendar.get(Calendar.YEAR);
-            if(dayOff.employeeId == employeeId && tempYear>=startYear&&tempYear<=endYear) {
+
+            int tempYear = calendar.get(Calendar.YEAR)*10000+calendar.get(Calendar.MONTH+1)*100+calendar.get(Calendar.DAY_OF_MONTH);
+            if(dayOff.employeeId == employeeId && tempYear>= finalStartYear &&tempYear<= finalEndYear) {
                 results.add(dayOff);
-            };
+            }
         }));
         return results;
     }

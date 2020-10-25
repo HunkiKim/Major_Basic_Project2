@@ -66,12 +66,16 @@ public class DayOffHistoryController extends Controller{
 
         UI.print(Langs.DAY_OFF_HISTORY_MAIN);
         String menu = UI.getInput();
+
         if(menu.equals(Menu.ANNUAL_HISTORY.getMenu())){
             history(Option.ANNUAL.getMenu());
         } else if(menu.equals(Menu.ADVANCED_SEARCH.getMenu())){
             history(Option.RANGE.getMenu());
         } else if(menu.equals(Menu.BACK_PAGE1.getMenu())||menu.equals(Menu.BACK_PAGE2.getMenu())){
             return new MainController();
+        }else{
+            UI.print(Langs.MENU_ERROR);
+            this.start();
         }
 
 
@@ -83,15 +87,19 @@ public class DayOffHistoryController extends Controller{
 
         if(menu.equals(PageMenu.NEXT_PAGE.getMenu())){
             if(options.equals(Option.ANNUAL.getMenu())) {
-                if (history.isNextPageExists(this.annualPage))
+                if (history.isNextPageExists(this.annualPage)) {
+                    UI.print("다음 페이지 존재");
                     this.annualPage++;
+                }
                 else {
                     UI.print(Langs.DAY_OFF_LAST_PAGE);
                     this.history(options);
                 }
             }else if(options.equals(Option.RANGE.getMenu())){
-                if (history.isNextPageExists(this.searchPage))
+                if (history.isNextPageExists(this.searchPage)) {
+                    UI.print("다음 페이지 존재");
                     this.searchPage++;
+                }
                 else {
                     UI.print(Langs.DAY_OFF_LAST_PAGE);
                     this.history(options);
@@ -99,15 +107,19 @@ public class DayOffHistoryController extends Controller{
             }
         }else if(menu.equals(PageMenu.PREV_PAGE.getMenu())){
             if(options.equals(Option.ANNUAL.getMenu())){
-                if(history.isPrevPageExists(this.annualPage))
+                if(history.isPrevPageExists(this.annualPage)) {
+                    UI.print("이전 페이지 존재");
                     this.annualPage--;
+                }
                 else{
                     UI.print(Langs.DAY_OFF_FIRST_PAGE);
                     this.history(options);
                 }
             }else if(options.equals(Option.RANGE.getMenu())){
-                if (history.isNextPageExists(this.searchPage))
+                if (history.isNextPageExists(this.searchPage)) {
+                    UI.print("이전 페이지 존재");
                     this.searchPage--;
+                }
                 else {
                     UI.print(Langs.DAY_OFF_LAST_PAGE);
                     this.history(options);
@@ -131,18 +143,26 @@ public class DayOffHistoryController extends Controller{
         DayOffHistoryService history = new DayOffHistoryService();
 
         if(options.equals(Option.ANNUAL.getMenu())){
-            result = history.getHistory(this.employeeId, this.annualPage, startDate, endDate); // 기능 미완성
+
+            result = history.getHistory(this.employeeId, this.annualPage, startDate, endDate, 1); // 기능 미완성
         }else if(options.equals(Option.RANGE.getMenu())){
             while(true){
                 UI.print(Langs.DAY_OFF_HISTORY_DATE_START);
                 checkString = UI.getInput();
-                startDate = Utils.stringToDate(checkString);
-
+                if(checkString.equals("b")||checkString.equals("B")){
+                    return new DayOffHistoryController(this.employeeId);
+                }
                 UI.print(Langs.DAY_OFF_HISTORY_DATE_END);
                 checkString1 = UI.getInput();
-                endDate = Utils.stringToDate(checkString1);
+                if(checkString1.equals("b")||checkString1.equals("B")){
+                    return new DayOffHistoryController(this.employeeId);
+                }
+                if(startDate == null || endDate == null) {
+                    UI.print(Langs.DAY_OFF_LETTER_ERROR);
+                    continue;
+                }
 
-                if(Utils.isValidationDate(checkString)||Utils.isValidationDate(checkString1)){
+                if(!Utils.isValidationDate(checkString)||!Utils.isValidationDate(checkString1)){
                     UI.print(Langs.DAY_OFF_INVALIDATION_DATE);
                     continue;
                 }
@@ -152,14 +172,14 @@ public class DayOffHistoryController extends Controller{
                     continue;
                 }
 
-                if(startDate == null || endDate == null) {
-                    UI.print(Langs.DAY_OFF_LETTER_ERROR);
-                    continue;
-                }
+
+
+                startDate = Utils.stringToDate(checkString+" 00:00");
+                endDate = Utils.stringToDate(checkString1+" 00:00");
                 break;
             }
 
-            result = history.getHistory(this.employeeId,this.searchPage, startDate, endDate);
+            result = history.getHistory(this.employeeId,this.searchPage, startDate, endDate, 2);
         }
 
         if(!result){

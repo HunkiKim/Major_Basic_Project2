@@ -12,5 +12,5 @@ public interface IDayOffRepository {
     public List<DayOff> findByEmployeeId(int employeeId);
     DayOff findByExactId(int id);
     DayOff findByDate(int employeeId, Date start);
-    List<DayOff> findByDate(int employeeId, Date start, Date end);
+    List<DayOff> findByDate(int employeeId, Date start, Date end, int option);
 }

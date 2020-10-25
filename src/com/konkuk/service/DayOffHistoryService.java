@@ -14,9 +14,9 @@ public class DayOffHistoryService {
     DayOffRepository dayOffRepository = DayOffRepository.getInstance();
     private List<DayOff> dayOffList;
 
-    public boolean getHistory(int employeeId, int pageNumber, Date start, Date end){
+    public boolean getHistory(int employeeId, int pageNumber, Date start, Date end, int option){
         String record = "";
-        this.dayOffList = dayOffRepository.findByDate(employeeId, start, end);
+        this.dayOffList = dayOffRepository.findByDate(employeeId, start, end, option);
         dayOffList.sort(new Comparator<DayOff>() {
             @Override
             public int compare(DayOff o1, DayOff o2) {
@@ -51,10 +51,17 @@ public class DayOffHistoryService {
     }
 
     public boolean isNextPageExists(int annualPage) {
-        return annualPage < dayOffList.size();
+//        return annualPage < dayOffList.size();
+        if(annualPage>0 && annualPage<(dayOffList.size()-1)/10+1){
+            return true;
+        }
+        return false;
     }
 
     public boolean isPrevPageExists(int annualPage) {
-        return annualPage == 0;
+        if(annualPage>1 && annualPage<=(dayOffList.size()-1)/10+1){
+            return true;
+        }
+        return false;
     }
 }
