@@ -8,7 +8,7 @@ public class MainController extends Controller {
     public Controller start() {
         Controller next = null;
         while(true) {
-            UI.print(Langs.MAIN);
+            UI.print2(Langs.MAIN);
             String nextMenu = UI.getInput();
             switch (nextMenu) {
                 case "1":

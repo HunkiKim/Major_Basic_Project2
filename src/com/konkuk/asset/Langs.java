@@ -7,7 +7,8 @@ public final class Langs {
             "2. 직원 추가\n" +
             "3. 로그 조회\n" +
             "4. 프로그램 종료\n" +
-            HORIZON;
+            HORIZON+
+            "입력: ";
     public static final String DAY_OFF_MAIN = HORIZON +
             "1. 연차 사용\n" +
             "2. 연차 추가\n" +
