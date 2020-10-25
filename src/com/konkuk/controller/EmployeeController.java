@@ -113,6 +113,9 @@ public class EmployeeController extends Controller {
                 if(id.equals("B") || id.equals("b")){
                     return new MainController();
                 }
+                if(!new EmployeeService().idcheck(id)){// 숫자가 아니면 다시
+                    continue;
+                }
 
                 for(int i=0; i<exactfind.size(); i++){
                     if(Integer.parseInt(id)==(int)exactfind.get(i)){
@@ -141,6 +144,7 @@ public class EmployeeController extends Controller {
                     return new MainController();
                 }
                 if (new EmployeeService().check(yn) == 0) {
+
                     return new ManagerController(Integer.parseInt(id));
                 }
                 else if(new EmployeeService().check(yn) == 1){
@@ -218,6 +222,7 @@ public class EmployeeController extends Controller {
             }
             if (new EmployeeService().check(yn) == 0) {
                 try{
+//                    L.addLog("[직원추가] " , "사원번호: "+id +" 사원이름: "+name+ "연봉: "+ salary + " 잔여연차: "+"0");
                     Erepositry.add(new Employee(Integer.parseInt(id), name, Integer.parseInt(salary), 0));
                 } catch (IOException e) {
                     e.printStackTrace();
