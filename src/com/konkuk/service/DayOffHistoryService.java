@@ -5,6 +5,7 @@ import com.konkuk.asset.Langs;
 import com.konkuk.dto.DayOff;
 import com.konkuk.repository.DayOffRepository;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -36,14 +37,16 @@ public class DayOffHistoryService {
         }
         List<DayOff> subList = new ArrayList<>(this.dayOffList.subList(pageNumber*10, Math.min(listSize,pageNumber*10+9)));
         UI.print(Langs.DATA_FILE_HEADER_DAYOFF);
+        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
+
         for(DayOff data:subList){
             record+=(data.id+" "+
                     data.employeeId+" "+
                     data.changedDayOffCount+" "+
                     data.reason+" "+
-                    data.dateDayOffStart+" "+
-                    data.dateDayOffEnd+" "+
-                    data.dateCreated);
+                    simpleDate.format(data.dateDayOffStart)+" "+
+                    simpleDate.format(data.dateDayOffEnd)+" "+
+                    simpleDate.format(data.dateCreated));
             UI.print(record);
         }
 

@@ -29,7 +29,7 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
                 if(uniquePolicy.contains(id)) {
                     Utils.exit(Langs.VIOLATE_UNIQUE_KEY);
                 }
-                String reason = parsedData.get(4);
+                String reason = parsedData.get(3);
                 Date dateDayOffStart = Utils.stringToDate(parsedData.get(4));
                 Date dateDayOffEnd = Utils.stringToDate(parsedData.get(5));
                 Date dateCreated = Utils.stringToDate(parsedData.get(6));
