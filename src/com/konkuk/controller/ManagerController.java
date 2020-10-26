@@ -33,7 +33,7 @@ public class ManagerController extends Controller {
                     next = new DayOffHistoryController(employeeid);
                     break;
                 case "4":// 연차 정보 조회
-                      next = new DayOffInfoController(employeeid);// 매개변수를 어떻게 받아오는지 몰라서 일단 안했습니다.
+                      next = new DayOffInfoController(employeeid);
                     break;
                 case "B":
                     next = new MainController(); //메인
