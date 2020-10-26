@@ -21,13 +21,7 @@ public class DayOffHistoryService {
         dayOffList.sort(new Comparator<DayOff>() {
             @Override
             public int compare(DayOff o1, DayOff o2) {
-                // id값은 중복되지 않기 때문에 return 0은 따로 안 만들었습니다.
-                if (o1.id>o2.id){
-                    return -1;
-                }else{
-                    return 1;
-                }
-
+                return -o1.dateDayOffStart.compareTo(o2.dateDayOffStart);
             }
         });
 
