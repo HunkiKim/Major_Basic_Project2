@@ -32,10 +32,13 @@ public class DayOffHistoryService {
         });
 
         int listSize = this.dayOffList.size();
+
+
         if(listSize<=0){
             return false;
         }
-        List<DayOff> subList = new ArrayList<>(this.dayOffList.subList(pageNumber*10, Math.min(listSize,pageNumber*10+9)));
+        List<DayOff> subList = new ArrayList<>(this.dayOffList.subList(pageNumber*10, Math.min(listSize,pageNumber*10+10)));
+
         UI.print(Langs.DATA_FILE_HEADER_DAYOFF);
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -46,23 +49,22 @@ public class DayOffHistoryService {
                     data.reason+" "+
                     simpleDate.format(data.dateDayOffStart)+" "+
                     simpleDate.format(data.dateDayOffEnd)+" "+
-                    simpleDate.format(data.dateCreated));
-            UI.print(record);
+                    simpleDate.format(data.dateCreated))+"\n";
         }
-
+        UI.print(record);
         return true;
     }
 
     public boolean isNextPageExists(int annualPage) {
-//        return annualPage < dayOffList.size();
-        if(annualPage>0 && annualPage<(dayOffList.size()-1)/10+1){
+        int existPage = (this.dayOffList.size()-1)/10;
+        if(annualPage<existPage){
             return true;
         }
         return false;
     }
 
     public boolean isPrevPageExists(int annualPage) {
-        if(annualPage>1 && annualPage<=(dayOffList.size()-1)/10+1){
+        if(annualPage>=1){
             return true;
         }
         return false;
