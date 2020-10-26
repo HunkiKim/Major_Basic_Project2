@@ -125,6 +125,7 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
         List<DayOff> results = new ArrayList<>();
         int startYear;
         int endYear;
+
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyyMMdd");
 
         startYear = Integer.parseInt(simpleDate.format(start));
@@ -138,11 +139,14 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
 
         Calendar calendar = Calendar.getInstance();
         int finalStartYear = startYear;
-        int finalEndYear = endYear+10000;
+        int finalEndYear;
+        if(option==1)
+            finalEndYear = endYear+10000;
+        else
+            finalEndYear = endYear;
         dayOffList.forEach((dayOff -> {
             calendar.setTime(dayOff.dateDayOffStart);
-
-            int tempYear = calendar.get(Calendar.YEAR)*10000+calendar.get(Calendar.MONTH+1)*100+calendar.get(Calendar.DAY_OF_MONTH);
+            int tempYear = calendar.get(Calendar.YEAR)*10000+(calendar.get(Calendar.MONTH)+1)*100+calendar.get(Calendar.DAY_OF_MONTH);
             if(dayOff.employeeId == employeeId && tempYear>= finalStartYear &&tempYear<= finalEndYear) {
                 results.add(dayOff);
             }
