@@ -1,5 +1,6 @@
 package com.konkuk;
 
+import com.konkuk.asset.Langs;
 import com.konkuk.asset.Settings;
 
 import java.text.ParseException;
@@ -44,6 +45,25 @@ public class Utils {
     public static boolean isOnlyNumber(String checkString) {
         String pattern = "^[0-9]*$";
         return Pattern.matches(pattern, checkString);
+    }
+
+    public static boolean menuCheck(String menu) {
+        String pattern = "^[1-2]$";
+        if(menu.equals("")){
+            UI.print(Langs.MENU_SELECTION_ERROR);
+            return false;
+        }
+        if(isOnlyNumber(menu)){
+            if(Pattern.matches(pattern, menu)) {
+                return true;
+            }
+            else {
+                UI.print(Langs.MENU_DSNT_EXIST);
+                return false;
+            }
+        }
+        UI.print(Langs.MENU_LETTER_ERROR);
+        return false;
     }
 
     public enum InputType {NUMERIC, LETTER, MIXED}

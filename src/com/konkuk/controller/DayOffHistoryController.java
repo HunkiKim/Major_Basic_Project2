@@ -67,16 +67,15 @@ public class DayOffHistoryController extends Controller{
 
         UI.print2(Langs.DAY_OFF_HISTORY_MAIN);
         String menu = UI.getInput();
-
+        if(!Utils.menuCheck(menu)){
+            return this.start();
+        }
         if(menu.equals(Menu.ANNUAL_HISTORY.getMenu())){
             history(Option.ANNUAL.getMenu());
         } else if(menu.equals(Menu.ADVANCED_SEARCH.getMenu())){
             history(Option.RANGE.getMenu());
         } else if(menu.equals(Menu.BACK_PAGE1.getMenu())||menu.equals(Menu.BACK_PAGE2.getMenu())){
             return new MainController();
-        }else{
-            UI.print(Langs.MENU_ERROR);
-            this.start();
         }
 
 
@@ -85,6 +84,9 @@ public class DayOffHistoryController extends Controller{
     private Controller pageMenu(String options, DayOffHistoryService history){
         UI.print2(Langs.DAY_OFF_HISTORY_PAGE);
         String menu = UI.getInput();
+        if(!Utils.menuCheck(menu)){
+            this.pageMenu(options, history);
+        }
 
         if(menu.equals(PageMenu.NEXT_PAGE.getMenu())){
             if(options.equals(Option.ANNUAL.getMenu())) {

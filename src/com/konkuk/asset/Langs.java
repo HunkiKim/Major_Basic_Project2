@@ -46,7 +46,9 @@ public final class Langs {
     public static final String FCOUNT_ERROR = "문법적으로 올바른 연차는 -365 ~ 365 사이의 수입니다.";
     public static final String REASON_ERROR = "올바른 입력이 아닙니다. 1byte이상 512byte미만으로 다시 입력하세요.";
     public static final String FIND_ERROR = "선택한 대상이 존재하지 않습니다. 다시 입력해주세요: ";
-    public static final String MENU_ERROR = "올바른 입력이 아닙니다. 다시 입력해주세요.";
+    public static final String MENU_LETTER_ERROR = "올바르지 않은 문자가 포함되어 있습니다. 다시 확인해주세요.";
+    public static final String MENU_DSNT_EXIST = "해당 메뉴가 존재하지 않습니다. 다시 확인해주세요.";
+    public static final String MENU_SELECTION_ERROR = "각 메뉴에 해당하는 숫자를 입력해주세요";
     public static final String LOG_TITLE = "[로그내역]";
     public static final String INSERT_BACK = "이전 화면으로 돌아가시려면 'B', 'b'를 입력해주세요 : ";
     public static final String EMPLOYEE_ID = "사번: ";
