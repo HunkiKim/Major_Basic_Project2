@@ -62,6 +62,7 @@ public class Utils {
                 return false;
             }
         }
+        if(menu.equals("b")||menu.equals("B")) return true;
         UI.print(Langs.MENU_LETTER_ERROR);
         return false;
     }
