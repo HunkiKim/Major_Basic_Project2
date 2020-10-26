@@ -88,7 +88,7 @@ public final class Langs {
             "1. 이번 연도 연차 조회\n" +
             "2. 상세 검색\n" +
             HORIZON +
-            "입력 ";
+            "입력: ";
     public static final String DAY_OFF_HISTORY_PAGE = "\n" +
             "1. 다음 연차 내역    " + "2. 이전 연차 내역\n"+
             HORIZON +
