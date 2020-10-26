@@ -138,6 +138,10 @@ public class DayOffHistoryController extends Controller{
         }else if(menu.equals(PageMenu.BACK_PAGE1.getMenu())||menu.equals(PageMenu.BACK_PAGE2.getMenu())){
             return this.start();
         }
+        else{
+            UI.print(Langs.INPUT_ERROR);
+            this.pageMenu(options, history);
+        }
         return this.start();
     }
     private Controller history(String options) {
