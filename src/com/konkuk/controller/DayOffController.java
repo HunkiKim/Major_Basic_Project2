@@ -16,6 +16,8 @@ import java.util.Date;
 import java.util.List;
 
 
+
+
 public class DayOffController extends Controller {
     int employeeId;
 
@@ -24,6 +26,7 @@ public class DayOffController extends Controller {
     }
 
     private int type = 0;
+    private int num = 0;
     private String start = null;
     private String start1 = null;
     private String end = null;
@@ -31,11 +34,25 @@ public class DayOffController extends Controller {
     private float count = 0;
 
     DayOff dayOff = null;
+    EmployeeRepository employeeRepository = EmployeeRepository.getInstance();
+    Employee employee = employeeRepository.findByExactId(employeeId);
 
     public Controller start() {
+
+
+        UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT2);
+        UI.print(Langs.HORIZON);
+        String result2 = employee.id + " " +
+                employee.name + " " +
+                employee.residualDayOff;
+        UI.print(result2);
+
         UI.print(Langs.DAY_OFF_MAIN);
         String menu = UI.getInput();
         while(true) {
+            if(menu.equals("B") || menu.equals("b")){
+                return new MainController();
+            }
             if(menu.equals("1")) {
                 use();
                 break;
@@ -201,7 +218,7 @@ public class DayOffController extends Controller {
         if(m==1){       //수정
             while(true){    //연차번호 검색, 찾기
                 UI.print(Langs.INPUT_NUM);
-                int num = UI.getInput2();
+                num = UI.getInput2();
 
                 dayOff = DayOffRepository.getInstance().findByExactId(num);
                 if(dayOff==null){
@@ -258,25 +275,24 @@ public class DayOffController extends Controller {
                 }
             }
 
-            boolean isDone = dayOffService.change(dayOff, reason, start, end);
+            boolean isDone = dayOffService.change(num, dayOff, reason, start, end);
 
-                if (isDone) {
-                    //출력
-                    UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT3);
-                    UI.print(Langs.HORIZON);
-//                    String result3 = dayOff.id + " " +
-//                            dayOff.employeeId + " " +
-//                            dayOff + " " +
-//                            reason + " " +
-//                            start + " " +
-//                            end + " " +
-//                            dayOff.getResidualDayOff();
-//                    UI.print(result3);
-                } else {
-                    // 실패한 것
-                    UI.print(Langs.DAY_OFF_ERROR);
-                }
-
+            if (isDone) {
+                //출력
+                UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT3);
+                UI.print(Langs.HORIZON);
+                String result3 = dayOff.id + " " +
+                        dayOff.employeeId + " " +
+                        employee.name + " " +
+                        reason + " " +
+                        start + " " +
+                        end + " " +
+                        employee.residualDayOff;
+                UI.print(result3);
+            } else {
+                // 실패한 것
+                UI.print(Langs.DAY_OFF_ERROR);
+            }
         } else if (m==2){       //취소
             while(true){    //연차번호 검색, 찾기
                 UI.print(Langs.INPUT_NUM);
