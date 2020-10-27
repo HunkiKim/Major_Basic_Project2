@@ -4,24 +4,25 @@ import com.konkuk.UI;
 import com.konkuk.asset.Langs;
 import com.konkuk.dto.Employee;
 import com.konkuk.repository.EmployeeRepository;
+import com.konkuk.repository.LogRepository;
 import com.konkuk.service.DayOffInfoService;
 
 
-import java.io.IOException;
-
 public class DayOffInfoController extends Controller {
+    LogRepository log = LogRepository.getInstance();
+    DayOffInfoService dayOffInfoService= new DayOffInfoService();
+
     int employeeId;
 
 
-    public enum Menu {DayOffInfo}
 
-    protected DayOffInfoController.Menu currentMenu;
     public DayOffInfoController(int employeeId) {
         this.employeeId = employeeId;
 
     }
     EmployeeRepository employeeRepository = EmployeeRepository.getInstance();
     Employee employee = employeeRepository.findByExactId(employeeId);
+
 
     public Controller start() {
             print(employeeId);
@@ -30,46 +31,77 @@ public class DayOffInfoController extends Controller {
 
 
     public Controller print(int employeeId) {
-        if (employeeRepository.findByExactId(employeeId).getResidualDayOff()>= 1) { //잔여연차 1이상
+
+        if (employeeRepository.findByExactId(employeeId).getResidualDayOff()>= 1) { //잔여연차 1이상(출력 형태 맞추기위한 조건문)
             UI.print2(Langs.HORIZON);
             UI.print(Langs.DAY_OFF_INFO);
             UI.print2(Langs.HORIZON);
-           UI.print( employeeRepository.findByExactId(employeeId).getId()+"   "+ employeeRepository.findByExactId(employeeId).getName() +"   "
-                    + employeeRepository.findByExactId(employeeId).getResidualDayOff());
+            UI.print( employeeRepository.findByExactId(employeeId).getId()+"   "+ employeeRepository.findByExactId(employeeId).getName() +"   "
+                     + employeeRepository.findByExactId(employeeId).getResidualDayOff());
+
+            log.addLog("[연차정보 조회] " ,
+                    "사원번호 : "+employeeRepository.findByExactId(employeeId).getName()+
+                            " 사원이름 : "+employeeRepository.findByExactId(employeeId).getName()+
+                            " 연봉 : " + employeeRepository.findByExactId(employeeId).getSalary()+
+                            " 잔여연차 : "+employeeRepository.findByExactId(employeeId).getResidualDayOff());
         } else {
             UI.print2(Langs.HORIZON);
             UI.print(Langs.DAY_OFF_INFO);
             UI.print2(Langs.HORIZON);
             UI.print( employeeRepository.findByExactId(employeeId).getId()+"   "+ employeeRepository.findByExactId(employeeId).getName() +"   "
                     + 0);
+            log.addLog("[연차정보 조회] " ,
+                    "사원번호 : "+employeeRepository.findByExactId(employeeId).getName()+
+                           " 사원이름 : "+employeeRepository.findByExactId(employeeId).getName()+
+                            " 연봉 : " + employeeRepository.findByExactId(employeeId).getSalary()+
+                            " 잔여연차 : "+employeeRepository.findByExactId(employeeId).getResidualDayOff());
         }
+
         if (employeeRepository.findByExactId(employeeId).getResidualDayOff() == 0) {  //잔여연차=0
             UI.print2(Langs.HORIZON);
             UI.print("연차를 모두 사용하였습니다. [메인 화면]으로 이동합니다.");
-
-        } else if (employeeRepository.findByExactId(employeeId).getResidualDayOff() >= 1) { //잔여연차 1 이상
-
+            log.addLog("[연차정보 조회] " ,
+                    "사원번호 : "+employeeRepository.findByExactId(employeeId).getName()+
+                            " 사원이름 : "+employeeRepository.findByExactId(employeeId).getName()+
+                            " 연봉 : " + employeeRepository.findByExactId(employeeId).getSalary()+
+                            " 잔여연차 : "+employeeRepository.findByExactId(employeeId).getResidualDayOff());
+        }
+        else if (employeeRepository.findByExactId(employeeId).getResidualDayOff() >= 1) { //잔여연차 1 이상
             UI.print(Langs.DAY_OFF_INFO_PAGE_REFUND);
-            while (true) {
-
+            while (true) { //1.환급액 조회 2.메인메뉴 이동
                 String menu = UI.getInput();
                 if (menu.equals("1")) {
-                    new DayOffInfoService().refund_cal(employeeRepository.findByExactId(employeeId).getSalary(),employeeRepository.findByExactId(employeeId).getResidualDayOff()
-                            ,employeeRepository.findByExactId(employeeId).getName());
+                    UI.print(employeeRepository.findByExactId(employeeId).getName()+"님의 연차 미사용으로 인한 환급액은 "
+                            +dayOffInfoService.refund_cal(employeeRepository.findByExactId(employeeId).getSalary(),employeeRepository.findByExactId(employeeId).getResidualDayOff(),
+                            employeeRepository.findByExactId(employeeId).getName())+"원 입니다");
+                    log.addLog("[환급액 조회] " , "사원번호 : "+employeeRepository.findByExactId(employeeId).getName()+
+                            " 사원이름 : "+employeeRepository.findByExactId(employeeId).getName()+
+                            "연봉 : " + employeeRepository.findByExactId(employeeId).getSalary()+
+                            " 잔여연차 : "+employeeRepository.findByExactId(employeeId).getResidualDayOff()+
+                            " 환급액: "+dayOffInfoService.refund_cal(employeeRepository.findByExactId(employeeId).getSalary(),
+                             employeeRepository.findByExactId(employeeId).getResidualDayOff(),
+                            employeeRepository.findByExactId(employeeId).getName()));
                     return new MainController();
                 } else if (menu.equals("2")) {
                     return new MainController();}
                 else {
                     UI.print(Langs.INPUT_ERROR);
                 } }}
-        else if (employeeRepository.findByExactId(employeeId).getResidualDayOff() < 0) { //잔여연차 0미만
 
+        else if (employeeRepository.findByExactId(employeeId).getResidualDayOff() < 0) { //잔여연차 0미만
             UI.print(Langs.DAY_OFF_INFO_PAGE);
             while (true) {
                 String menu = UI.getInput();
                 if (menu.equals("1")) {
-                    new DayOffInfoService().cal(employeeRepository.findByExactId(employeeId).getSalary(),employeeRepository.findByExactId(employeeId).getResidualDayOff()
-                            ,employeeRepository.findByExactId(employeeId).getName());
+                    UI.print(employeeRepository.findByExactId(employeeId).getName()+"님의 연차 초과사용으로 인한 차감액은 "
+                            +dayOffInfoService.cal(employeeRepository.findByExactId(employeeId).getSalary(),employeeRepository.findByExactId(employeeId).getResidualDayOff(),
+                            employeeRepository.findByExactId(employeeId).getName())+"원 입니다");
+                    log.addLog("[차감액 조회] " , "사원번호 : "+employeeRepository.findByExactId(employeeId).getName()+
+                            " 사원이름 : "+employeeRepository.findByExactId(employeeId).getName()+
+                            " 연봉 : " + employeeRepository.findByExactId(employeeId).getSalary()+
+                            " 잔여연차 : "+employeeRepository.findByExactId(employeeId).getResidualDayOff() +
+                            " 차감액: "+dayOffInfoService.cal(employeeRepository.findByExactId(employeeId).getSalary(),employeeRepository.findByExactId(employeeId).getResidualDayOff(),
+                            employeeRepository.findByExactId(employeeId).getName()));
                     return new MainController();
                 } else if (menu.equals("2")) {
                     return new MainController();
@@ -77,9 +109,8 @@ public class DayOffInfoController extends Controller {
                     UI.print(Langs.INPUT_ERROR);
                 }
             }
-
-
         }
         return new MainController();
     }
+
 }

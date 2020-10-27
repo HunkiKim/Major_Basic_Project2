@@ -21,13 +21,13 @@ public class EmployeeManageController extends Controller {
     }
 
     public Controller start() {
-        UI.print(Langs.EMPLOYEE_MANAGE_MAIN);
+        UI.print2(Langs.EMPLOYEE_MANAGE_MAIN);
 
 
         while(true) {
             UI.print2("입력: ");
             String menu = UI.getInput();
-            UI.print2(Langs.HORIZON);
+
             if(menu.equals("B") || menu.equals("b")){
                 return new MainController();
             }
