@@ -4,6 +4,7 @@ package com.konkuk.controller;
 import com.konkuk.UI;
 import com.konkuk.asset.Langs;
 import com.konkuk.dto.Log;
+import com.konkuk.repository.LogRepository;
 import com.konkuk.service.LogService;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -28,7 +29,6 @@ public class LogController extends Controller {
                 e.printStackTrace();
             }
         }
-        // 수정 필요
         return new MainController();
     }
 
@@ -36,7 +36,7 @@ public class LogController extends Controller {
         List<Log> log_list = (new LogService()).getLogs();
         UI.print(Langs.LOG_TITLE);
         UI.print(Langs.HORIZON);
-        log_list.forEach((log -> UI.print(log.Day + " " + log.log_category + " " + log.log_content)));
+        log_list.forEach((log -> UI.print(log.Day.substring(0, 4) + "/" + log.Day.substring(4, 6) + "/" + log.Day.substring(6,14) + " " + log.log_category + log.log_content)));
         UI.print(Langs.HORIZON);
         UI.print(Langs.INSERT_BACK);
     }
