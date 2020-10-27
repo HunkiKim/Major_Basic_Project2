@@ -25,7 +25,7 @@ public class DayOffHistoryService {
         dayOffList.sort(new Comparator<DayOff>() {
             @Override
             public int compare(DayOff o1, DayOff o2) {
-                return -o1.dateDayOffStart.compareTo(o2.dateDayOffStart);
+                return -o1.dateCreated.compareTo(o2.dateCreated);
             }
         });
 
