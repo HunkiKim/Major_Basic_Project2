@@ -16,6 +16,7 @@ public class Main {
         LogRepository.getInstance();
 
         Controller controller = new MainController();
+
         while(true) {
             if(exit) break;
             controller = controller.start();
