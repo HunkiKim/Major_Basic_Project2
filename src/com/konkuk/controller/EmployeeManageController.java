@@ -224,7 +224,7 @@ public class EmployeeManageController extends Controller {
 
                 while(true) {
 
-                    UI.print2("검색한 대상을 선택하시겠습니까? ");
+                    UI.print2("위와 같이 저장하시겠습니까? ");
                     yn = UI.getInput();
                     if(yn.equals("B") || yn.equals("b")){
                         return new MainController();
