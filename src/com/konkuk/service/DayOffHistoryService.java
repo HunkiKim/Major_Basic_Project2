@@ -17,7 +17,11 @@ public class DayOffHistoryService {
 
     public boolean getHistory(int employeeId, int pageNumber, Date start, Date end, int option){
         String record = "";
-        this.dayOffList = dayOffRepository.findByDate(employeeId, start, end, option);
+        if(option==3){
+            this.dayOffList = dayOffRepository.findByEmployeeId(employeeId);
+        }else{
+            this.dayOffList = dayOffRepository.findByDate(employeeId, start, end, option);
+        }
         dayOffList.sort(new Comparator<DayOff>() {
             @Override
             public int compare(DayOff o1, DayOff o2) {
