@@ -2,6 +2,7 @@ package com.konkuk.controller;
 
 import com.konkuk.UI;
 import com.konkuk.asset.Langs;
+import com.konkuk.service.EmployeeService;
 
 public class MainController extends Controller {
 
@@ -26,8 +27,22 @@ public class MainController extends Controller {
                 default:
                     break;
             }
-            if (next != null) break;
+//            UI.print(nextMenu);
+            if(nextMenu.equals("")){
+                UI.print(Langs.BLANK_SPACE_ERROR);
+            }
+            else if(nextMenu.contains(" ")){
+                UI.print(Langs.BLANK_SPACE_ERROR);
+            }
+            else if(new EmployeeService().idcheck(nextMenu)){
+                UI.print(Langs.NUM_ERROR);
+            }
+
+            if (next != null){
+                break;
+            }
             // 그 외는 공통 메시지 출력 후 다시 받기
+
         }
         return next;
     }

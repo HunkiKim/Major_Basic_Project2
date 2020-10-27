@@ -52,7 +52,7 @@ public final class Langs {
     public static final String MENU_DSNT_EXIST = "해당 메뉴가 존재하지 않습니다. 다시 확인해주세요.";
     public static final String MENU_SELECTION_ERROR = "각 메뉴에 해당하는 숫자를 입력해주세요";
     public static final String LOG_TITLE = "[로그내역]";
-    public static final String EMPTY_ERROR = "입력한 문자가 없습니다. 다시 입력해주세요.";
+    public static final String EMPTY_ERROR = "빈 문자열을 입력하셨습니다. 다시 입력해주세요.";
     public static final String INSERT_BACK = "이전 화면으로 돌아가시려면 'B', 'b'를 입력해주세요 : ";
     public static final String EMPLOYEE_ID = "사번: ";
     public static final String EMPLOYEE_NAME = "이름: ";
@@ -89,8 +89,8 @@ public final class Langs {
     public static final String DATA_FILE_HEADER_DAYOFF_RESULT2 = "\"사번\",\"이름\",\"잔여 연차 수\"";
     public static final String DATA_FILE_HEADER_DAYOFF_RESULT3 = "\"번호\",\"사번\",\"이름\",\"사유\",\"연차 시작\",\"연차 종료\",\"잔여 연차 수\"";
     public static final String DATA_FILE_HEADER_DAYOFF = "\"번호\",\"사번\",\"변동 연차 수\",\"사유\",\"연차 시작\",\"연차 종료\",\"생성 날짜\"";
-
-
+    public static final String BLANK_SPACE_ERROR = "올바른 입력이 아닙니다. 다시 입력해주세요.";
+    public static final String NUM_ERROR = "범위내의 숫자가 아닙니다. 다시 입력해주세요.";
     public static final String DAY_OFF_HISTORY_MAIN = HORIZON +
             "1. 이번 연도 연차 조회\n" +
             "2. 상세 검색\n" +

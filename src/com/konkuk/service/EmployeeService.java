@@ -100,6 +100,11 @@ public class EmployeeService {
                 return false;
             }
         }
+
+        if(id.charAt(0)=='0' && id.length()!=1){
+            UI.print(Langs.BLANK_SPACE_ERROR);
+            return false;
+        }
         //길이 확인
         if(id.length()<1 || id.length()>7){
             UI.print(Langs.LENGTH_ERROR);
