@@ -20,7 +20,7 @@ public class ManagerController extends Controller {
 
 
         while(true) {
-            UI.print(Langs.MANAGE_MAIN);
+            UI.print2(Langs.MANAGE_MAIN);
             String nextMenu = UI.getInput();
             switch (nextMenu) {
                 case "1":

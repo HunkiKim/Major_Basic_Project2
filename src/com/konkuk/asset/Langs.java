@@ -36,7 +36,8 @@ public final class Langs {
             "2. 연차 사용 및 수정\n"+
             "3. 연차 내역 조회\n"+
             "4. 연차 정보 조회\n"
-            +HORIZON;
+            +HORIZON
+            +"입력 : ";
 
     public static final String EMPLOYEE_MANAGE_MAIN = HORIZON +
             "1. 정보 수정\n"+
