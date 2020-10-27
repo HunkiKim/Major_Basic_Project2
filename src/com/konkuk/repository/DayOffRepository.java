@@ -74,6 +74,20 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
     }
 
     @Override
+    public DayOff update(int dayOffId, DayOff dayOff) throws IOException {
+        deleteDataLine(dayOffId);
+        dayOff.id = dayOffId;
+        addDataLine(parseDtoToList(dayOff));
+        for(int i = 0; i < dayOffList.size(); i++) {
+            if(dayOffList.get(i).id == dayOffId) {
+                dayOffList.set(i, dayOff);
+                break;
+            }
+        }
+        return dayOff;
+    }
+
+    @Override
     public DayOff findByExactId(int id) {
         DayOff result = null;
         for (DayOff e : dayOffList) {
