@@ -15,7 +15,7 @@ public class Utils {
 
     public static void exit(String msg) {
         debug("강제 종료");
-        debug(msg);
+        System.out.println(msg);
         System.exit(0);
     }
 

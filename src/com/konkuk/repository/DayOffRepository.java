@@ -26,10 +26,10 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
                 int id = Integer.parseInt(parsedData.get(0));
                 int employeeId = Integer.parseInt(parsedData.get(1));
                 float changedDayOffCount = Float.parseFloat(parsedData.get(2));
-                uniquePolicy.add(id);
                 if(uniquePolicy.contains(id)) {
-                    Utils.exit(Langs.VIOLATE_UNIQUE_KEY);
+                    Utils.exit(this.debugTitle + " - " + Langs.VIOLATE_UNIQUE_KEY);
                 }
+                uniquePolicy.add(id);
                 String reason = parsedData.get(3);
                 Date dateDayOffStart = Utils.stringToDate(parsedData.get(4));
                 Date dateDayOffEnd = Utils.stringToDate(parsedData.get(5));
