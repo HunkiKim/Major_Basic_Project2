@@ -45,7 +45,7 @@ public class EmployeeRepository extends Repository implements  IEmployeeReposito
         List<String> result = new ArrayList<>();
         result.add(String.valueOf(employee.id));
         result.add(employee.name);
-        result.add(String.valueOf(employee.salary));
+        result.add(String.valueOf((int) employee.salary));
         result.add(String.valueOf(employee.residualDayOff));
         return result;
     }
