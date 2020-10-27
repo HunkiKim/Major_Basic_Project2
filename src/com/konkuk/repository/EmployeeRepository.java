@@ -6,6 +6,7 @@ import com.konkuk.asset.Settings;
 import com.konkuk.dto.Employee;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +46,9 @@ public class EmployeeRepository extends Repository implements  IEmployeeReposito
         List<String> result = new ArrayList<>();
         result.add(String.valueOf(employee.id));
         result.add(employee.name);
-        result.add(String.valueOf((int) employee.salary));
+        DecimalFormat df = new DecimalFormat("#");
+        df.setMaximumFractionDigits(0);
+        result.add(df.format(employee.salary));
         result.add(String.valueOf(employee.residualDayOff));
         return result;
     }
