@@ -53,17 +53,37 @@ public class EmployeeController extends Controller {
                 exactfind = employeeService.getEmployees(input);
             }catch(StringIndexOutOfBoundsException e){
                 UI.print(Langs.EMPTY_ERROR);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
                 continue;
             }
             catch (IllegalLetterException e) {
                 UI.print(Langs.LETTER_ERROR);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
                 continue;
             } catch (IllegalLengthException e) {
                 UI.print(Langs.LENGTH_ERROR);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
                 continue;
             }
             if(exactfind == null || exactfind.size() == 0) {
                 UI.print(Langs.FIND_ERROR);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             } else {
                 exactfind.forEach(employee -> {
                     UI.print("*" + Langs.EMPLOYEE_ID + employee.id);
@@ -85,6 +105,7 @@ public class EmployeeController extends Controller {
                     return new MainController();
                 }
                 if(!employeeService.idcheck(id)){// 숫자가 아니면 다시
+
                     continue;
                 }
 
@@ -96,6 +117,11 @@ public class EmployeeController extends Controller {
 
                 if(check==0){
                     UI.print(Langs.FIND_ERROR);
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     continue;
                 }
 
@@ -107,6 +133,11 @@ public class EmployeeController extends Controller {
                     } else { //검색대상 오류
                         // 만약 올바르지 않은 숫자거나 문자라면
                         UI.print(Langs.LETTER_ERROR);
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         continue;
                     }   // 올바른 숫자일경우
 
@@ -122,6 +153,11 @@ public class EmployeeController extends Controller {
                         return new MainController();
                     }
                     UI.print(Langs.LETTER_ERROR); // 문자 잘못입력시
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -153,6 +189,11 @@ public class EmployeeController extends Controller {
                 }
                 if(check==1){
                     UI.print("이미 같은 사번이 존재합니다. 다시 입력해주세요");
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     continue;
                 }
 
@@ -205,6 +246,11 @@ public class EmployeeController extends Controller {
                 break;
             }
             UI.print(Langs.LETTER_ERROR);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
 

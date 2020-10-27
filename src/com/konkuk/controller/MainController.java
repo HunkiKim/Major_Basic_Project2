@@ -29,17 +29,33 @@ public class MainController extends Controller {
             }
 //            UI.print(nextMenu);
             if(nextMenu.equals("")){
-                UI.print(Langs.BLANK_SPACE_ERROR);
-            }
-            else if(nextMenu.contains(" ")){
-                UI.print(Langs.BLANK_SPACE_ERROR);
-            }
-            else if(new EmployeeService().idcheck(nextMenu)){
-                UI.print(Langs.NUM_ERROR);
-            }
-
-            if (next != null){
-                break;
+                    UI.print(Langs.BLANK_SPACE_ERROR);
+                    try {
+                        Thread.sleep(2000);
+                    } catch(InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if(nextMenu.contains(" ")){
+                    UI.print(Langs.BLANK_SPACE_ERROR);
+                    try {
+                        Thread.sleep(2000);
+                    } catch(InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if(new EmployeeService().idcheck(nextMenu)){
+                    if(Integer.parseInt(nextMenu)>4 || Integer.parseInt(nextMenu)<1) {
+                        UI.print(Langs.NUM_ERROR);
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                if (next != null){
+                    break;
             }
             // 그 외는 공통 메시지 출력 후 다시 받기
 

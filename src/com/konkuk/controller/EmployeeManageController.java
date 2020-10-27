@@ -51,6 +51,11 @@ public class EmployeeManageController extends Controller {
                         break;
                     }
                     UI.print(Langs.LETTER_ERROR);
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 break;
@@ -72,6 +77,11 @@ public class EmployeeManageController extends Controller {
                         }
                     if (check == 1) {
                         UI.print("이미 같은 사번이 존재합니다. 다시 입력해주세요");
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         continue;
                     }// id 종료
                     break;
@@ -121,6 +131,11 @@ public class EmployeeManageController extends Controller {
                         break;
                     }
                     UI.print(Langs.LETTER_ERROR);
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
                 break;
             }
@@ -129,6 +144,11 @@ public class EmployeeManageController extends Controller {
                 }
             else {
                 UI.print(Langs.INPUT_ERROR);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return new MainController();
