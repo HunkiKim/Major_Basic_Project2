@@ -51,6 +51,7 @@ public final class Langs {
     public static final String MENU_DSNT_EXIST = "해당 메뉴가 존재하지 않습니다. 다시 확인해주세요.";
     public static final String MENU_SELECTION_ERROR = "각 메뉴에 해당하는 숫자를 입력해주세요";
     public static final String LOG_TITLE = "[로그내역]";
+    public static final String EMPTY_ERROR = "입력한 문자가 없습니다. 다시 입력해주세요.";
     public static final String INSERT_BACK = "이전 화면으로 돌아가시려면 'B', 'b'를 입력해주세요 : ";
     public static final String EMPLOYEE_ID = "사번: ";
     public static final String EMPLOYEE_NAME = "이름: ";

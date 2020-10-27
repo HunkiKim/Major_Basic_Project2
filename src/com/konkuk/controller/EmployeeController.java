@@ -51,7 +51,11 @@ public class EmployeeController extends Controller {
             }
             try {
                 exactfind = employeeService.getEmployees(input);
-            } catch (IllegalLetterException e) {
+            }catch(StringIndexOutOfBoundsException e){
+                UI.print(Langs.EMPTY_ERROR);
+                continue;
+            }
+            catch (IllegalLetterException e) {
                 UI.print(Langs.LETTER_ERROR);
                 continue;
             } catch (IllegalLengthException e) {
@@ -95,29 +99,30 @@ public class EmployeeController extends Controller {
                     continue;
                 }
 
-                if(Integer.parseInt(id) == Erepositry.findByExactId(Integer.parseInt(id)).id){
-                    UI.print("*"+Langs.EMPLOYEE_ID+Erepositry.findByExactId(Integer.parseInt(id)).id);
-                    UI.print("*"+Langs.EMPLOYEE_NAME+Erepositry.findByExactId(Integer.parseInt(id)).name);
-                    UI.print("*"+Langs.EMPLOYEE_SALARY+(int) Erepositry.findByExactId(Integer.parseInt(id)).salary+"\n");
-                }else { //검색대상 오류
-                    // 만약 올바르지 않은 숫자거나 문자라면
-                    UI.print(Langs.LETTER_ERROR);
-                    continue;
-                }   // 올바른 숫자일경우
+                while(true) {
+                    if (Integer.parseInt(id) == Erepositry.findByExactId(Integer.parseInt(id)).id) {
+                        UI.print("*" + Langs.EMPLOYEE_ID + Erepositry.findByExactId(Integer.parseInt(id)).id);
+                        UI.print("*" + Langs.EMPLOYEE_NAME + Erepositry.findByExactId(Integer.parseInt(id)).name);
+                        UI.print("*" + Langs.EMPLOYEE_SALARY + (int) Erepositry.findByExactId(Integer.parseInt(id)).salary + "\n");
+                    } else { //검색대상 오류
+                        // 만약 올바르지 않은 숫자거나 문자라면
+                        UI.print(Langs.LETTER_ERROR);
+                        continue;
+                    }   // 올바른 숫자일경우
 
-                UI.print2("검색한 대상을 선택하시겠습니까? ");
-                String yn = UI.getInput();
-                if(yn.equals("B") || yn.equals("b")){
-                    return new MainController();
-                }
-                if (employeeService.check(yn) == 0) {
+                    UI.print2("검색한 대상을 선택하시겠습니까? ");
+                    String yn = UI.getInput();
+                    if (yn.equals("B") || yn.equals("b")) {
+                        return new MainController();
+                    }
+                    if (employeeService.check(yn) == 0) {
 
-                    return new ManagerController(Integer.parseInt(id));
+                        return new ManagerController(Integer.parseInt(id));
+                    } else if (employeeService.check(yn) == 1) {
+                        return new MainController();
+                    }
+                    UI.print(Langs.LETTER_ERROR); // 문자 잘못입력시
                 }
-                else if(employeeService.check(yn) == 1){
-                    return new MainController();
-                }
-                UI.print(Langs.LETTER_ERROR); // 문자 잘못입력시
             }
 
         }

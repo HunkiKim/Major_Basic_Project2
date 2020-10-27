@@ -16,8 +16,6 @@ public class EmployeeManageController extends Controller {
     EmployeeRepository Erepository = EmployeeRepository.getInstance();
     public EmployeeManageController(int employeeId) {
         this.employeeId = employeeId;
-
-
     }
 
     public Controller start() {
