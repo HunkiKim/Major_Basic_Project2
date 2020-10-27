@@ -165,6 +165,16 @@ public class EmployeeService {
             }
         }
 
+        if(salary.charAt(0)=='0' && salary.length()!=1){ // 앞에 0이 있는경우?
+            UI.print(Langs.BLANK_SPACE_ERROR);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+
         if(salary.length()<8 || salary.length()>10){
             UI.print(Langs.LENGTH_ERROR);
             try {

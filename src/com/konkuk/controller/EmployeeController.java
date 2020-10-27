@@ -49,6 +49,35 @@ public class EmployeeController extends Controller {
             if(input.equals("B") || input.equals("b")){
                 return new MainController();
             }
+            //공통
+            if(input.equals("")){
+                UI.print(Langs.BLANK_SPACE_ERROR);
+                try {
+                    Thread.sleep(2000);
+                } catch(InterruptedException e) {
+                    e.printStackTrace();
+                }
+                continue;
+            }
+            else if(input.contains(" ")){
+                UI.print(Langs.BLANK_SPACE_ERROR);
+                try {
+                    Thread.sleep(2000);
+                } catch(InterruptedException e) {
+                    e.printStackTrace();
+                }
+                continue;
+            }
+            if(input.charAt(0)=='0' && input.length()!=1){
+                UI.print(Langs.BLANK_SPACE_ERROR);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                continue;
+            }
+            //공통
             try {
                 exactfind = employeeService.getEmployees(input);
             }catch(StringIndexOutOfBoundsException e){
@@ -77,6 +106,7 @@ public class EmployeeController extends Controller {
                 }
                 continue;
             }
+
             if(exactfind == null || exactfind.size() == 0) {
                 UI.print(Langs.FIND_ERROR);
                 try {
@@ -104,8 +134,27 @@ public class EmployeeController extends Controller {
                 if(id.equals("B") || id.equals("b")){
                     return new MainController();
                 }
+                //공통
+                if(id.equals("")){
+                    UI.print(Langs.BLANK_SPACE_ERROR);
+                    try {
+                        Thread.sleep(2000);
+                    } catch(InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    continue;
+                }
+                else if(id.contains(" ")){
+                    UI.print(Langs.BLANK_SPACE_ERROR);
+                    try {
+                        Thread.sleep(2000);
+                    } catch(InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    continue;
+                }
+                //공통
                 if(!employeeService.idcheck(id)){// 숫자가 아니면 다시
-
                     continue;
                 }
 
@@ -146,6 +195,26 @@ public class EmployeeController extends Controller {
                     if (yn.equals("B") || yn.equals("b")) {
                         return new MainController();
                     }
+                    //공통
+                    if(yn.equals("")){
+                        UI.print(Langs.BLANK_SPACE_ERROR);
+                        try {
+                            Thread.sleep(2000);
+                        } catch(InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        continue;
+                    }
+                    else if(yn.contains(" ")){
+                        UI.print(Langs.BLANK_SPACE_ERROR);
+                        try {
+                            Thread.sleep(2000);
+                        } catch(InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        continue;
+                    }
+                    //공통
                     if (employeeService.check(yn) == 0) {
 
                         return new ManagerController(Integer.parseInt(id));
@@ -181,6 +250,25 @@ public class EmployeeController extends Controller {
             if(id.equals("B") || id.equals("b")){
                 return;
             }// 체크에서 올바르다면(true) 반복문 빠져가가기
+            if(id.equals("")){
+                UI.print(Langs.BLANK_SPACE_ERROR);
+                try {
+                    Thread.sleep(2000);
+                } catch(InterruptedException e) {
+                    e.printStackTrace();
+                }
+                continue;
+            }
+            else if(id.contains(" ")){
+                UI.print(Langs.BLANK_SPACE_ERROR);
+                try {
+                    Thread.sleep(2000);
+                } catch(InterruptedException e) {
+                    e.printStackTrace();
+                }
+                continue;
+            }
+            //공통 항목
             if(employeeService.idcheck(id)) {
                 for(int i=0; i<Erepositry.findById(Integer.parseInt(id)).size(); i++){
                     if(Erepositry.findById(Integer.parseInt(id)).get(i).id==Integer.parseInt(id)){
@@ -209,6 +297,26 @@ public class EmployeeController extends Controller {
             if(name.equals("B") || name.equals("b")){
                 return;
             }
+            //공통
+            if(name.equals("")){
+                UI.print(Langs.BLANK_SPACE_ERROR);
+                try {
+                    Thread.sleep(2000);
+                } catch(InterruptedException e) {
+                    e.printStackTrace();
+                }
+                continue;
+            }
+            else if(name.contains(" ")){
+                UI.print(Langs.BLANK_SPACE_ERROR);
+                try {
+                    Thread.sleep(2000);
+                } catch(InterruptedException e) {
+                    e.printStackTrace();
+                }
+                continue;
+            }
+
             if(employeeService.namecheck(name)) // 체크에서 올바르다면(true) 반복문 빠져가가기
                 break;
         }
@@ -220,6 +328,26 @@ public class EmployeeController extends Controller {
             if(salary.equals("B") || salary.equals("b")){
                 return;
             }
+            //공통
+            if(salary.equals("")){
+                UI.print(Langs.BLANK_SPACE_ERROR);
+                try {
+                    Thread.sleep(2000);
+                } catch(InterruptedException e) {
+                    e.printStackTrace();
+                }
+                continue;
+            }
+            else if(salary.contains(" ")){
+                UI.print(Langs.BLANK_SPACE_ERROR);
+                try {
+                    Thread.sleep(2000);
+                } catch(InterruptedException e) {
+                    e.printStackTrace();
+                }
+                continue;
+            }
+            //공통
             if(employeeService.salarycheck(salary))// 체크에서 올바르다면(true) 반복문 빠져가가기
                 break;
         }
@@ -233,6 +361,25 @@ public class EmployeeController extends Controller {
             if(yn.equals("B") || yn.equals("b")){
                 return;
             }
+            if(yn.equals("")){
+                UI.print(Langs.BLANK_SPACE_ERROR);
+                try {
+                    Thread.sleep(2000);
+                } catch(InterruptedException e) {
+                    e.printStackTrace();
+                }
+                continue;
+            }
+            else if(yn.contains(" ")){
+                UI.print(Langs.BLANK_SPACE_ERROR);
+                try {
+                    Thread.sleep(2000);
+                } catch(InterruptedException e) {
+                    e.printStackTrace();
+                }
+                continue;
+            }
+
             if (employeeService.check(yn) == 0) {
                 try{
                     L.addLog("[사원추가] " , "사원번호 : "+id +" 사원이름 : "+name+ "연봉 : "+ salary + " 잔여연차 : "+"0");

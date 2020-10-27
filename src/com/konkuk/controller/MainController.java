@@ -28,7 +28,7 @@ public class MainController extends Controller {
                     break;
             }
 //            UI.print(nextMenu);
-            if(nextMenu.equals("")){
+                if(nextMenu.equals("")){
                     UI.print(Langs.BLANK_SPACE_ERROR);
                     try {
                         Thread.sleep(2000);
