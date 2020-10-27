@@ -38,9 +38,9 @@ public class DayOffHistoryService {
         List<DayOff> subList = new ArrayList<>(this.dayOffList.subList(pageNumber*10, Math.min(listSize,pageNumber*10+10)));
 
         //UI.print(Langs.DATA_FILE_HEADER_DAYOFF);
-        UI.print2(Langs.HORIZON1);
+        UI.print2(Langs.HORIZON);
         System.out.println(String.format("%s %4s %9s %4s %10s %10s %7s", "번호", "사번", "변동 연차 수", "사유", "연차 시작 시간", "연차 종료 시간", "생성 날짜"));
-        UI.print2(Langs.HORIZON1);
+        UI.print2(Langs.HORIZON);
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
 
         for(DayOff data:subList){
@@ -60,7 +60,7 @@ public class DayOffHistoryService {
 //                    simpleDate.format(data.dateDayOffEnd)+" "+
 //                    simpleDate.format(data.dateCreated))+"\n";
         }
-        UI.print2(Langs.HORIZON1);
+        UI.print2(Langs.HORIZON);
         return true;
     }
 

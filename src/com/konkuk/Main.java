@@ -18,12 +18,11 @@ public class Main {
     }
 
     private static void initData() {
-        UI.print(Langs.LOADING_REPOSITORY);
         UI.print2(Langs.HORIZON);
+        UI.print(Langs.LOADING_REPOSITORY);
         EmployeeRepository.getInstance();
         DayOffRepository.getInstance();
         LogRepository.getInstance();
         UI.print(Langs.LOADING_REPOSITORY_DONE);
-        UI.print(Langs.HORIZON1);
     }
 }
