@@ -1,8 +1,9 @@
 package com.konkuk.asset;
 
 public final class Langs {
-    public static final String HORIZON = "------------------------------\n";
-    public static final String HORIZON1 = "------------------------------------------------------------\n";
+    public static final String LOADING_REPOSITORY = "무결성 검사 시작";
+    public static final String LOADING_REPOSITORY_DONE = "무결성 검사 종료";
+    public static final String HORIZON = "------------------------------------------------------------\n";
     public static final String MAIN = HORIZON +
             "1. 직원 선택 및 관리\n" +
             "2. 직원 추가\n" +

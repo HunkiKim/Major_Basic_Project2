@@ -20,14 +20,15 @@ public class LogRepository extends Repository {
         super(dataFilePath);
         this.debugTitle = "Log";
         if(isDataFileExists()) {
-            logList = loadData((parsedData, uniquePolicy) -> {
+            logList = loadData((parsedData) -> {
                 int log_number = Integer.parseInt(parsedData.get(0));
                 String log_category = parsedData.get(1);
                 String log_content = parsedData.get(2);
                 String Day = parsedData.get(3);
                 if(uniquePolicy.contains(log_number)) {
-                    Utils.exit(Langs.VIOLATE_UNIQUE_KEY);
+                    Utils.exit(this.debugTitle + " - " + Langs.VIOLATE_UNIQUE_KEY);
                 }
+                uniquePolicy.add(log_number);
                 return new Log(log_number, log_category, log_content, Day);
             });
         } else {
