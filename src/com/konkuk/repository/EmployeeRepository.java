@@ -17,7 +17,7 @@ public class EmployeeRepository extends Repository implements  IEmployeeReposito
         super(dataFilePath);
         this.debugTitle = "Employee";
         if (isDataFileExists()) {
-            employeeList = loadData((parsedData, uniquePolicy) -> {
+            employeeList = loadData((parsedData) -> {
                 int id = Integer.parseInt(parsedData.get(0));
                 String name = parsedData.get(1);
                 int salary = Integer.parseInt(parsedData.get(2));

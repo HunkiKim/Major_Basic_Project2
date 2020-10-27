@@ -22,7 +22,7 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
         super(dataFilePath);
         this.debugTitle = "DayOff";
         if (isDataFileExists()) {
-            dayOffList = loadData((parsedData, uniquePolicy) -> {
+            dayOffList = loadData((parsedData) -> {
                 int id = Integer.parseInt(parsedData.get(0));
                 int employeeId = Integer.parseInt(parsedData.get(1));
                 float changedDayOffCount = Float.parseFloat(parsedData.get(2));

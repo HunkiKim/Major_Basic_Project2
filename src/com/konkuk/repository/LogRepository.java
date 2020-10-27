@@ -20,7 +20,7 @@ public class LogRepository extends Repository {
         super(dataFilePath);
         this.debugTitle = "Log";
         if(isDataFileExists()) {
-            logList = loadData((parsedData, uniquePolicy) -> {
+            logList = loadData((parsedData) -> {
                 int log_number = Integer.parseInt(parsedData.get(0));
                 String log_category = parsedData.get(1);
                 String log_content = parsedData.get(2);

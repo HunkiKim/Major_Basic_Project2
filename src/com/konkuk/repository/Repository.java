@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class Repository {
 
     public String debugTitle = "";
-    private final String NEW_LINE = System.getProperty("line.separator");
+    HashSet<Integer> uniquePolicy = new HashSet<>();
     private File file;
 
     protected Repository(String dataFilePath) {
@@ -104,7 +104,7 @@ public class Repository {
     }
 
     protected interface Deserializer<T> {
-        T deserialize(List<String> parsedData, HashSet<Integer> uniquePolicy);
+        T deserialize(List<String> parsedData);
     }
 
     protected void addDataLine(List<String> fieldsData) throws IOException {
@@ -152,7 +152,6 @@ public class Repository {
     protected <T> List<T> loadData(Deserializer<T> deserializer) {
         Utils.debug("데이터 파일 (" + debugTitle + ") 로드");
         List<T> result = new ArrayList<>();
-        HashSet<Integer> uniquePolicy = new HashSet<>();
         AtomicInteger ignoredData = new AtomicInteger();
         try {
             List<String> lines = Files.readAllLines(Paths.get(file.getPath()));
@@ -166,7 +165,7 @@ public class Repository {
                 try {
                     // todo: 일부 데이터가 없는경우 (사번은 무시, 기획서에서 사번만 고유하므로 나머지는 수정 필요를 명시하자)
                     List<String> parsed = parseDataLine(line);
-                    result.add(deserializer.deserialize(parsed, uniquePolicy));
+                    result.add(deserializer.deserialize(parsed));
                 } catch (ParseException | NumberFormatException e) {
                     // Line이 이상하거나, 정상 파싱은 되었으나 데이터가 이상한 경우
                     ignoredData.getAndIncrement();
