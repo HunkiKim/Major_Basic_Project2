@@ -25,6 +25,7 @@ public class LogRepository extends Repository {
                 String log_category = parsedData.get(1);
                 String log_content = parsedData.get(2);
                 String Day = parsedData.get(3);
+                uniquePolicy.add(log_number);
                 if(uniquePolicy.contains(log_number)) {
                     Utils.exit(Langs.VIOLATE_UNIQUE_KEY);
                 }
