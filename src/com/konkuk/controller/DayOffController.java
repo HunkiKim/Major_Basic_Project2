@@ -30,8 +30,6 @@ public class DayOffController extends Controller {
     private String reason = null;
     private float count = 0;
 
-    EmployeeRepository employeeRepository = EmployeeRepository.getInstance();
-    Employee employee = employeeRepository.findByExactId(employeeId);
     DayOff dayOff = null;
 
     public Controller start() {
@@ -139,7 +137,7 @@ public class DayOffController extends Controller {
         DayOffService dayOffService = new DayOffService();
 
         while(true){
-            UI.print(Langs.DAY_OFF_REASON);
+            UI.print(Langs.DAY_OFF_ADD_REASON);
             reason = UI.getInput();
 
             if(dayOffService.reasonCheck(reason)==true){
@@ -158,19 +156,16 @@ public class DayOffController extends Controller {
             else continue;
         }
 
-        boolean isDone = dayOffService.add(employee, reason, count);
-
-        if(isDone) {
-            //결과 출력
+        Employee employee = dayOffService.add(employeeId, reason, count);
+        if(employee == null) {
+            UI.print(Langs.DAY_OFF_ERROR);
+        } else {
             UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT2);
             UI.print(Langs.HORIZON);
             String result2 = employee.id + " " +
-                            employee.name + " " +
-                            employee.residualDayOff;
+                    employee.name + " " +
+                    employee.residualDayOff;
             UI.print(result2);
-        } else {
-            // 실패한 것
-            UI.print(Langs.DAY_OFF_ERROR);
         }
     }
 
@@ -331,19 +326,16 @@ public class DayOffController extends Controller {
             else continue;
         }
 
-        boolean isDone = dayOffService.reduct(employee, reason, count);
-
-        if(isDone) {
-            //출력
+        Employee employee = dayOffService.add(employeeId, reason, count);
+        if(employee == null) {
+            UI.print(Langs.DAY_OFF_ERROR);
+        } else {
             UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT2);
             UI.print(Langs.HORIZON);
             String result2 = employee.id + " " +
-                            employee.name + " " +
-                            employee.residualDayOff;
+                    employee.name + " " +
+                    employee.residualDayOff;
             UI.print(result2);
-        } else {
-            // 실패한 것
-            UI.print(Langs.DAY_OFF_ERROR);
         }
     }
 }

@@ -65,6 +65,7 @@ public final class Langs {
     public static final String DAY_OFF_CHANGE_REASON = "연차 사유를 입력하세요(수정하지 않을 시 'p' 나 'P'를 입력하세요): ";
     public static final String DAY_OFF_CHANGE_START = "연차 시작 시간(YYYYMMDD HH:MM)을 입력하세요(수정하지 않을 시 'p' 나 'P'를 입력하세요): ";
     public static final String DAY_OFF_ADD = "연차 추가 개수를 입력하세요: ";
+    public static final String DAY_OFF_ADD_REASON = "연차 추가 사유를 입력하세요: ";
     public static final String DAY_OFF_RED = "연차 차감 개수를 입력하세요: ";
     public static final String INPUT_NUM = "연차 번호를 입력하세요: ";
     public static final String DAY_OFF_NOT_EXIST = "입력받은 연차 번호에 해당하는 연차 사용 기록이 없습니다.";

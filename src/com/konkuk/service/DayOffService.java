@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class DayOffService {
     public enum DayOffType {AllDay, HalfDay}
@@ -21,7 +20,6 @@ public class DayOffService {
     EmployeeRepository employeeRepository = EmployeeRepository.getInstance();
 
     private int list_num = 1;
-    private float fcount = 0;
 
     public List<String> getList(int employeeId) {
         List<DayOff> dayOffList = dayOffRepository.findByEmployeeId(employeeId);
@@ -94,14 +92,25 @@ public class DayOffService {
         return employee;
     }
 
-    public boolean add(Employee employee, String reason, float count){
-        fcount = employee.getResidualDayOff() + count;
+    public Employee add(int employeeId, String reason, float count) {
+        Employee employee = employeeRepository.findByExactId(employeeId);
+        float fcount = employee.getResidualDayOff() + count;
         if(fcount>365 || fcount<-365){
             UI.print(Langs.FCOUNT_ERROR);
-            return true;
+            return null;
         }
-        employee.setResidualDayOff(fcount);
-        return false;
+        employee.residualDayOff = fcount;
+        try {
+            DayOff dayOff = new DayOff();
+            dayOff.reason = reason;
+            dayOff.employeeId = employee.id;
+            dayOff.changedDayOffCount = count;
+            dayOffRepository.add(dayOff);
+            employeeRepository.update(employeeId, employee);
+        } catch (IOException e) {
+            return null;
+        }
+        return employee;
     }
 
     public boolean change(DayOff dayOff, String reason, String start, String end){
@@ -121,15 +130,4 @@ public class DayOffService {
         }
         return true;
     }
-
-    public boolean reduct(Employee employee, String reason, float count){
-        fcount = employee.getResidualDayOff() - count;
-        if(fcount>365 || fcount<-365){
-            UI.print(Langs.FCOUNT_ERROR);
-            return true;
-        }
-        employee.setResidualDayOff(fcount);
-        return false;
-    }
-
 }
