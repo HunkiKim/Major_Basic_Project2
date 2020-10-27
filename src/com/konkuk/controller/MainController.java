@@ -19,8 +19,10 @@ public class MainController extends Controller {
                     break;
                 case "3":
                     next = new LogController(LogController.Menu.LOG);
-                case "4" :
+                    break;
+                case "4":
                     System.exit(0);
+                    break;
                 default:
                     break;
             }
