@@ -38,13 +38,14 @@ public class LogController extends Controller {
         UI.print2(Langs.HORIZON);
         log_list.forEach((log -> UI.print(log.Day.substring(0, 4) + "/" + log.Day.substring(4, 6) + "/" + log.Day.substring(6,14) + " " + log.log_category + log.log_content)));
         UI.print2(Langs.HORIZON);
-        UI.print(Langs.INSERT_BACK);
+
     }
 
 
     public void LogCheck() throws IOException, InterruptedException {
+        Print_Log();
         while(true) {
-            Print_Log();
+            UI.print2(Langs.INSERT_BACK);
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             String confirm;
             confirm = br.readLine();
@@ -52,7 +53,7 @@ public class LogController extends Controller {
                 break;
             }
             else {
-                UI.print2("올바르지 않은 입력입니다. 다시 입력해주세요");
+                UI.print("올바르지 않은 입력입니다. 다시 입력해주세요");
                 try {
                     Thread.sleep(2000);
                 } catch(InterruptedException e) {
