@@ -227,22 +227,20 @@ public class DayOffController extends Controller {
                 dayOff = DayOffRepository.getInstance().findByExactId(num);
                 if(dayOff==null){
                     UI.print(Langs.DAY_OFF_NOT_EXIST);
-                    continue;
                 } else break;
             }
 
             while(true){
                 UI.print2(Langs.DAY_OFF_CHANGE_REASON);
                 String reason1 = UI.getInput();
-                if(reason1 == "p" || reason1 == "P") {    //건너뛰기
+                if(reason1.equals("p") || reason1.equals("P")) {    //건너뛰기
                     reason = dayOff.reason;
                     break;
                 } else{
-                    if(dayOffService.reasonCheck(reason1)==true){
+                    if(dayOffService.reasonCheck(reason1)){
                         reason = reason1;
                         break;
                     }
-                    else continue;
                 }
             }
 
@@ -342,20 +340,18 @@ public class DayOffController extends Controller {
             UI.print2(Langs.DAY_OFF_RED_REASON);
             reason = UI.getInput();
 
-            if(dayOffService.reasonCheck(reason)==true){
+            if(dayOffService.reasonCheck(reason)){
                 break;
             }
-            else continue;
         }
 
         while(true){
             UI.print2(Langs.DAY_OFF_RED);
             count = UI.getInput1();
 
-            if(dayOffService.countCheck(count)==true){
+            if(dayOffService.countCheck(count)){
                 break;
             }
-            else continue;
         }
 
         Employee employee = dayOffService.reduct(employeeId, reason, count);
