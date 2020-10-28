@@ -190,7 +190,7 @@ public class EmployeeManageController extends Controller {
                 break;
                 }
             else {
-                Utils.pause(Langs.INPUT_ERROR);
+                Utils.pause(Langs.LETTER_ERROR);
             }
         }
         return new MainController();
