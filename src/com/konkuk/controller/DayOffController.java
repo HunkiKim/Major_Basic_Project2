@@ -117,7 +117,7 @@ public class DayOffController extends Controller {
                 Calendar tmpEnd = Calendar.getInstance();
                 tmpStart.setTime(startDate);
                 tmpEnd.setTime(new Date(endTime));
-                if(tmpStart.get(Calendar.HOUR_OF_DAY) < 12 && tmpEnd.get(Calendar.HOUR_OF_DAY) > 12) {
+                if(tmpStart.get(Calendar.HOUR_OF_DAY) <= 12 && tmpEnd.get(Calendar.HOUR_OF_DAY) >= 12) {
                     endTime += 3600000;
                 }
                 end = Utils.dateToString(new Date(endTime));
@@ -271,7 +271,7 @@ public class DayOffController extends Controller {
                     Calendar tmpEnd = Calendar.getInstance();
                     tmpStart.setTime(startDate);
                     tmpEnd.setTime(new Date(endTime));
-                    if(tmpStart.get(Calendar.HOUR_OF_DAY) < 12 && tmpEnd.get(Calendar.HOUR_OF_DAY) > 12) {
+                    if(tmpStart.get(Calendar.HOUR_OF_DAY) <= 12 && tmpEnd.get(Calendar.HOUR_OF_DAY) >= 12) {
                         endTime += 3600000;
                     }
                     end = Utils.dateToString(new Date(endTime));
