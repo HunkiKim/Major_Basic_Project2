@@ -25,16 +25,6 @@ public class DayOffController extends Controller {
         this.employeeId = employeeId;
     }
 
-    private int type = 0;
-    private int num = 0;
-    private String start = "";
-    private String start1 = "";
-    private String end = "";
-    private String reason = "";
-    private float count = 0;
-
-    DayOff dayOff = null;
-    DayOff dayOff2 = null;
     EmployeeRepository employeeRepository = EmployeeRepository.getInstance();
     Employee employee = employeeRepository.findByExactId(employeeId);
 
@@ -77,6 +67,10 @@ public class DayOffController extends Controller {
 
 
     private void use() {
+        int type;
+        String reason, start, end;
+        DayOff dayOff;
+
         DayOffService dayOffService = new DayOffService();
 
         while (true) {
@@ -159,6 +153,9 @@ public class DayOffController extends Controller {
     }
 
     private void add() {
+        String reason;
+        float count;
+
         DayOffService dayOffService = new DayOffService();
 
         while(true){
@@ -200,6 +197,11 @@ public class DayOffController extends Controller {
     }
 
     private void change_cancel() {
+        int num = 0;
+        String reason, start1, start = "", end;
+
+        DayOff dayOff = null;
+        DayOff dayOff2 = null;
         int m = 0;
         DayOffService dayOffService = new DayOffService();
 
@@ -292,7 +294,7 @@ public class DayOffController extends Controller {
             }
 
 
-            DayOff dayOff = dayOffService.change(num, reason, start, end);
+            dayOff = dayOffService.change(num, reason, start, end);
 
             if (dayOff!=null) {
                 //출력
@@ -318,7 +320,7 @@ public class DayOffController extends Controller {
         } else if (m==2){       //취소
             while(true){    //연차번호 검색, 찾기
                 UI.print2(Langs.INPUT_NUM);
-                int num = UI.getInput2();
+                num = UI.getInput2();
 
                 dayOff = DayOffRepository.getInstance().findByExactId(num);
                 if(dayOff==null){
@@ -342,6 +344,9 @@ public class DayOffController extends Controller {
 
 
     private void reduct(){
+        String reason;
+        float count;
+
         DayOffService dayOffService = new DayOffService();
 
         while(true){
