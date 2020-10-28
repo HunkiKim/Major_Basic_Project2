@@ -78,10 +78,10 @@ public class DayOffService {
         if(employee == null) return null;
 
         if(dayOffType == DayOffType.AllDay){
-            dayOff.changedDayOffCount = 1;
+            dayOff.changedDayOffCount = -1;
             employee.residualDayOff--;
         } else if(dayOffType == DayOffType.HalfDay){
-            dayOff.changedDayOffCount = 0.5f;
+            dayOff.changedDayOffCount = -0.5f;
             employee.residualDayOff = employee.residualDayOff - 0.5f;
         }
         try{
