@@ -19,7 +19,7 @@ public class Repository {
 
     public String debugTitle = "";
     HashSet<Integer> uniquePolicy = new HashSet<>();
-    private File file;
+    private final File file;
 
     protected Repository(String dataFilePath) {
         file = new File(dataFilePath);
