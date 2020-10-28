@@ -38,10 +38,15 @@ public class ManagerController extends Controller {
                     break;
                 case "B":
                     next = new MainController(); //메인
+                    break;
                 case "b":
                     next = new MainController();
+                    break;
                 default:
                     break;
+            }
+            if (next != null){
+                break;
             }
             if(nextMenu.equals("")){
                 Utils.pause(Langs.BLANK_SPACE_ERROR);
@@ -54,9 +59,7 @@ public class ManagerController extends Controller {
                     Utils.pause(Langs.NUM_ERROR);
                 }
             }
-            if (next != null){
-                break;
-            }
+
 
 
             // 그 외는 공통 메시지 출력 후 다시 받기
