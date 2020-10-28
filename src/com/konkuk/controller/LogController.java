@@ -2,6 +2,7 @@ package com.konkuk.controller;
 
 
 import com.konkuk.UI;
+import com.konkuk.Utils;
 import com.konkuk.asset.Langs;
 import com.konkuk.dto.Log;
 import com.konkuk.repository.LogRepository;
@@ -53,12 +54,7 @@ public class LogController extends Controller {
                 break;
             }
             else {
-                UI.print("올바르지 않은 입력입니다. 다시 입력해주세요");
-                try {
-                    Thread.sleep(2000);
-                } catch(InterruptedException e) {
-                    e.printStackTrace();
-                }
+                Utils.pause("올바르지 않은 입력입니다. 다시 입력해주세요");
             }
         }
     }

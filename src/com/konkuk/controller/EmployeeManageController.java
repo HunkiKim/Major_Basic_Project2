@@ -1,6 +1,7 @@
 package com.konkuk.controller;
 
 import com.konkuk.UI;
+import com.konkuk.Utils;
 import com.konkuk.asset.Langs;
 import com.konkuk.dto.Employee;
 import com.konkuk.repository.EmployeeRepository;
@@ -31,30 +32,15 @@ public class EmployeeManageController extends Controller {
             }
             //공통
             if(menu.equals("")){
-                UI.print(Langs.BLANK_SPACE_ERROR);
-                try {
-                    Thread.sleep(2000);
-                } catch(InterruptedException e) {
-                    e.printStackTrace();
-                }
+                Utils.pause(Langs.BLANK_SPACE_ERROR);
                 continue;
             }
             else if(menu.contains(" ")){
-                UI.print(Langs.BLANK_SPACE_ERROR);
-                try {
-                    Thread.sleep(2000);
-                } catch(InterruptedException e) {
-                    e.printStackTrace();
-                }
+                Utils.pause(Langs.BLANK_SPACE_ERROR);
                 continue;
             }
             if(menu.charAt(0)=='0' && menu.length()!=1){
-                UI.print(Langs.BLANK_SPACE_ERROR);
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                Utils.pause(Langs.BLANK_SPACE_ERROR);
                 continue;
             }
             //공통
@@ -68,21 +54,11 @@ public class EmployeeManageController extends Controller {
                     }
                     //공통
                     if(yn.equals("")){
-                        UI.print(Langs.BLANK_SPACE_ERROR);
-                        try {
-                            Thread.sleep(2000);
-                        } catch(InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        Utils.pause(Langs.BLANK_SPACE_ERROR);
                         continue;
                     }
                     else if(yn.contains(" ")){
-                        UI.print(Langs.BLANK_SPACE_ERROR);
-                        try {
-                            Thread.sleep(2000);
-                        } catch(InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        Utils.pause(Langs.BLANK_SPACE_ERROR);
                         continue;
                     }
 
@@ -99,12 +75,7 @@ public class EmployeeManageController extends Controller {
                     else if(new EmployeeService().check(yn) == 1){
                         break;
                     }
-                    UI.print(Langs.LETTER_ERROR);
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    Utils.pause(Langs.LETTER_ERROR);
                 }
 
                 break;
@@ -120,21 +91,11 @@ public class EmployeeManageController extends Controller {
                     }
                     //공통
                     if(id.equals("")){
-                        UI.print(Langs.BLANK_SPACE_ERROR);
-                        try {
-                            Thread.sleep(2000);
-                        } catch(InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        Utils.pause(Langs.BLANK_SPACE_ERROR);
                         continue;
                     }
                     else if(id.contains(" ")){
-                        UI.print(Langs.BLANK_SPACE_ERROR);
-                        try {
-                            Thread.sleep(2000);
-                        } catch(InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        Utils.pause(Langs.BLANK_SPACE_ERROR);
                         continue;
                     }
 
@@ -146,12 +107,7 @@ public class EmployeeManageController extends Controller {
                             }
                         }
                     if (check == 1) {
-                        UI.print("이미 같은 사번이 존재합니다. 다시 입력해주세요");
-                        try {
-                            Thread.sleep(2000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        Utils.pause("이미 같은 사번이 존재합니다. 다시 입력해주세요");
                         continue;
                     }// id 종료
                     break;
@@ -166,21 +122,11 @@ public class EmployeeManageController extends Controller {
                     }
                     //공통
                     if(name.equals("")){
-                        UI.print(Langs.BLANK_SPACE_ERROR);
-                        try {
-                            Thread.sleep(2000);
-                        } catch(InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        Utils.pause(Langs.BLANK_SPACE_ERROR);
                         continue;
                     }
                     else if(name.contains(" ")){
-                        UI.print(Langs.BLANK_SPACE_ERROR);
-                        try {
-                            Thread.sleep(2000);
-                        } catch(InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        Utils.pause(Langs.BLANK_SPACE_ERROR);
                         continue;
                     }
                     //공통
@@ -197,21 +143,11 @@ public class EmployeeManageController extends Controller {
                     }
                     //공통
                     if(salary.equals("")){
-                        UI.print(Langs.BLANK_SPACE_ERROR);
-                        try {
-                            Thread.sleep(2000);
-                        } catch(InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        Utils.pause(Langs.BLANK_SPACE_ERROR);
                         continue;
                     }
                     else if(salary.contains(" ")){
-                        UI.print(Langs.BLANK_SPACE_ERROR);
-                        try {
-                            Thread.sleep(2000);
-                        } catch(InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        Utils.pause(Langs.BLANK_SPACE_ERROR);
                         continue;
                     }
                     //공통
@@ -232,21 +168,11 @@ public class EmployeeManageController extends Controller {
 
                     //공통
                     if(yn.equals("")){
-                        UI.print(Langs.BLANK_SPACE_ERROR);
-                        try {
-                            Thread.sleep(2000);
-                        } catch(InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        Utils.pause(Langs.BLANK_SPACE_ERROR);
                         continue;
                     }
                     else if(yn.contains(" ")){
-                        UI.print(Langs.BLANK_SPACE_ERROR);
-                        try {
-                            Thread.sleep(2000);
-                        } catch(InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        Utils.pause(Langs.BLANK_SPACE_ERROR);
                         continue;
                     }
                     //공통
@@ -264,12 +190,7 @@ public class EmployeeManageController extends Controller {
                     else if(new EmployeeService().check(yn) == 1){
                         break;
                     }
-                    UI.print(Langs.LETTER_ERROR);
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    Utils.pause(Langs.LETTER_ERROR);
                 }
                 break;
             }
@@ -277,12 +198,7 @@ public class EmployeeManageController extends Controller {
                 break;
                 }
             else {
-                UI.print(Langs.INPUT_ERROR);
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                Utils.pause(Langs.INPUT_ERROR);
             }
         }
         return new MainController();

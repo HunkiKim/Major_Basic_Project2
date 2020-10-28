@@ -9,6 +9,17 @@ import java.util.Date;
 import java.util.regex.Pattern;
 
 public class Utils {
+    public static void pause(String msg) {
+        if(msg != null) System.out.println(msg);
+        if(!Settings.DEBUG) {
+            try {
+                Thread.sleep(2000);
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public static void debug(String msg) {
         if(Settings.DEBUG) System.out.println("Debug: " + msg);
     }
@@ -24,6 +35,7 @@ public class Utils {
     }
 
     public static Date stringToDate(String string, String format) {
+        if(string.equals("")) return null;
         Date result = null;
         SimpleDateFormat transFormat = new SimpleDateFormat(format);
         try {
@@ -35,10 +47,10 @@ public class Utils {
     }
 
     public static String dateToString(Date date) {
-        if(date == null) return "";
         return dateToString(date, "yyyyMMdd HH:mm");
     }
     public static String dateToString(Date date, String format) {
+        if(date == null) return "";
         SimpleDateFormat transFormat = new SimpleDateFormat(format);
         return transFormat.format(date);
     }

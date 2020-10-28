@@ -1,6 +1,7 @@
 package com.konkuk.controller;
 
 import com.konkuk.UI;
+import com.konkuk.Utils;
 import com.konkuk.asset.Langs;
 import com.konkuk.dto.Employee;
 import com.konkuk.repository.EmployeeRepository;
@@ -76,13 +77,8 @@ public class DayOffInfoController extends Controller {
                 } else if (menu.equals("2")) {
                     return new MainController();}
                 else {
-                    UI.print("올바르지 않은 입력입니다. 다시 입력해주세요");
-                    try {
-                        Thread.sleep(2000);
-                        UI.print2("입력:");
-                    } catch(InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    Utils.pause("올바르지 않은 입력입니다. 다시 입력해주세요");
+                    UI.print2("입력:");
                 } }}
 
         else if (employeeRepository.findByExactId(employeeId).getResidualDayOff() < 0) { //잔여연차 0미만
@@ -114,13 +110,8 @@ public class DayOffInfoController extends Controller {
                 } else if (menu.equals("2")) {
                     return new MainController();
                 } else {
-                    UI.print("올바르지 않은 입력입니다. 다시 입력해주세요");
-                    try {
-                        Thread.sleep(2000);
-                        UI.print2("입력:");
-                    } catch(InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    Utils.pause("올바르지 않은 입력입니다. 다시 입력해주세요");
+                    UI.print2("입력:");
                 }
             }
         }

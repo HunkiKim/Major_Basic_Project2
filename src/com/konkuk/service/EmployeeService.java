@@ -96,33 +96,18 @@ public class EmployeeService {
     public boolean idcheck(String id){
         for (int i = 0; i < id.length(); i++) { //숫자가 아닐시
             if (id.charAt(i) < 48 || id.charAt(i) > 58) {
-                UI.print(Langs.LETTER_ERROR);
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                Utils.pause(Langs.LETTER_ERROR);
                 return false;
             }
         }
 
         if(id.charAt(0)=='0' && id.length()!=1){
-            UI.print(Langs.BLANK_SPACE_ERROR);
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Utils.pause(Langs.BLANK_SPACE_ERROR);
             return false;
         }
         //길이 확인
         if(id.length()<1 || id.length()>7){
-            UI.print(Langs.LENGTH_ERROR);
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Utils.pause(Langs.LENGTH_ERROR);
             return false;
         }
         return true;
@@ -130,22 +115,12 @@ public class EmployeeService {
 
     public boolean namecheck(String name){
         if(!Pattern.matches("^[a-zA-Z가-힣]*$",name)){//정규표현식 한글
-            UI.print(Langs.LETTER_ERROR);
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Utils.pause(Langs.LETTER_ERROR);
             return false;
         }
 
         if(name.getBytes().length<1 || name.getBytes().length>32) { //한글 영어 둘다있기때문에 byte로 했습니다.
-            UI.print(Langs.LETTER_ERROR);
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Utils.pause(Langs.LETTER_ERROR);
             return false;
         }
 
@@ -155,33 +130,18 @@ public class EmployeeService {
     public boolean salarycheck(String salary){
         for (int i = 0; i < salary.length(); i++) { //숫자가 아닐시
             if (salary.charAt(i) < 48 || salary.charAt(i) > 58) {
-                UI.print(Langs.LETTER_ERROR);
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                Utils.pause(Langs.LETTER_ERROR);
                 return false;
             }
         }
 
         if(salary.charAt(0)=='0' && salary.length()!=1){ // 앞에 0이 있는경우?
-            UI.print(Langs.BLANK_SPACE_ERROR);
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Utils.pause(Langs.BLANK_SPACE_ERROR);
             return false;
         }
 
         if(salary.length()<8 || salary.length()>10){
-            UI.print(Langs.LENGTH_ERROR);
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Utils.pause(Langs.LENGTH_ERROR);
             return false;
         }
 

@@ -1,6 +1,7 @@
 package com.konkuk.controller;
 
 import com.konkuk.UI;
+import com.konkuk.Utils;
 import com.konkuk.asset.Langs;
 import com.konkuk.dto.Employee;
 import com.konkuk.service.EmployeeService;
@@ -43,29 +44,14 @@ public class ManagerController extends Controller {
                     break;
             }
             if(nextMenu.equals("")){
-                UI.print(Langs.BLANK_SPACE_ERROR);
-                try {
-                    Thread.sleep(2000);
-                } catch(InterruptedException e) {
-                    e.printStackTrace();
-                }
+                Utils.pause(Langs.BLANK_SPACE_ERROR);
             }
             else if(nextMenu.contains(" ")){
-                UI.print(Langs.BLANK_SPACE_ERROR);
-                try {
-                    Thread.sleep(2000);
-                } catch(InterruptedException e) {
-                    e.printStackTrace();
-                }
+                Utils.pause(Langs.BLANK_SPACE_ERROR);
             }
             else if(new EmployeeService().idcheck(nextMenu)){
                 if(Integer.parseInt(nextMenu)>4 || Integer.parseInt(nextMenu)<1) {
-                    UI.print(Langs.NUM_ERROR);
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    Utils.pause(Langs.NUM_ERROR);
                 }
             }
             if (next != null){

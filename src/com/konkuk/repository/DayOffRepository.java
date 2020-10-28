@@ -34,9 +34,6 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
                 Date dateDayOffStart = Utils.stringToDate(parsedData.get(4));
                 Date dateDayOffEnd = Utils.stringToDate(parsedData.get(5));
                 Date dateCreated = Utils.stringToDate(parsedData.get(6));
-                if(dateDayOffStart == null || dateDayOffEnd == null || dateCreated == null)
-                    return null;
-
                 DayOff dayOff = new DayOff();
                 dayOff.id = id;
                 dayOff.employeeId = employeeId;

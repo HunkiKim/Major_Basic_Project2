@@ -1,5 +1,6 @@
 package com.konkuk.repository;
 
+import com.konkuk.UI;
 import com.konkuk.Utils;
 import com.konkuk.asset.Langs;
 
@@ -97,7 +98,7 @@ public class Repository {
     }
 
     private String serialize(List<String> fieldsData) {
-        return "\n" + fieldsData
+        return fieldsData
                 .stream()
                 .map(s -> "\"" + s.replaceAll("\"", "\"\"") + "\"")
                 .collect(Collectors.joining(","));
@@ -108,6 +109,16 @@ public class Repository {
     }
 
     protected void addDataLine(List<String> fieldsData) throws IOException {
+
+        
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+        String line = bufferedReader.readLine();
+        while(line != null) {
+            System.out.println(line.indexOf(System.getProperty("line.separator")));
+            line = bufferedReader.readLine();
+
+        }
+
         FileWriter writer = new FileWriter(file, true);
         writer.write(serialize(fieldsData));
         writer.flush();
@@ -130,9 +141,7 @@ public class Repository {
                 String dataId = parseDataLine(line).get(0);
                 if(!dataId.equals(parsedId)) {
                     bufferedWriter.write(line);
-                    // 다음행이 있고, 그게 삭제될 행이 아니면 개행 추가
-                    // todo: 개행 버그 수정
-                    if(next != null) bufferedWriter.write(System.getProperty("line.separator"));
+                    bufferedWriter.write(System.getProperty("line.separator"));
                     bufferedWriter.flush();
                 }
             } catch (ParseException e) {
