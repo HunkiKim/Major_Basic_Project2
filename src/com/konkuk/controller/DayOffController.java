@@ -1,5 +1,6 @@
 package com.konkuk.controller;
 
+import com.konkuk.Main;
 import com.konkuk.UI;
 import com.konkuk.Utils;
 import com.konkuk.asset.Langs;
@@ -42,7 +43,7 @@ public class DayOffController extends Controller {
             if(menu.equals("B") || menu.equals("b")){
                 return new MainController();
             }
-            if(menu.equals("1")) {
+            else if (menu.equals("1")) {
                 use();
                 break;
             } else if(menu.equals("2")) {

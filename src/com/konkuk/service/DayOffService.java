@@ -43,13 +43,13 @@ public class DayOffService {
             return false;
         }
 
-        for (int i = 0; i < reason.length(); i++) { //알파벳이 아닐시, 이상한 문자일 경우 예외처리
+        /*for (int i = 0; i < reason.length(); i++) { //알파벳이 아닐시, 이상한 문자일 경우 예외처리
             if (!(reason.charAt(i)>=65 && reason.charAt(i)<=90) &&
                     !(reason.charAt(i)>=97 && reason.charAt(i)<=122) && !(reason.charAt(i)>='가' && reason.charAt(i)<='힣')) {
                 UI.print(Langs.LETTER_ERROR);
                 return false;
             }
-        }
+        }*/
         return true;
     }
 
