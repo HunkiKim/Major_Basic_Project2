@@ -111,19 +111,19 @@ public class DayOffService {
         return employee;
     }
 
-    public boolean change(int dayOffId, String reason, String start, String end){
+    public DayOff change(int dayOffId, String reason, String start, String end){
         DayOff dayOff = DayOffRepository.getInstance().findByExactId(dayOffId);
         try{
             dayOff.reason = reason;
             Date startDate = Utils.stringToDate(start);
             dayOff.dateDayOffStart = startDate;
-            Date endDate = Utils.stringToDate(start);
+            Date endDate = Utils.stringToDate(end);
             dayOff.dateDayOffEnd = endDate;
             dayOffRepository.update(dayOffId, dayOff);
         } catch (IOException e){
-            return true;
+            return null;
         }
-        return false;
+        return dayOff;
     }
 
     public boolean cancel(DayOff dayOff){

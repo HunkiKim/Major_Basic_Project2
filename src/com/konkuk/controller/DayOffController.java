@@ -48,9 +48,10 @@ public class DayOffController extends Controller {
                 employee.residualDayOff;
         UI.print(result2);
 
-        UI.print2(Langs.DAY_OFF_MAIN);
-        String menu = UI.getInput();
         while(true) {
+            UI.print2(Langs.DAY_OFF_MAIN);
+            String menu = UI.getInput();
+
             if(menu.equals("B") || menu.equals("b")){
                 return new MainController();
             }
@@ -68,6 +69,7 @@ public class DayOffController extends Controller {
                 break;
             } else {
                 UI.print(Langs.INPUT_ERROR);
+                continue;
             }
         }
         return new MainController();
@@ -233,7 +235,7 @@ public class DayOffController extends Controller {
 
                 dayOff = DayOffRepository.getInstance().findByExactId(num);
                 if(dayOff==null){
-                    System.out.print(Langs.DAY_OFF_NOT_EXIST);
+                    UI.print(Langs.DAY_OFF_NOT_EXIST);
                     continue;
                 } else break;
             }
@@ -244,12 +246,13 @@ public class DayOffController extends Controller {
                 if(reason1 == "p" || reason1 == "P") {    //건너뛰기
                     reason = dayOff.reason;
                     break;
+                } else{
+                    if(dayOffService.reasonCheck(reason1)==true){
+                        reason = reason1;
+                        break;
+                    }
+                    else continue;
                 }
-
-                if(dayOffService.reasonCheck(reason1)==true){
-                    break;
-                }
-                else continue;
             }
 
             while(true){
@@ -260,7 +263,7 @@ public class DayOffController extends Controller {
 
                 dayOff2 = DayOffRepository.getInstance().findByDate(employeeId, startDate);  //이미 사용한 날짜를 중복해서 입력 예외
                 if(dayOff2!=null){
-                    System.out.print(Langs.DAY_OFF_USED2);
+                    UI.print(Langs.DAY_OFF_USED2);
                     continue;
                 }
 
@@ -289,9 +292,9 @@ public class DayOffController extends Controller {
             }
 
 
-            boolean isDone = dayOffService.change(num, reason, start, end);
+            DayOff dayOff = dayOffService.change(num, reason, start, end);
 
-            if (isDone) {
+            if (dayOff!=null) {
                 //출력
                 UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT3);
                 UI.print(Langs.HORIZON);
