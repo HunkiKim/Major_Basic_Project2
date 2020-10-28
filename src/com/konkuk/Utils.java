@@ -35,6 +35,7 @@ public class Utils {
     }
 
     public static String dateToString(Date date) {
+        if(date == null) return "";
         return dateToString(date, "yyyyMMdd HH:mm");
     }
     public static String dateToString(Date date, String format) {

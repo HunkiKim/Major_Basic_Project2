@@ -99,11 +99,11 @@ public class DayOffService {
         }
         employee.residualDayOff = fcount;
         try {
-            //DayOff dayOff = new DayOff();
-            //dayOff.reason = reason;
-            //dayOff.employeeId = employee.id;
-            //dayOff.changedDayOffCount = count;
-            //dayOffRepository.add(dayOff);
+            DayOff dayOff = new DayOff();
+            dayOff.reason = reason;
+            dayOff.employeeId = employee.id;
+            dayOff.changedDayOffCount = count;
+            dayOffRepository.add(dayOff);
             employeeRepository.update(employeeId, employee);
         } catch (IOException e) {
             return null;
@@ -145,11 +145,11 @@ public class DayOffService {
         }
         employee.residualDayOff = fcount;
         try {
-            //DayOff dayOff = new DayOff();
-            //dayOff.reason = reason;
-            //dayOff.employeeId = employee.id;
-            //dayOff.changedDayOffCount = count;
-            //dayOffRepository.add(dayOff);
+            DayOff dayOff = new DayOff();
+            dayOff.reason = reason;
+            dayOff.employeeId = employee.id;
+            dayOff.changedDayOffCount = count;
+            dayOffRepository.add(dayOff);
             employeeRepository.update(employeeId, employee);
         } catch (IOException e) {
             return null;
