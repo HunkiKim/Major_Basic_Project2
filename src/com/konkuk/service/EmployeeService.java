@@ -15,11 +15,9 @@ import java.util.regex.Pattern;
 
 public class EmployeeService {
     EmployeeRepository Erepositry = EmployeeRepository.getInstance();
-    public boolean add(Employee employee) {
-        // 비즈니스 로직
 
-
-        return false;
+    public Employee getEmployee(int employeeId) {
+        return Erepositry.findByExactId(employeeId);
     }
 
     public List<Employee> getEmployees(String input) throws IllegalLengthException, IllegalLetterException {

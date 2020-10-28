@@ -3,6 +3,7 @@ package com.konkuk;
 import com.konkuk.asset.Langs;
 import com.konkuk.asset.Settings;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,6 +29,12 @@ public class Utils {
         debug("강제 종료");
         System.out.println(msg);
         System.exit(0);
+    }
+
+    public static String floatToString(float f) {
+        DecimalFormat df = new DecimalFormat("#");
+        df.setMaximumFractionDigits(0);
+        return df.format(f);
     }
 
     public static Date stringToDate(String string) {
