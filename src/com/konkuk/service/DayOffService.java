@@ -40,10 +40,8 @@ public class DayOffService {
         }
 
         for (int i = 0; i < reason.length(); i++) { //알파벳이 아닐시, 이상한 문자일 경우 예외처리
-            if ((reason.charAt(i)>=65 && reason.charAt(i)<=90) ||
-                    (reason.charAt(i)>=97 && reason.charAt(i)<=122) || (reason.charAt(i)>='가' && reason.charAt(i)<='힣')) {
-                return true;
-            } else {
+            if (!(reason.charAt(i)>=65 && reason.charAt(i)<=90) &&
+                    !(reason.charAt(i)>=97 && reason.charAt(i)<=122) && !(reason.charAt(i)>='가' && reason.charAt(i)<='힣')) {
                 UI.print(Langs.LETTER_ERROR);
                 return false;
             }
@@ -94,18 +92,18 @@ public class DayOffService {
 
     public Employee add(int employeeId, String reason, float count) {
         Employee employee = employeeRepository.findByExactId(employeeId);
-        float fcount = employee.getResidualDayOff() + count;
+        float fcount = employee.residualDayOff + count;
         if(fcount>365 || fcount<-365){
             UI.print(Langs.FCOUNT_ERROR);
             return null;
         }
         employee.residualDayOff = fcount;
         try {
-            DayOff dayOff = new DayOff();
-            dayOff.reason = reason;
-            dayOff.employeeId = employee.id;
-            dayOff.changedDayOffCount = count;
-            dayOffRepository.add(dayOff);
+            //DayOff dayOff = new DayOff();
+            //dayOff.reason = reason;
+            //dayOff.employeeId = employee.id;
+            //dayOff.changedDayOffCount = count;
+            //dayOffRepository.add(dayOff);
             employeeRepository.update(employeeId, employee);
         } catch (IOException e) {
             return null;
@@ -113,14 +111,15 @@ public class DayOffService {
         return employee;
     }
 
-    public boolean change(int id, DayOff dayOff, String reason, String start, String end){
+    public boolean change(int dayOffId, String reason, String start, String end){
+        DayOff dayOff = DayOffRepository.getInstance().findByExactId(dayOffId);
         try{
             dayOff.reason = reason;
             Date startDate = Utils.stringToDate(start);
             dayOff.dateDayOffStart = startDate;
             Date endDate = Utils.stringToDate(start);
             dayOff.dateDayOffEnd = endDate;
-            dayOffRepository.update(id, dayOff);
+            dayOffRepository.update(dayOffId, dayOff);
         } catch (IOException e){
             return true;
         }
@@ -135,5 +134,26 @@ public class DayOffService {
             return false;
         }
         return true;
+    }
+
+    public Employee reduct(int employeeId, String reason, float count) {
+        Employee employee = employeeRepository.findByExactId(employeeId);
+        float fcount = employee.residualDayOff - count;
+        if(fcount>365 || fcount<-365){
+            UI.print(Langs.FCOUNT_ERROR);
+            return null;
+        }
+        employee.residualDayOff = fcount;
+        try {
+            //DayOff dayOff = new DayOff();
+            //dayOff.reason = reason;
+            //dayOff.employeeId = employee.id;
+            //dayOff.changedDayOffCount = count;
+            //dayOffRepository.add(dayOff);
+            employeeRepository.update(employeeId, employee);
+        } catch (IOException e) {
+            return null;
+        }
+        return employee;
     }
 }

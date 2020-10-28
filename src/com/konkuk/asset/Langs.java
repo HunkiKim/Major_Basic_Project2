@@ -69,6 +69,7 @@ public final class Langs {
     public static final String DAY_OFF_ADD = "연차 추가 개수를 입력하세요: ";
     public static final String DAY_OFF_ADD_REASON = "연차 추가 사유를 입력하세요: ";
     public static final String DAY_OFF_RED = "연차 차감 개수를 입력하세요: ";
+    public static final String DAY_OFF_RED_REASON = "연차 차감 사유를 입력하세요: ";
     public static final String INPUT_NUM = "연차 번호를 입력하세요: ";
     public static final String DAY_OFF_NOT_EXIST = "입력받은 연차 번호에 해당하는 연차 사용 기록이 없습니다.";
     public static final String DAY_OFF_DELETE = "연차 사용을 취소합니다.";
