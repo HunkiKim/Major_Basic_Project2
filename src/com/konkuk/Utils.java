@@ -40,8 +40,7 @@ public class Utils {
         SimpleDateFormat transFormat = new SimpleDateFormat(format);
         try {
             result = transFormat.parse(string);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        } catch (ParseException ignored) {
         }
         return result;
     }
