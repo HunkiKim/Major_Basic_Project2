@@ -17,6 +17,7 @@ import java.util.List;
 public class DayOffRepository extends Repository implements IDayOffRepository {
 
     private List<DayOff> dayOffList;
+    String header = DayOff.getHeader();
 
     private DayOffRepository(String dataFilePath) {
         super(dataFilePath);
@@ -45,7 +46,7 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
                 return dayOff;
             });
         } else {
-            createEmptyDataFile(DayOff.getHeader());
+            createEmptyDataFile(header);
         }
     }
 
@@ -71,17 +72,15 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
     }
 
     @Override
-    public DayOff update(int dayOffId, DayOff dayOff) throws IOException {
-        deleteDataLine(dayOffId);
+    public void update(int dayOffId, DayOff dayOff) {
         dayOff.id = dayOffId;
-        addDataLine(parseDtoToList(dayOff));
         for(int i = 0; i < dayOffList.size(); i++) {
             if(dayOffList.get(i).id == dayOffId) {
                 dayOffList.set(i, dayOff);
                 break;
             }
         }
-        return dayOff;
+        reCreateFile();
     }
 
     @Override
@@ -97,14 +96,14 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
     }
 
     @Override
-    public void delete(int dayOffId) throws IOException {
-        deleteDataLine(dayOffId);
+    public void delete(int dayOffId) {
         for(int i = 0; i < dayOffList.size(); i++) {
             if(dayOffList.get(i).id == dayOffId) {
                 dayOffList.remove(i);
                 break;
             }
         }
+        reCreateFile();
     }
 
     @Override
@@ -187,5 +186,15 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
         result.add(Utils.dateToString(dayOff.dateDayOffEnd));
         result.add(Utils.dateToString(dayOff.dateCreated));
         return result;
+    }
+
+    private void reCreateFile() {
+        createEmptyDataFile(this.header);
+        dayOffList.forEach(dayOff -> {
+            try {
+                addDataLine(parseDtoToList(dayOff));
+            } catch (IOException ignored) {
+            }
+        });
     }
 }

@@ -117,24 +117,18 @@ public class DayOffService {
 
     public DayOff change(int dayOffId, String reason, String start, String end){
         DayOff dayOff = dayOffRepository.findByExactId(dayOffId);
-        try{
-            dayOff.reason = reason;
-            dayOff.dateDayOffStart = Utils.stringToDate(start);
-            dayOff.dateDayOffEnd = Utils.stringToDate(end);
-            dayOffRepository.update(dayOffId, dayOff);
-        } catch (IOException e){
-            return null;
-        }
+        dayOff.reason = reason;
+        dayOff.dateDayOffStart = Utils.stringToDate(start);
+        dayOff.dateDayOffEnd = Utils.stringToDate(end);
+        dayOffRepository.update(dayOffId, dayOff);
         return dayOff;
     }
 
     public boolean cancel(int dayOffId) {
-        try {
-            dayOffRepository.delete(dayOffId);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
+        // dayOffList에서 dayOffId 제거
+        // dayOffList로 파일 재생성
+
+        dayOffRepository.delete(dayOffId);
         return true;
     }
 

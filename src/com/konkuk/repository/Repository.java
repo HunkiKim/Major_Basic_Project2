@@ -114,41 +114,6 @@ public class Repository {
         writer.close();
     }
 
-    protected void deleteDataLine(int id) throws IOException {
-        String originPath = file.getPath();
-        String tmpFilePath = file.getPath() + "_" + new Date().getTime();
-        File tmpFile = new File(tmpFilePath);
-
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(tmpFile));
-
-        String line = bufferedReader.readLine();
-        String parsedId = String.valueOf(id);
-        while(line != null) {
-            String next = bufferedReader.readLine();
-            try {
-                String dataId = parseDataLine(line).get(0);
-                if(!dataId.equals(parsedId)) {
-                    bufferedWriter.write(line);
-                    // 다음행이 있고, 그게 삭제될 행이 아니면 개행 추가
-                    // todo: 개행 버그 수정
-                    if(next != null) bufferedWriter.write(System.getProperty("line.separator"));
-                    bufferedWriter.flush();
-                }
-            } catch (ParseException e) {
-                Utils.debug("데이터 파일 헤더 제거 or 잘못된 라인 삭제:" + line);
-            }
-            line = next;
-        }
-        bufferedReader.close();
-        bufferedWriter.close();
-
-        //todo: 이거 실패했을때 처리
-        file.delete();
-        tmpFile.renameTo(file);
-        file = new File(originPath);
-    }
-
     protected <T> List<T> loadData(Deserializer<T> deserializer) {
         Utils.debug("데이터 파일 (" + debugTitle + ") 로드");
         List<T> result = new ArrayList<>();

@@ -13,6 +13,7 @@ import java.util.List;
 public class EmployeeRepository extends Repository implements  IEmployeeRepository {
 
     private List<Employee> employeeList;
+    String header = Employee.getHeader();
 
     private EmployeeRepository(String dataFilePath) {
         super(dataFilePath);
@@ -30,7 +31,7 @@ public class EmployeeRepository extends Repository implements  IEmployeeReposito
                 return new Employee(id, name, salary, residualDayOff);
             });
         } else {
-            createEmptyDataFile(Employee.getHeader());
+            createEmptyDataFile(header);
         }
     }
 
@@ -109,27 +110,35 @@ public class EmployeeRepository extends Repository implements  IEmployeeReposito
     }
 
     @Override
-    public Employee update(int targetId, Employee employee) throws IOException {
-        deleteDataLine(targetId);
+    public void update(int targetId, Employee employee) {
         employee.id = targetId;
-        addDataLine(parseDtoToList(employee));
         for(int i = 0; i < employeeList.size(); i++) {
             if(employeeList.get(i).id == targetId) {
                 employeeList.set(i, employee);
                 break;
             }
         }
-        return employee;
+        reCreateFile();
     }
 
     @Override
-    public void delete(int targetId) throws IOException {
-        deleteDataLine(targetId);
+    public void delete(int targetId) {
         for(int i = 0; i < employeeList.size(); i++) {
             if(employeeList.get(i).id == targetId) {
                 employeeList.remove(i);
                 break;
             }
         }
+        reCreateFile();
+    }
+
+    private void reCreateFile() {
+        createEmptyDataFile(this.header);
+        employeeList.forEach(employee -> {
+            try {
+                addDataLine(parseDtoToList(employee));
+            } catch (IOException ignored) {
+            }
+        });
     }
 }

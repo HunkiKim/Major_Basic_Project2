@@ -6,12 +6,12 @@ import java.io.IOException;
 import java.util.List;
 
 public interface IEmployeeRepository {
-    public Employee add(Employee employee) throws IOException;
-    public List<Employee> findByName(String name);
-    public List<Employee> findBySalary(int salary);
+    Employee add(Employee employee) throws IOException;
+    List<Employee> findByName(String name);
+    List<Employee> findBySalary(int salary);
     List<Employee> findBySalaryBetween(int salary, int salary2);
-    public List<Employee> findById(int id);
-    public Employee findByExactId(int id);
-    public Employee update(int targetId, Employee data) throws IOException;
-    public void delete(int targetId) throws IOException;
+    List<Employee> findById(int id);
+    Employee findByExactId(int id);
+    void update(int targetId, Employee data);
+    void delete(int targetId);
 }
