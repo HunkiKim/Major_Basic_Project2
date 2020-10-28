@@ -78,6 +78,11 @@ public class DayOffHistoryController extends Controller{
         UI.print2(Langs.DAY_OFF_HISTORY_MAIN);
         String menu = UI.getInput();
         if(!Utils.menuCheck(menu)){
+            try {
+                Thread.sleep(2000);
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            }
             return this.start();
         }
         if(menu.equals(Menu.ANNUAL_HISTORY.getMenu())){
@@ -97,6 +102,11 @@ public class DayOffHistoryController extends Controller{
         UI.print2(Langs.DAY_OFF_HISTORY_PAGE);
         String menu = UI.getInput();
         if(!Utils.menuCheck(menu)){
+            try {
+                Thread.sleep(2000);
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            }
             this.pageMenu(options, history);
         }
 
@@ -109,7 +119,11 @@ public class DayOffHistoryController extends Controller{
                 }
                 else {
                     UI.print(Langs.DAY_OFF_LAST_PAGE);
-
+                    try {
+                        Thread.sleep(2000);
+                    } catch(InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
                 return this.history(options);
             }else if(options.equals(Option.RANGE.getMenu())){
@@ -120,7 +134,11 @@ public class DayOffHistoryController extends Controller{
                 }
                 else {
                     UI.print(Langs.DAY_OFF_LAST_PAGE);
-
+                    try {
+                        Thread.sleep(2000);
+                    } catch(InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
                 history.getHistory(this.employeeId,this.searchPage, this.startDate, this.endDate, 2);
                 return this.pageMenu(options, history);
@@ -132,9 +150,14 @@ public class DayOffHistoryController extends Controller{
                 }
                 else {
                     UI.print(Langs.DAY_OFF_LAST_PAGE);
-
+                    try {
+                        Thread.sleep(2000);
+                    } catch(InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
                 history.getHistory(this.employeeId,this.searchPage, this.startDate, this.endDate, 3);
+
                 return this.pageMenu(options, history);
             }
 
@@ -147,7 +170,11 @@ public class DayOffHistoryController extends Controller{
                 }
                 else{
                     UI.print(Langs.DAY_OFF_FIRST_PAGE);
-
+                    try {
+                        Thread.sleep(2000);
+                    } catch(InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
                 return this.history(options);
             }else if(options.equals(Option.RANGE.getMenu())){
@@ -158,6 +185,11 @@ public class DayOffHistoryController extends Controller{
                 }
                 else {
                     UI.print(Langs.DAY_OFF_FIRST_PAGE);
+                    try {
+                        Thread.sleep(2000);
+                    } catch(InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
                 history.getHistory(this.employeeId,this.searchPage, this.startDate, this.endDate, 2);
                 return this.pageMenu(options, history);
@@ -169,6 +201,11 @@ public class DayOffHistoryController extends Controller{
                 }
                 else {
                     UI.print(Langs.DAY_OFF_FIRST_PAGE);
+                    try {
+                        Thread.sleep(2000);
+                    } catch(InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
                 history.getHistory(this.employeeId,this.searchPage, this.startDate, this.endDate, 3);
                 return this.pageMenu(options, history);
@@ -180,6 +217,11 @@ public class DayOffHistoryController extends Controller{
         }
         else{
             UI.print(Langs.INPUT_ERROR);
+            try {
+                Thread.sleep(2000);
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            }
             this.pageMenu(options, history);
         }
         return this.start();
@@ -219,14 +261,29 @@ public class DayOffHistoryController extends Controller{
 
                 if(!Utils.isOnlyNumber(checkString) || !Utils.isOnlyNumber(checkString1)) {
                     UI.print(Langs.DAY_OFF_LETTER_ERROR);
+                    try {
+                        Thread.sleep(2000);
+                    } catch(InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     continue;
                 }
                 if(checkString.length()!=8 || checkString1.length()!=8){
                     UI.print(Langs.DAY_OFF_LENGTH_ERROR);
+                    try {
+                        Thread.sleep(2000);
+                    } catch(InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     continue;
                 }
                 if(!Utils.isValidationDate(checkString)||!Utils.isValidationDate(checkString1)){
                     UI.print(Langs.DAY_OFF_INVALIDATION_DATE);
+                    try {
+                        Thread.sleep(2000);
+                    } catch(InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     continue;
                 }
 
@@ -244,6 +301,11 @@ public class DayOffHistoryController extends Controller{
 
         if(!result){
             UI.print(Langs.DAY_OFF_DSNT_EXIST);
+            try {
+                Thread.sleep(2000);
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            }
             return this.start();
         }
         return this.pageMenu(options, history);
