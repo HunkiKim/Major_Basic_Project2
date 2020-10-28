@@ -1,6 +1,5 @@
 package com.konkuk.controller;
 
-import com.konkuk.Main;
 import com.konkuk.UI;
 import com.konkuk.Utils;
 import com.konkuk.asset.Langs;
@@ -313,19 +312,24 @@ public class DayOffController extends Controller {
                 // 실패한 것
                 UI.print(Langs.DAY_OFF_ERROR);
             }
-        } else if (m==2){       //취소
+        } else {       //취소
+            String inputs;
+            int dayOffId = 0;
             while(true){    //연차번호 검색, 찾기
                 UI.print2(Langs.INPUT_NUM);
-                num = UI.getInput2();
-
-                dayOff = DayOffRepository.getInstance().findByExactId(num);
-                if(dayOff==null){
-                    System.out.print(Langs.DAY_OFF_NOT_EXIST);
-                    continue;
-                } else break;
+                inputs = UI.getInput();
+                if(Utils.isOnlyNumber(inputs)) {
+                    dayOffId = Integer.parseInt(inputs);
+                    if(dayOffService.getDayOff(dayOffId) == null) {
+                        Utils.pause(Langs.DAY_OFF_NOT_EXIST);
+                    } else {
+                        break;
+                    }
+                } else {
+                    Utils.pause(Langs.BLANK_SPACE_ERROR);
+                }
             }
-
-            boolean isDone = dayOffService.cancel(dayOff);
+            boolean isDone = dayOffService.cancel(dayOffId);
 
             if (isDone) {
                 //잘 된것

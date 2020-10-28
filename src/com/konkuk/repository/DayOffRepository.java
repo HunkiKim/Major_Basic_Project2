@@ -98,10 +98,10 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
 
     // todo: 이거 id로 수정
     @Override
-    public void delete(DayOff dayoff) throws IOException {
-        deleteDataLine(dayoff.id);
+    public void delete(int dayOffId) throws IOException {
+        deleteDataLine(dayOffId);
         for(int i = 0; i < dayOffList.size(); i++) {
-            if(dayOffList.get(i).id == dayoff.id) {
+            if(dayOffList.get(i).id == dayOffId) {
                 dayOffList.remove(i);
                 break;
             }

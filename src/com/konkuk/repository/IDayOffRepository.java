@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IDayOffRepository {
     public DayOff add(DayOff dayoff) throws IOException;
-    public void delete(DayOff dayoff) throws IOException;
+    public void delete(int dayOffId) throws IOException;
     public List<DayOff> findByEmployeeId(int employeeId);
     public DayOff update(int dayOffId, DayOff dayOff) throws IOException;
     DayOff findByExactId(int id);

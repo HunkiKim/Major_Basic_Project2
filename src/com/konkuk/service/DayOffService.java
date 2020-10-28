@@ -21,6 +21,10 @@ public class DayOffService {
 
     private int list_num = 1;
 
+    public DayOff getDayOff(int dayOffId) {
+        return dayOffRepository.findByExactId(dayOffId);
+    }
+
     public List<String> getList(int employeeId) {
         List<DayOff> dayOffList = dayOffRepository.findByEmployeeId(employeeId);
         Employee employee = employeeRepository.findByExactId(employeeId);
@@ -124,9 +128,9 @@ public class DayOffService {
         return dayOff;
     }
 
-    public boolean cancel(DayOff dayOff){
+    public boolean cancel(int dayOffId) {
         try {
-            dayOffRepository.delete(dayOff);
+            dayOffRepository.delete(dayOffId);
         } catch (IOException e) {
             e.printStackTrace();
             return false;
