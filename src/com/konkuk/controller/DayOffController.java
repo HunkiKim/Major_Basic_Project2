@@ -137,11 +137,7 @@ public class DayOffController extends Controller {
                     end + " " +
                     employee.residualDayOff;
             UI.print(result1);
-            try {
-                Thread.sleep(2000);
-            } catch(InterruptedException e) {
-                e.printStackTrace();
-            }
+            Utils.pause("");
         } else {
             // 실패한 것
             UI.print(Langs.DAY_OFF_ERROR);
@@ -184,11 +180,7 @@ public class DayOffController extends Controller {
                     employee.name + " " +
                     employee.residualDayOff;
             UI.print(result2);
-            try {
-                Thread.sleep(2000);
-            } catch(InterruptedException e) {
-                e.printStackTrace();
-            }
+            Utils.pause("");
         }
     }
 
@@ -303,11 +295,7 @@ public class DayOffController extends Controller {
                         end + " " +
                         employee.residualDayOff;
                 UI.print(result3);
-                try {
-                    Thread.sleep(2000);
-                } catch(InterruptedException e) {
-                    e.printStackTrace();
-                }
+                Utils.pause("");
             } else {
                 // 실패한 것
                 UI.print(Langs.DAY_OFF_ERROR);
@@ -379,11 +367,7 @@ public class DayOffController extends Controller {
                     employee.name + " " +
                     employee.residualDayOff;
             UI.print(result2);
-            try {
-                Thread.sleep(2000);
-            } catch(InterruptedException e) {
-                e.printStackTrace();
-            }
+            Utils.pause("");
         }
     }
 }
