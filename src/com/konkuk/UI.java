@@ -1,5 +1,6 @@
 package com.konkuk;
 
+import com.konkuk.asset.Langs;
 import com.konkuk.asset.Settings;
 import com.konkuk.dto.Log;
 import java.util.List;
@@ -10,9 +11,7 @@ public class UI {
         System.out.println(msg);
     }
     public static void print2(String msg){ System.out.print(msg);}
-    public static void print_log(List<Log> log_list) {
 
-    }
     public static String getInput() {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();

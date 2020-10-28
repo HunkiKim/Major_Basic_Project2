@@ -56,7 +56,7 @@ public class DayOffController extends Controller {
                 reduct();
                 break;
             } else {
-                UI.print(Langs.INPUT_ERROR);
+                Utils.pause(Langs.BLANK_SPACE_ERROR);
                 continue;
             }
         }
@@ -81,7 +81,7 @@ public class DayOffController extends Controller {
                 type = 1;
                 break;
             } else {
-                UI.print(Langs.INPUT_ERROR);
+                Utils.pause(Langs.BLANK_SPACE_ERROR);
             }
 
         }
@@ -104,12 +104,12 @@ public class DayOffController extends Controller {
 
             dayOff = DayOffRepository.getInstance().findByDate(employeeId, startDate);  //이미 사용한 날짜를 중복해서 입력 예외
             if(dayOff!=null){
-                UI.print(Langs.DAY_OFF_USED);
+                Utils.pause(Langs.DAY_OFF_USED);
                 continue;
             }
 
             if(startDate == null) {
-                UI.print(Langs.INPUT_ERROR_TIME);
+                Utils.pause(Langs.INPUT_ERROR_TIME);
             } else {
                 long endTime = startDate.getTime() + (type == 0 ? 28800000 : 14400000);
 
@@ -138,10 +138,9 @@ public class DayOffController extends Controller {
                     end + " " +
                     employee.residualDayOff;
             UI.print(result1);
-            Utils.pause("");
         } else {
             // 실패한 것
-            UI.print(Langs.DAY_OFF_ERROR);
+            Utils.pause(Langs.DAY_OFF_ERROR);
         }
     }
 
@@ -173,7 +172,7 @@ public class DayOffController extends Controller {
 
         Employee employee = dayOffService.add(employeeId, reason, count);
         if(employee == null) {
-            UI.print(Langs.DAY_OFF_ERROR);
+            Utils.pause(Langs.DAY_OFF_ERROR);
         } else {
             UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT2);
             UI.print(Langs.HORIZON);
@@ -181,7 +180,6 @@ public class DayOffController extends Controller {
                     employee.name + " " +
                     employee.residualDayOff;
             UI.print(result2);
-            Utils.pause("");
         }
     }
 
@@ -214,7 +212,7 @@ public class DayOffController extends Controller {
                 m = 2;
                 break;
             } else{
-                UI.print(Langs.INPUT_ERROR);
+                Utils.pause(Langs.INPUT_ERROR);
                 continue;
             }
         }
@@ -226,7 +224,7 @@ public class DayOffController extends Controller {
 
                 dayOff = DayOffRepository.getInstance().findByExactId(num);
                 if(dayOff==null){
-                    UI.print(Langs.DAY_OFF_NOT_EXIST);
+                    Utils.pause(Langs.DAY_OFF_NOT_EXIST);
                 } else break;
             }
 
@@ -252,7 +250,7 @@ public class DayOffController extends Controller {
 
                 dayOff2 = DayOffRepository.getInstance().findByDate(employeeId, startDate);  //이미 사용한 날짜를 중복해서 입력 예외
                 if(dayOff2!=null){
-                    UI.print(Langs.DAY_OFF_USED2);
+                    Utils.pause(Langs.DAY_OFF_USED2);
                     continue;
                 }
 
@@ -263,7 +261,7 @@ public class DayOffController extends Controller {
                 }
 
                 if(startDate == null) {
-                    UI.print(Langs.INPUT_ERROR_TIME);
+                    Utils.pause(Langs.INPUT_ERROR_TIME);
                     continue;
                 } else{
                     long endTime = startDate.getTime() + 14400000;  //연차 수정은 4시간 고정
@@ -294,10 +292,9 @@ public class DayOffController extends Controller {
                         end + " " +
                         employee.residualDayOff;
                 UI.print(result3);
-                Utils.pause("");
             } else {
                 // 실패한 것
-                UI.print(Langs.DAY_OFF_ERROR);
+                Utils.pause(Langs.DAY_OFF_ERROR);
             }
         } else {       //취소
             String inputs;
@@ -323,7 +320,7 @@ public class DayOffController extends Controller {
                 UI.print(Langs.DAY_OFF_DELETE);
             } else {
                 // 실패한 것
-                UI.print(Langs.DAY_OFF_ERROR);
+                Utils.pause(Langs.DAY_OFF_ERROR);
             }
         }
 
@@ -356,7 +353,7 @@ public class DayOffController extends Controller {
 
         Employee employee = dayOffService.reduct(employeeId, reason, count);
         if(employee == null) {
-            UI.print(Langs.DAY_OFF_ERROR);
+            Utils.pause(Langs.DAY_OFF_ERROR);
         } else {
             UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT2);
             UI.print(Langs.HORIZON);
@@ -364,7 +361,6 @@ public class DayOffController extends Controller {
                     employee.name + " " +
                     employee.residualDayOff;
             UI.print(result2);
-            Utils.pause("");
         }
     }
 }
