@@ -246,18 +246,19 @@ public class DayOffController extends Controller {
                 UI.print2(Langs.DAY_OFF_CHANGE_START);
                 start1 = UI.getInput();
 
+                if(start1.equals("p") || start1.equals("P")){
+                    start = Utils.dateToString(dayOff.dateDayOffStart);
+                    end = Utils.dateToString(dayOff.dateDayOffEnd);
+                    dayOff = dayOffService.change(num, reason, start, end);
+                    break;
+                }
+
                 Date startDate = Utils.stringToDate(start1);
 
                 dayOff2 = DayOffRepository.getInstance().findByDate(employeeId, startDate);  //이미 사용한 날짜를 중복해서 입력 예외
                 if(dayOff2!=null){
                     Utils.pause(Langs.DAY_OFF_USED2);
                     continue;
-                }
-
-                if(start1.equals("p") || start1.equals("P")){
-                    start = Utils.dateToString(dayOff.dateDayOffStart);
-                    end = Utils.dateToString(dayOff.dateDayOffEnd);
-                    break;
                 }
 
                 if(startDate == null) {
@@ -274,12 +275,13 @@ public class DayOffController extends Controller {
                         endTime += 3600000;
                     }
                     end = Utils.dateToString(new Date(endTime));
+                    dayOff = dayOffService.change(num, reason, start1, end);
                     break;
                 }
             }
 
-            dayOff = dayOffService.change(num, reason, start1, end);
             Employee employee = employeeService.getEmployee(employeeId);
+            String start3 = Utils.dateToString(dayOff.dateDayOffStart);
             if (dayOff!=null) {
                 //출력
                 UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT3);
@@ -288,7 +290,7 @@ public class DayOffController extends Controller {
                         dayOff.employeeId + " " +
                         employee.name + " " +
                         reason + " " +
-                        start1 + " " +
+                        start3 + " " +
                         end + " " +
                         employee.residualDayOff;
                 UI.print(result3);
