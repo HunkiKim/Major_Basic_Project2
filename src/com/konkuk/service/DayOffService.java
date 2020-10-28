@@ -25,13 +25,15 @@ public class DayOffService {
         return dayOffRepository.findByExactId(dayOffId);
     }
 
-    public List<String> getList(int employeeId) {
+    public List<String> getUsedDayOffList(int employeeId) {
         List<DayOff> dayOffList = dayOffRepository.findByEmployeeId(employeeId);
         Employee employee = employeeRepository.findByExactId(employeeId);
         List<String> results = new ArrayList<>();   //결과
         dayOffList.forEach((dayOff -> {
-            results.add(dayOff.id + "  " + dayOff.employeeId + "  " + employee.name + "  " + dayOff.reason + "  " +
-                    Utils.dateToString(dayOff.dateDayOffStart) + "  " + Utils.dateToString(dayOff.dateDayOffEnd));
+            if(dayOff.dateDayOffStart != null) {
+                results.add(dayOff.id + "  " + dayOff.employeeId + "  " + employee.name + "  " + dayOff.reason + "  " +
+                        Utils.dateToString(dayOff.dateDayOffStart) + "  " + Utils.dateToString(dayOff.dateDayOffEnd));
+            }
         }));
         return results;
     }
