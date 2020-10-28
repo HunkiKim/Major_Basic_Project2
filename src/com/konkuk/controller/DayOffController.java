@@ -288,7 +288,7 @@ public class DayOffController extends Controller {
                         dayOff.employeeId + " " +
                         employee.name + " " +
                         reason + " " +
-                        start + " " +
+                        start1 + " " +
                         end + " " +
                         employee.residualDayOff;
                 UI.print(result3);
