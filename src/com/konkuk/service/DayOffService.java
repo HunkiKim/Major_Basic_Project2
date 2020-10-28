@@ -54,7 +54,7 @@ public class DayOffService {
     }
 
     public boolean countCheck(float count){
-        if(count>-30 && count<30){
+        if(count>=-30 && count<=30){
             return true;
         }
         else {
@@ -107,6 +107,7 @@ public class DayOffService {
             dayOff.reason = reason;
             dayOff.employeeId = employee.id;
             dayOff.changedDayOffCount = count;
+            dayOff.dateCreated = new Date();
             dayOffRepository.add(dayOff);
             employeeRepository.update(employeeId, employee);
         } catch (IOException e) {
