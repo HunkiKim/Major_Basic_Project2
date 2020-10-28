@@ -103,7 +103,7 @@ public class DayOffController extends Controller {
 
             dayOff = DayOffRepository.getInstance().findByDate(employeeId, startDate);  //이미 사용한 날짜를 중복해서 입력 예외
             if(dayOff!=null){
-                System.out.print(Langs.DAY_OFF_USED);
+                UI.print(Langs.DAY_OFF_USED);
                 continue;
             }
 

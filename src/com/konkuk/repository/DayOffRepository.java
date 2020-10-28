@@ -96,7 +96,6 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
         return result;
     }
 
-    // todo: 이거 id로 수정
     @Override
     public void delete(int dayOffId) throws IOException {
         deleteDataLine(dayOffId);
@@ -122,8 +121,19 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
     @Override
     public DayOff findByDate(int employeeId, Date start){
         DayOff result = null;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(start);
+        int y = calendar.get(Calendar.YEAR);
+        int m = calendar.get(Calendar.MONTH);
+        int d = calendar.get(Calendar.DATE);
         for(DayOff e : dayOffList) {
-            if(e.employeeId == employeeId && e.dateDayOffStart == start) {
+            if(e.dateDayOffStart == null) continue;
+            calendar.setTime(e.dateDayOffStart);
+            if(e.employeeId == employeeId &&
+                    calendar.get(Calendar.YEAR) == y &&
+                    calendar.get(Calendar.MONTH) == m &&
+                    calendar.get(Calendar.DATE) == d
+            ) {
                 result = e;
                 break;
             }
