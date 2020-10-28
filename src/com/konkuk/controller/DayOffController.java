@@ -101,28 +101,26 @@ public class DayOffController extends Controller {
             start = UI.getInput();
 
             Date startDate = Utils.stringToDate(start);
-
+            if(startDate == null) {
+                Utils.pause(Langs.INPUT_ERROR_TIME);
+                continue;
+            }
             dayOff = DayOffRepository.getInstance().findByDate(employeeId, startDate);  //이미 사용한 날짜를 중복해서 입력 예외
             if(dayOff!=null){
                 Utils.pause(Langs.DAY_OFF_USED);
                 continue;
             }
+            long endTime = startDate.getTime() + (type == 0 ? 28800000 : 14400000);
 
-            if(startDate == null) {
-                Utils.pause(Langs.INPUT_ERROR_TIME);
-            } else {
-                long endTime = startDate.getTime() + (type == 0 ? 28800000 : 14400000);
-
-                Calendar tmpStart = Calendar.getInstance();
-                Calendar tmpEnd = Calendar.getInstance();
-                tmpStart.setTime(startDate);
-                tmpEnd.setTime(new Date(endTime));
-                if(tmpStart.get(Calendar.HOUR_OF_DAY) <= 12 && tmpEnd.get(Calendar.HOUR_OF_DAY) >= 12) {
-                    endTime += 3600000;
-                }
-                end = Utils.dateToString(new Date(endTime));
-                break;
+            Calendar tmpStart = Calendar.getInstance();
+            Calendar tmpEnd = Calendar.getInstance();
+            tmpStart.setTime(startDate);
+            tmpEnd.setTime(new Date(endTime));
+            if(tmpStart.get(Calendar.HOUR_OF_DAY) <= 12 && tmpEnd.get(Calendar.HOUR_OF_DAY) >= 12) {
+                endTime += 3600000;
             }
+            end = Utils.dateToString(new Date(endTime));
+            break;
         }
 
         DayOffType dayOffType = type == 0 ? DayOffType.AllDay : DayOffType.HalfDay;
