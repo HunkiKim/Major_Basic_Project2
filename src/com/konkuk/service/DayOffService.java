@@ -27,7 +27,7 @@ public class DayOffService {
         List<String> results = new ArrayList<>();   //결과
         dayOffList.forEach((dayOff -> {
             results.add(dayOff.id + "  " + dayOff.employeeId + "  " + employee.name + "  " + dayOff.reason + "  " +
-                    dayOff.dateDayOffStart + "  " + dayOff.dateDayOffEnd);
+                    Utils.dateToString(dayOff.dateDayOffStart) + "  " + Utils.dateToString(dayOff.dateDayOffEnd));
         }));
         return results;
     }
