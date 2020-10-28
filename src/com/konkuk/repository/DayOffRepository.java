@@ -45,7 +45,7 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
                 return dayOff;
             });
         } else {
-            createEmptyDataFile(Employee.getHeader());
+            createEmptyDataFile(DayOff.getHeader());
         }
     }
 
