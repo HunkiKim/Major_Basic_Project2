@@ -10,13 +10,11 @@ import com.konkuk.repository.DayOffRepository;
 import com.konkuk.repository.EmployeeRepository;
 import com.konkuk.service.DayOffService;
 import com.konkuk.service.DayOffService.DayOffType;
+import com.konkuk.service.EmployeeService;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-
-
 
 public class DayOffController extends Controller {
     int employeeId;
@@ -26,7 +24,7 @@ public class DayOffController extends Controller {
     }
 
     EmployeeRepository employeeRepository = EmployeeRepository.getInstance();
-    Employee employee = employeeRepository.findByExactId(employeeId);
+    EmployeeService employeeService = new EmployeeService();
 
     public Controller start() {
         Employee employee = employeeRepository.findByExactId(employeeId);
@@ -64,7 +62,6 @@ public class DayOffController extends Controller {
         }
         return new MainController();
     }
-
 
     private void use() {
         int type;
@@ -269,7 +266,7 @@ public class DayOffController extends Controller {
                     continue;
                 }
 
-                if(start1 == "p" || start1 == "P"){
+                if(start1.equals("p") || start1.equals("P")){
                     start = Utils.dateToString(dayOff.dateDayOffStart);
                     end = Utils.dateToString(dayOff.dateDayOffEnd);
                     break;
@@ -293,9 +290,8 @@ public class DayOffController extends Controller {
                 }
             }
 
-
-            dayOff = dayOffService.change(num, reason, start, end);
-
+            dayOff = dayOffService.change(num, reason, start1, end);
+            Employee employee = employeeService.getEmployee(employeeId);
             if (dayOff!=null) {
                 //출력
                 UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT3);
