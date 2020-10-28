@@ -157,6 +157,7 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
         else
             finalEndYear = endYear;
         dayOffList.forEach((dayOff -> {
+            if(dayOff.dateDayOffStart == null) return;
             calendar.setTime(dayOff.dateDayOffStart);
             int tempYear = calendar.get(Calendar.YEAR)*10000+(calendar.get(Calendar.MONTH)+1)*100+calendar.get(Calendar.DAY_OF_MONTH);
             if(dayOff.employeeId == employeeId && tempYear>= finalStartYear &&tempYear<= finalEndYear) {
