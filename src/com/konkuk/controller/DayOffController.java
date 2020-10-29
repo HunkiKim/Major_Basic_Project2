@@ -39,6 +39,7 @@ public class DayOffController extends Controller {
         while(true) {
             UI.print2(Langs.DAY_OFF_MAIN);
             String menu = UI.getInput();
+            if(menu.toLowerCase().equals("b")) break;
 
             if(menu.equals("B") || menu.equals("b")){
                 return new MainController();
@@ -73,6 +74,7 @@ public class DayOffController extends Controller {
         while (true) {
             UI.print2(Langs.DAY_OFF_USE);
             String menu = UI.getInput();
+            if(menu.toLowerCase().equals("b")) return;
 
             if (menu.equals("1")) {         //연차
                 type = 0;
@@ -89,6 +91,7 @@ public class DayOffController extends Controller {
         while(true){
             UI.print2(Langs.DAY_OFF_REASON);
             reason = UI.getInput();
+            if(reason.toLowerCase().equals("b")) return;
 
             if(dayOffService.reasonCheck(reason)==true){
                 break;
@@ -99,6 +102,7 @@ public class DayOffController extends Controller {
         while(true){
             UI.print2(Langs.DAY_OFF_START);
             start = UI.getInput();
+            if(start.toLowerCase().equals("b")) return;
 
             Date startDate = Utils.stringToDate(start);
             if(startDate == null) {
@@ -151,6 +155,7 @@ public class DayOffController extends Controller {
         while(true){
             UI.print2(Langs.DAY_OFF_ADD_REASON);
             reason = UI.getInput();
+            if(reason.toLowerCase().equals("b")) return;
 
             if(dayOffService.reasonCheck(reason)==true){
                 break;
@@ -160,7 +165,9 @@ public class DayOffController extends Controller {
 
         while(true){
             UI.print2(Langs.DAY_OFF_ADD);
-            count = UI.getInput1();
+            String inputs = UI.getInput();
+            if(inputs.toLowerCase().equals("b")) return;
+            count = Float.parseFloat(inputs);
 
             if(dayOffService.countCheck(count)==true){
                 break;
@@ -202,6 +209,7 @@ public class DayOffController extends Controller {
         while(true){
             UI.print2(Langs.DAY_OFF_CC);
             String menu = UI.getInput();
+            if(menu.toLowerCase().equals("b")) break;
 
             if(menu.equals("1")){
                 m = 1;
@@ -218,7 +226,9 @@ public class DayOffController extends Controller {
         if(m==1){       //수정
             while(true){    //연차번호 검색, 찾기
                 UI.print2(Langs.INPUT_NUM);
-                num = UI.getInput2();
+                String inputs = UI.getInput();
+                if(inputs.toLowerCase().equals("b")) break;
+                num = Integer.parseInt(inputs);
 
                 dayOff = DayOffRepository.getInstance().findByExactId(num);
                 if(dayOff==null){
@@ -229,6 +239,7 @@ public class DayOffController extends Controller {
             while(true){
                 UI.print2(Langs.DAY_OFF_CHANGE_REASON);
                 String reason1 = UI.getInput();
+                if(reason1.toLowerCase().equals("b")) return;
                 if(reason1.equals("p") || reason1.equals("P")) {    //건너뛰기
                     reason = dayOff.reason;
                     break;
@@ -243,6 +254,7 @@ public class DayOffController extends Controller {
             while(true){
                 UI.print2(Langs.DAY_OFF_CHANGE_START);
                 start1 = UI.getInput();
+                if(start1.toLowerCase().equals("b")) return;
 
                 if(start1.equals("p") || start1.equals("P")){
                     start = Utils.dateToString(dayOff.dateDayOffStart);
@@ -302,6 +314,7 @@ public class DayOffController extends Controller {
             while(true){    //연차번호 검색, 찾기
                 UI.print2(Langs.INPUT_NUM);
                 inputs = UI.getInput();
+                if(inputs.toLowerCase().equals("b")) return;
                 if(Utils.isOnlyNumber(inputs)) {
                     dayOffId = Integer.parseInt(inputs);
                     if(dayOffService.getDayOff(dayOffId) == null) {
@@ -336,6 +349,7 @@ public class DayOffController extends Controller {
         while(true){
             UI.print2(Langs.DAY_OFF_RED_REASON);
             reason = UI.getInput();
+            if(reason.toLowerCase().equals("b")) return;
 
             if(dayOffService.reasonCheck(reason)){
                 break;
@@ -344,7 +358,9 @@ public class DayOffController extends Controller {
 
         while(true){
             UI.print2(Langs.DAY_OFF_RED);
-            count = UI.getInput1();
+            String inputs = UI.getInput();
+            if(inputs.toLowerCase().equals("b")) return;
+            count = Float.parseFloat(inputs);
 
             if(dayOffService.countCheck(count)){
                 break;
