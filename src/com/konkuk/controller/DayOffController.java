@@ -216,7 +216,7 @@ public class DayOffController extends Controller {
         DayOffService dayOffService = new DayOffService();
 
         //연차 사용 리스트 출력
-        UI.print(Langs.HORIZON);
+        UI.print2(Langs.HORIZON);
         UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT3);
         UI.print2(Langs.HORIZON);
         List<String> dayOffList = dayOffService.getUsedDayOffList(employeeId);
