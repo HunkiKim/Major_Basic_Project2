@@ -244,6 +244,12 @@ public class DayOffController extends Controller {
                 UI.print2(Langs.DAY_OFF_CHANGE_START);
                 start1 = UI.getInput();
 
+                Date startDate = Utils.stringToDate(start1);
+                if(startDate == null) {
+                    Utils.pause(Langs.INPUT_ERROR_TIME);
+                    continue;
+                }
+
                 if(start1.equals("p") || start1.equals("P")){
                     start = Utils.dateToString(dayOff.dateDayOffStart);
                     end = Utils.dateToString(dayOff.dateDayOffEnd);
@@ -251,31 +257,26 @@ public class DayOffController extends Controller {
                     break;
                 }
 
-                Date startDate = Utils.stringToDate(start1);
-
                 dayOff2 = DayOffRepository.getInstance().findByDate(employeeId, startDate);  //이미 사용한 날짜를 중복해서 입력 예외
                 if(dayOff2!=null){
                     Utils.pause(Langs.DAY_OFF_USED2);
                     continue;
                 }
 
-                if(startDate == null) {
-                    Utils.pause(Langs.INPUT_ERROR_TIME);
-                    continue;
-                } else{
-                    long endTime = startDate.getTime() + 14400000;  //연차 수정은 4시간 고정
 
-                    Calendar tmpStart = Calendar.getInstance();
-                    Calendar tmpEnd = Calendar.getInstance();
-                    tmpStart.setTime(startDate);
-                    tmpEnd.setTime(new Date(endTime));
-                    if(tmpStart.get(Calendar.HOUR_OF_DAY) <= 12 && tmpEnd.get(Calendar.HOUR_OF_DAY) >= 12) {
-                        endTime += 3600000;
-                    }
-                    end = Utils.dateToString(new Date(endTime));
-                    dayOff = dayOffService.change(num, reason, start1, end);
-                    break;
+                long endTime = startDate.getTime() + 14400000;  //연차 수정은 4시간 고정
+
+                Calendar tmpStart = Calendar.getInstance();
+                Calendar tmpEnd = Calendar.getInstance();
+                tmpStart.setTime(startDate);
+                tmpEnd.setTime(new Date(endTime));
+                if(tmpStart.get(Calendar.HOUR_OF_DAY) <= 12 && tmpEnd.get(Calendar.HOUR_OF_DAY) >= 12) {
+                    endTime += 3600000;
                 }
+                end = Utils.dateToString(new Date(endTime));
+                dayOff = dayOffService.change(num, reason, start1, end);
+                break;
+
             }
 
             Employee employee = employeeService.getEmployee(employeeId);
