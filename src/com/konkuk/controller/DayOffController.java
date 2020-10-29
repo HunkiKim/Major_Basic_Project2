@@ -30,7 +30,7 @@ public class DayOffController extends Controller {
         Employee employee = employeeRepository.findByExactId(employeeId);
         System.out.println();
         UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT2);
-        UI.print(Langs.HORIZON);
+        UI.print2(Langs.HORIZON);
         String result2 = employee.id + " " +
                 employee.name + " " +
                 employee.residualDayOff;
@@ -141,7 +141,7 @@ public class DayOffController extends Controller {
         if (employee != null) {
             //결과 출력
             UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT);
-            UI.print(Langs.HORIZON);
+            UI.print2(Langs.HORIZON);
             String result1 = employee.id + " " +
                     employee.name + " " +
                     reason + " " +
@@ -176,8 +176,17 @@ public class DayOffController extends Controller {
             UI.print2(Langs.DAY_OFF_ADD);
             String inputs = UI.getInput();
             if(inputs.toLowerCase().equals("b")) return;
-            count = Float.parseFloat(inputs);
-
+            if((inputs.length() > 1 && inputs.charAt(0)=='0') ||
+                    !inputs.equals(inputs.trim())){
+                Utils.pause(Langs.BLANK_SPACE_ERROR);
+                continue;
+            }
+            try{
+                count = Float.parseFloat(inputs);
+            } catch (NumberFormatException e) {
+                Utils.pause(Langs.BLANK_SPACE_ERROR);
+                continue;
+            }
             if(dayOffService.countCheck(count)==true){
                 break;
             }
@@ -209,7 +218,7 @@ public class DayOffController extends Controller {
         //연차 사용 리스트 출력
         UI.print(Langs.HORIZON);
         UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT3);
-        UI.print(Langs.HORIZON);
+        UI.print2(Langs.HORIZON);
         List<String> dayOffList = dayOffService.getUsedDayOffList(employeeId);
         for(String data : dayOffList){
             System.out.println(data);
