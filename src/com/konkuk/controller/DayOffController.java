@@ -180,7 +180,7 @@ public class DayOffController extends Controller {
             Utils.pause(Langs.DAY_OFF_ERROR);
         } else {
             UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT2);
-            UI.print(Langs.HORIZON);
+            UI.print2(Langs.HORIZON);
             String result2 = employee.id + " " +
                     employee.name + " " +
                     employee.residualDayOff;
@@ -265,7 +265,7 @@ public class DayOffController extends Controller {
                 if(start1.equals("p") || start1.equals("P")){
                     start = Utils.dateToString(dayOff.dateDayOffStart);
                     end = Utils.dateToString(dayOff.dateDayOffEnd);
-                    dayOff = dayOffService.change(num, reason, start, end);
+                    dayOff = dayOffService.change(employeeId, num, reason, start, end);
                     break;
                 }
 
@@ -286,7 +286,7 @@ public class DayOffController extends Controller {
                     endTime += 3600000;
                 }
                 end = Utils.dateToString(new Date(endTime));
-                dayOff = dayOffService.change(num, reason, start1, end);
+                dayOff = dayOffService.change(employeeId, num, reason, start1, end);
                 break;
 
             }
