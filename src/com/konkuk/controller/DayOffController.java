@@ -89,7 +89,11 @@ public class DayOffController extends Controller {
         }
 
         while(true){
-            UI.print2(Langs.DAY_OFF_REASON);
+            if(type==0){
+                UI.print2(Langs.DAY_OFF_REASON);
+            } else if(type==1){
+                UI.print2(Langs.HALF_DAY_OFF_REASON);
+            }
             reason = UI.getInput();
             if(reason.toLowerCase().equals("b")) return;
 
@@ -100,7 +104,12 @@ public class DayOffController extends Controller {
         }
 
         while(true){
-            UI.print2(Langs.DAY_OFF_START);
+            if(type==0){
+                UI.print2(Langs.DAY_OFF_START);
+            } else if(type==1){
+                UI.print2(Langs.HALF_DAY_OFF_START);
+            }
+
             start = UI.getInput();
             if(start.toLowerCase().equals("b")) return;
 
