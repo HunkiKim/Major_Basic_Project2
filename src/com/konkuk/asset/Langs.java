@@ -44,7 +44,7 @@ public final class Langs {
             "2. 정보 삭제\n"+
             HORIZON;
     public static final String DAY_OFF_INFO = "사번 이름 잔여 연차수";
-    public static final String COUNT_ERROR = "올바른 개수가 아닙니다. -30~30사이의 수로 다시 입력하세요.";
+    public static final String COUNT_ERROR = "올바른 개수가 아닙니다. -30~30사이의 정수로 다시 입력하세요.";
     public static final String FCOUNT_ERROR = "문법적으로 올바른 연차는 -365 ~ 365 사이의 수입니다.";
     public static final String REASON_ERROR = "올바른 입력이 아닙니다. 1byte이상 512byte미만으로 다시 입력하세요.";
     public static final String FIND_ERROR = "선택한 대상이 존재하지 않습니다. 다시 입력해주세요. ";
