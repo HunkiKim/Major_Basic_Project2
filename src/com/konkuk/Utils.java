@@ -105,7 +105,7 @@ public class Utils {
             }
         }
         try {
-            int t = Integer.parseInt(target);
+            Float.parseFloat(target);
             return InputType.NUMERIC;
         } catch (NumberFormatException e) {
             return InputType.LETTER;

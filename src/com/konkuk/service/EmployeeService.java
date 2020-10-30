@@ -27,11 +27,10 @@ public class EmployeeService {
         InputType inputType = Utils.getInputType(input);
 
         if(inputType == InputType.NUMERIC) {
-            int parsedInput = Integer.parseInt(input);
             if(len>=1 && len<=7) {
-                return Erepositry.findById(parsedInput);
+                return Erepositry.findById(Integer.parseInt(input));
             } else if(len>=8 && len<=10){
-                return Erepositry.findBySalary(new BigDecimal(parsedInput));
+                return Erepositry.findBySalary(new BigDecimal(input));
             } else {
                 throw new IllegalLengthException();
             }
