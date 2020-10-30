@@ -159,8 +159,18 @@ public class DayOffService {
         return dayOff;
     }
 
-    public boolean cancel(int dayOffId) {
+    public boolean cancel(int employeeId, int dayOffId) {
+        DayOff dayOff = getDayOff(dayOffId);
+        Employee employee = employeeRepository.findByExactId(employeeId);
+        if(dayOff == null || employee == null) return false;
         dayOffRepository.delete(dayOffId);
+        logRepository.addLog("[연차취소] " ,
+                "사원번호 : "+employee.getId()+
+                        " 사원이름 : "+employee.getName()+
+                        " 잔여연차 : "+employee.getResidualDayOff()+
+                        " 연차시작일 : "+Utils.dateToString(dayOff.dateDayOffStart, "yyyyMMdd")+
+                        " 연차종료일 : "+Utils.dateToString(dayOff.dateDayOffEnd, "yyyyMMdd")+
+                        " 연차기간 : "+ Math.abs(dayOff.changedDayOffCount));
         return true;
     }
 

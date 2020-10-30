@@ -246,8 +246,17 @@ public class DayOffController extends Controller {
                 UI.print2(Langs.INPUT_NUM);
                 String inputs = UI.getInput();
                 if(inputs.toLowerCase().equals("b")) break;
-                num = Integer.parseInt(inputs);
-
+                if((inputs.length() > 1 && inputs.charAt(0)=='0') ||
+                        !inputs.equals(inputs.trim())){
+                    Utils.pause(Langs.BLANK_SPACE_ERROR);
+                    continue;
+                }
+                try{
+                    num = Integer.parseInt(inputs);
+                } catch (NumberFormatException e) {
+                    Utils.pause(Langs.BLANK_SPACE_ERROR);
+                    continue;
+                }
                 dayOff = DayOffRepository.getInstance().findByExactId(num);
                 if(dayOff==null){
                     Utils.pause(Langs.DAY_OFF_NOT_EXIST);
@@ -273,18 +282,16 @@ public class DayOffController extends Controller {
                 UI.print2(Langs.DAY_OFF_CHANGE_START);
                 start1 = UI.getInput();
                 if(start1.toLowerCase().equals("b")) return;
-
-                Date startDate = Utils.stringToDate(start1);
-                if(startDate == null) {
-                    Utils.pause(Langs.INPUT_ERROR_TIME);
-                    continue;
-                }
-
                 if(start1.equals("p") || start1.equals("P")){
                     start = Utils.dateToString(dayOff.dateDayOffStart);
                     end = Utils.dateToString(dayOff.dateDayOffEnd);
                     dayOff = dayOffService.change(employeeId, num, reason, start, end);
                     break;
+                }
+                Date startDate = Utils.stringToDate(start1);
+                if(startDate == null) {
+                    Utils.pause(Langs.INPUT_ERROR_TIME);
+                    continue;
                 }
 
                 dayOff2 = DayOffRepository.getInstance().findByDate(employeeId, startDate);  //이미 사용한 날짜를 중복해서 입력 예외
@@ -313,8 +320,9 @@ public class DayOffController extends Controller {
             String start3 = Utils.dateToString(dayOff.dateDayOffStart);
             if (dayOff!=null) {
                 //출력
+                UI.print2(Langs.HORIZON);
                 UI.print(Langs.DATA_FILE_HEADER_DAYOFF_RESULT3);
-                UI.print(Langs.HORIZON);
+                UI.print2(Langs.HORIZON);
                 String result3 = dayOff.id + " " +
                         dayOff.employeeId + " " +
                         employee.name + " " +
@@ -334,6 +342,11 @@ public class DayOffController extends Controller {
                 UI.print2(Langs.INPUT_NUM);
                 inputs = UI.getInput();
                 if(inputs.toLowerCase().equals("b")) return;
+                if((inputs.length() > 1 && inputs.charAt(0)=='0') ||
+                        !inputs.equals(inputs.trim())){
+                    Utils.pause(Langs.BLANK_SPACE_ERROR);
+                    continue;
+                }
                 if(Utils.isOnlyNumber(inputs)) {
                     dayOffId = Integer.parseInt(inputs);
                     if(dayOffService.getDayOff(dayOffId) == null) {
@@ -345,11 +358,11 @@ public class DayOffController extends Controller {
                     Utils.pause(Langs.BLANK_SPACE_ERROR);
                 }
             }
-            boolean isDone = dayOffService.cancel(dayOffId);
+            boolean isDone = dayOffService.cancel(employeeId, dayOffId);
 
             if (isDone) {
                 //잘 된것
-                UI.print(Langs.DAY_OFF_DELETE);
+                Utils.pause(Langs.DAY_OFF_DELETE);
             } else {
                 // 실패한 것
                 Utils.pause(Langs.DAY_OFF_ERROR);
