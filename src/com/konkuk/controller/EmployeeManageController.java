@@ -96,12 +96,14 @@ public class EmployeeManageController extends Controller {
                     }
 
                     //공통
-                    if (new EmployeeService().idcheck(id)) // 체크에서 올바르다면(true) 반복문 빠져가가기
+                    if (new EmployeeService().idcheck(id)) {
                         for (int i = 0; i < Erepository.findById(Integer.parseInt(id)).size(); i++) {
                             if (Erepository.findById(Integer.parseInt(id)).get(i).id == Integer.parseInt(id)) {
                                 check = 1;
                             }
                         }
+                    }else
+                        continue;
                     if (check == 1) {
                         Utils.pause("이미 같은 사번이 존재합니다. 다시 입력해주세요");
                         continue;
@@ -190,7 +192,7 @@ public class EmployeeManageController extends Controller {
                 break;
                 }
             else {
-                Utils.pause(Langs.LETTER_ERROR);
+                Utils.pause(Langs.INPUT_ERROR);
             }
         }
         return new MainController();

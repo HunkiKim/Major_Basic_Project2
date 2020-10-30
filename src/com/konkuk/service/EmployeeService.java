@@ -118,7 +118,7 @@ public class EmployeeService {
         }
 
         if(name.getBytes().length<1 || name.getBytes().length>32) { //한글 영어 둘다있기때문에 byte로 했습니다.
-            Utils.pause(Langs.LETTER_ERROR);
+            Utils.pause(Langs.LENGTH_ERROR);
             return false;
         }
 

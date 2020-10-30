@@ -190,11 +190,14 @@ public class EmployeeController extends Controller {
             }
             //공통 항목
             if(employeeService.idcheck(id)) {
-                for(int i=0; i<Erepositry.findById(Integer.parseInt(id)).size(); i++){
-                    if(Erepositry.findById(Integer.parseInt(id)).get(i).id==Integer.parseInt(id)){
-                        check=1;
+                for (int i = 0; i < Erepositry.findById(Integer.parseInt(id)).size(); i++) {
+                    if (Erepositry.findById(Integer.parseInt(id)).get(i).id == Integer.parseInt(id)) {
+                        check = 1;
                     }
                 }
+            }else
+                continue;
+
                 if(check==1){
                     Utils.pause("이미 같은 사번이 존재합니다. 다시 입력해주세요");
                     continue;
@@ -203,7 +206,8 @@ public class EmployeeController extends Controller {
                 break;
             }
 
-        }// id 종료
+        // id 종료
+
         //이름 시작
         while(true) {
 
