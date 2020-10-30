@@ -45,6 +45,7 @@ public class Utils {
         if(string.equals("")) return null;
         Date result = null;
         SimpleDateFormat transFormat = new SimpleDateFormat(format);
+        transFormat.setLenient(false);
         try {
             result = transFormat.parse(string);
         } catch (ParseException ignored) {
