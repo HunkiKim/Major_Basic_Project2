@@ -9,11 +9,13 @@ import com.konkuk.repository.LogRepository;
 import com.konkuk.service.EmployeeService;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 
 public class EmployeeManageController extends Controller {
     int employeeId;
     LogRepository L = LogRepository.getInstance();
+    EmployeeService employeeService = new EmployeeService();
     EmployeeRepository Erepository = EmployeeRepository.getInstance();
     public EmployeeManageController(int employeeId) {
         this.employeeId = employeeId;
@@ -173,10 +175,13 @@ public class EmployeeManageController extends Controller {
                     }
                     //공통
                     if (new EmployeeService().check(yn) == 0) {
-                        L.addLog("[사원수정] ","사원번호 : " + Erepository.findByExactId(employeeId).getId()+ " 사원이름 : "+ Erepository.findByExactId(employeeId).getName()+
-                                " 연봉 : "+ Erepository.findByExactId(employeeId).getSalary()+ " 잔여연차 : "+Erepository.findByExactId(employeeId).getResidualDayOff() +
-                                " -> " + "사원번호 : "+ id + " 사원이름 : " + name + "연봉 : " + salary + " 잔여연차 : "+ Erepository.findByExactId(employeeId).getResidualDayOff());
-                        Erepository.update(employeeId, new Employee(Integer.parseInt(id), name, Integer.parseInt(salary), 0));
+                        Employee employee = employeeService.getEmployee(employeeId);
+                        L.addLog("[사원수정] ","사원번호 : " + employee.getId()+ " 사원이름 : "+ employee.getName()+
+                                " 연봉 : "+ employee.getSalary()+ " 잔여연차 : "+employee.getResidualDayOff() +
+                                " -> " + "사원번호 : "+ id + " 사원이름 : " + name + "연봉 : " + salary + " 잔여연차 : "+ employee.getResidualDayOff());
+                        BigDecimal bSalary = new BigDecimal(salary);
+                        Employee newEmployee = new Employee(Integer.parseInt(id), name, bSalary, employee.getResidualDayOff());
+                        Erepository.update(employeeId, newEmployee);
                         break;
                     }
                     else if(new EmployeeService().check(yn) == 1){

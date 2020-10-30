@@ -9,6 +9,7 @@ import com.konkuk.exception.IllegalLengthException;
 import com.konkuk.exception.IllegalLetterException;
 import com.konkuk.repository.EmployeeRepository;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -30,7 +31,7 @@ public class EmployeeService {
             if(len>=1 && len<=7) {
                 return Erepositry.findById(parsedInput);
             } else if(len>=8 && len<=10){
-                return Erepositry.findBySalary(parsedInput);
+                return Erepositry.findBySalary(new BigDecimal(parsedInput));
             } else {
                 throw new IllegalLengthException();
             }
@@ -44,7 +45,7 @@ public class EmployeeService {
             // inputType == MIXED
             if(salarmeasure(input)) {
                 int conversionSalary = salaryconversion(input);
-                return Erepositry.findBySalaryBetween(conversionSalary, conversionSalary + 10000);
+                return Erepositry.findBySalaryBetween(new BigDecimal(conversionSalary), new BigDecimal(conversionSalary + 10000));
             } else {
                 throw new IllegalLetterException();
             }
