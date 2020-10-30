@@ -379,11 +379,21 @@ public class DayOffController extends Controller {
             UI.print2(Langs.DAY_OFF_RED);
             String inputs = UI.getInput();
             if(inputs.toLowerCase().equals("b")) return;
-            count = Float.parseFloat(inputs);
-
-            if(dayOffService.countCheck(count)){
+            if((inputs.length() > 1 && inputs.charAt(0)=='0') ||
+                    !inputs.equals(inputs.trim())){
+                Utils.pause(Langs.BLANK_SPACE_ERROR);
+                continue;
+            }
+            try{
+                count = Float.parseFloat(inputs);
+            } catch (NumberFormatException e) {
+                Utils.pause(Langs.BLANK_SPACE_ERROR);
+                continue;
+            }
+            if(dayOffService.countCheck(count)==true){
                 break;
             }
+            else continue;
         }
 
         Employee employee = dayOffService.reduct(employeeId, reason, count);
