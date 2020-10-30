@@ -57,7 +57,10 @@ public class DayOffInfoController extends Controller {
                 String menu = UI.getInput();
                 if (menu.equals("1")) {
                     UI.print(employee.getName()+"님의 연차 미사용으로 인한 환급액은 "
-                            +dayOffInfoService.refund_cal(employee.getSalary().floatValue(),employee.getResidualDayOff())+"원 입니다");
+                            +Utils.floatToString(
+                                    dayOffInfoService.refund_cal(
+                                            employee.getSalary().floatValue(),
+                                            employee.getResidualDayOff()))+"원 입니다");
                     log.addLog("[환급액 조회] " , "사원번호 :"+employee.getId()+
                             " 사원이름 :"+employee.getName()+
                             " 연봉 :" + salary+
@@ -92,7 +95,11 @@ public class DayOffInfoController extends Controller {
                 String menu = UI.getInput();
                 if (menu.equals("1")) {
                     UI.print(employee.getName()+"님의 연차 초과사용으로 인한 차감액은 "
-                            +dayOffInfoService.cal(employee.getSalary().floatValue(),employee.getResidualDayOff())+"원 입니다");
+                            +Utils.floatToString(
+                                    dayOffInfoService.cal(
+                                            employee.getSalary().floatValue(),
+                                            employee.getResidualDayOff()
+                                    ))+"원 입니다");
                     log.addLog("[차감액 조회] " , "사원번호 :"+employee.getId()+
                             " 사원이름 :"+employee.getName()+
                             " 연봉 :" + salary+
