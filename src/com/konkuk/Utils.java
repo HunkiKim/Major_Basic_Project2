@@ -62,6 +62,7 @@ public class Utils {
     }
 
     public static boolean isOnlyNumber(String checkString) {
+        if(checkString.equals("")) return false;
         String pattern = "^[0-9]*$";
         return Pattern.matches(pattern, checkString);
     }
