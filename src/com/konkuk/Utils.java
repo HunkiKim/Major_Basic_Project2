@@ -45,6 +45,7 @@ public class Utils {
         if(string.equals("")) return null;
         Date result = null;
         SimpleDateFormat transFormat = new SimpleDateFormat(format);
+        transFormat.setLenient(false);
         try {
             result = transFormat.parse(string);
         } catch (ParseException ignored) {
@@ -62,6 +63,7 @@ public class Utils {
     }
 
     public static boolean isOnlyNumber(String checkString) {
+        if(checkString.equals("")) return false;
         String pattern = "^[0-9]*$";
         return Pattern.matches(pattern, checkString);
     }
@@ -103,7 +105,7 @@ public class Utils {
             }
         }
         try {
-            int t = Integer.parseInt(target);
+            Float.parseFloat(target);
             return InputType.NUMERIC;
         } catch (NumberFormatException e) {
             return InputType.LETTER;

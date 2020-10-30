@@ -9,6 +9,7 @@ import com.konkuk.exception.IllegalLengthException;
 import com.konkuk.exception.IllegalLetterException;
 import com.konkuk.repository.EmployeeRepository;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -26,11 +27,10 @@ public class EmployeeService {
         InputType inputType = Utils.getInputType(input);
 
         if(inputType == InputType.NUMERIC) {
-            int parsedInput = Integer.parseInt(input);
             if(len>=1 && len<=7) {
-                return Erepositry.findById(parsedInput);
+                return Erepositry.findById(Integer.parseInt(input));
             } else if(len>=8 && len<=10){
-                return Erepositry.findBySalary(parsedInput);
+                return Erepositry.findBySalary(new BigDecimal(input));
             } else {
                 throw new IllegalLengthException();
             }
@@ -43,21 +43,21 @@ public class EmployeeService {
         } else {
             // inputType == MIXED
             if(salarmeasure(input)) {
-                int conversionSalary = salaryconversion(input);
-                return Erepositry.findBySalaryBetween(conversionSalary, conversionSalary + 10000);
+                BigDecimal conversionSalary = salaryconversion(input);
+                return Erepositry.findBySalaryBetween(conversionSalary, conversionSalary.add(new BigDecimal(10000)));
             } else {
                 throw new IllegalLetterException();
             }
         }
     }
 
-    public int salaryconversion(String target){ // 만으로 된 문자 빼고 0000 추가해주기
+    public BigDecimal salaryconversion(String target){ // 만으로 된 문자 빼고 0000 추가해주기
         String str = "";
         for(int i=0; i<target.length()-1; i++){
             str+=target.charAt(i);
         }
         str+="0000";
-        return Integer.parseInt(str);
+        return new BigDecimal(str);
     }
 
     public boolean salarmeasure(String target){//1000만 같은식으로 나올떄 확인

@@ -12,6 +12,7 @@ import com.konkuk.repository.LogRepository;
 import com.konkuk.service.EmployeeService;
 import com.sun.security.auth.callback.TextCallbackHandler;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
@@ -83,7 +84,7 @@ public class EmployeeController extends Controller {
                 exactfind.forEach(employee -> {
                     UI.print("*" + Langs.EMPLOYEE_ID + employee.id);
                     UI.print("*" + Langs.EMPLOYEE_NAME + employee.name);
-                    UI.print("*" + Langs.EMPLOYEE_SALARY + (int) employee.salary + "\n");
+                    UI.print("*" + Langs.EMPLOYEE_SALARY + employee.salary.toString() + "\n");
                 });
                 break;
             }
@@ -128,7 +129,7 @@ public class EmployeeController extends Controller {
                     if (Integer.parseInt(id) == Erepositry.findByExactId(Integer.parseInt(id)).id) {
                         UI.print("*" + Langs.EMPLOYEE_ID + Erepositry.findByExactId(Integer.parseInt(id)).id);
                         UI.print("*" + Langs.EMPLOYEE_NAME + Erepositry.findByExactId(Integer.parseInt(id)).name);
-                        UI.print("*" + Langs.EMPLOYEE_SALARY + (int) Erepositry.findByExactId(Integer.parseInt(id)).salary + "\n");
+                        UI.print("*" + Langs.EMPLOYEE_SALARY + Erepositry.findByExactId(Integer.parseInt(id)).salary.toString() + "\n");
                     } else { //검색대상 오류
                         // 만약 올바르지 않은 숫자거나 문자라면
                         Utils.pause(Langs.LETTER_ERROR);
@@ -272,7 +273,7 @@ public class EmployeeController extends Controller {
             if (employeeService.check(yn) == 0) {
                 try{
                     L.addLog("[사원추가] " , "사원번호 : "+id +" 사원이름 : "+name+ "연봉 : "+ salary + " 잔여연차 : "+"0");
-                    Erepositry.add(new Employee(Integer.parseInt(id), name, Integer.parseInt(salary), 0));
+                    Erepositry.add(new Employee(Integer.parseInt(id), name, new BigDecimal(salary), 0));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -44,7 +44,7 @@ public final class Langs {
             "2. 정보 삭제\n"+
             HORIZON;
     public static final String DAY_OFF_INFO = "사번 이름 잔여 연차수";
-    public static final String COUNT_ERROR = "올바른 개수가 아닙니다. -30~30사이의 수로 다시 입력하세요.";
+    public static final String COUNT_ERROR = "올바른 개수가 아닙니다. -30~30사이의 정수로 다시 입력하세요.";
     public static final String FCOUNT_ERROR = "문법적으로 올바른 연차는 -365 ~ 365 사이의 수입니다.";
     public static final String REASON_ERROR = "올바른 입력이 아닙니다. 1byte이상 512byte미만으로 다시 입력하세요.";
     public static final String FIND_ERROR = "선택한 대상이 존재하지 않습니다. 다시 입력해주세요. ";
@@ -66,8 +66,8 @@ public final class Langs {
     public static final String HALF_DAY_OFF_START = "반차 사용 시작 시간을 입력하세요(yyyyMMdd HH:mm): ";
     public static final String DAY_OFF_USED = "해당 날짜의 연차를 이미 사용하였습니다.";
     public static final String DAY_OFF_USED2 = "입력받은 날짜에 해당하는 연차를 사용했습니다";
-    public static final String DAY_OFF_CHANGE_REASON = "연차 사유를 입력하세요(수정하지 않을 시 'p' 나 'P'를 입력하세요): ";
-    public static final String DAY_OFF_CHANGE_START = "연차 시작 시간(yyyyMMdd HH:mm)을 입력하세요(수정하지 않을 시 'p' 나 'P'를 입력하세요): ";
+    public static final String DAY_OFF_CHANGE_REASON = "연차 사유를 입력하세요(수정하지 않을 시 'P' 나 'p'를 입력하세요): ";
+    public static final String DAY_OFF_CHANGE_START = "연차 시작 시간(yyyyMMdd HH:mm)을 입력하세요(수정하지 않을 시 'P' 나 'p'를 입력하세요): ";
     public static final String DAY_OFF_ADD = "연차 추가 개수를 입력하세요: ";
     public static final String DAY_OFF_ADD_REASON = "연차 추가 사유를 입력하세요: ";
     public static final String DAY_OFF_RED = "연차 차감 개수를 입력하세요: ";

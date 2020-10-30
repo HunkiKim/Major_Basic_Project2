@@ -26,7 +26,7 @@ public class DayOffInfoController extends Controller {
 
     public Controller print(int employeeId) {
         Employee employee = employeeService.getEmployee(employeeId);
-        String salary = Utils.floatToString(employee.salary);
+        String salary = employee.salary.toString();
 
         if (employee.getResidualDayOff() == 0) {  //잔여연차=0
             UI.print2(Langs.HORIZON);
@@ -57,14 +57,17 @@ public class DayOffInfoController extends Controller {
                 String menu = UI.getInput();
                 if (menu.equals("1")) {
                     UI.print(employee.getName()+"님의 연차 미사용으로 인한 환급액은 "
-                            +dayOffInfoService.refund_cal(employee.getSalary(),employee.getResidualDayOff())+"원 입니다");
+                            +Utils.floatToString(
+                                    dayOffInfoService.refund_cal(
+                                            employee.getSalary().floatValue(),
+                                            employee.getResidualDayOff()))+"원 입니다");
                     log.addLog("[환급액 조회] " , "사원번호 :"+employee.getId()+
                             " 사원이름 :"+employee.getName()+
                             " 연봉 :" + salary+
                             " 잔여연차 :"+employee.getResidualDayOff()+
                             " 환급액 :"+ Utils.floatToString(
                                     dayOffInfoService.refund_cal(
-                                            employee.getSalary(),
+                                            employee.getSalary().floatValue(),
                                             employee.getResidualDayOff()
                                     )));
                     return new MainController();
@@ -92,14 +95,18 @@ public class DayOffInfoController extends Controller {
                 String menu = UI.getInput();
                 if (menu.equals("1")) {
                     UI.print(employee.getName()+"님의 연차 초과사용으로 인한 차감액은 "
-                            +dayOffInfoService.cal(employee.getSalary(),employee.getResidualDayOff())+"원 입니다");
+                            +Utils.floatToString(
+                                    dayOffInfoService.cal(
+                                            employee.getSalary().floatValue(),
+                                            employee.getResidualDayOff()
+                                    ))+"원 입니다");
                     log.addLog("[차감액 조회] " , "사원번호 :"+employee.getId()+
                             " 사원이름 :"+employee.getName()+
                             " 연봉 :" + salary+
                             " 잔여연차 :"+employee.getResidualDayOff() +
                             " 차감액 :"+ Utils.floatToString(
                                     dayOffInfoService.cal(
-                                            employee.getSalary(),
+                                            employee.getSalary().floatValue(),
                                             employee.getResidualDayOff())));
                     return new MainController();
                 } else if (menu.equals("2")) {

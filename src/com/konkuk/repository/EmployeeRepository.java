@@ -6,6 +6,7 @@ import com.konkuk.asset.Settings;
 import com.konkuk.dto.Employee;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class EmployeeRepository extends Repository implements  IEmployeeReposito
             employeeList = loadData((parsedData) -> {
                 int id = Integer.parseInt(parsedData.get(0));
                 String name = parsedData.get(1);
-                int salary = Integer.parseInt(parsedData.get(2));
+                BigDecimal salary = new BigDecimal(parsedData.get(2));
                 float residualDayOff = Float.parseFloat(parsedData.get(3));
                 if (uniquePolicy.contains(id)) {
                     Utils.exit(this.debugTitle + " - " + Langs.VIOLATE_UNIQUE_KEY);
@@ -71,19 +72,19 @@ public class EmployeeRepository extends Repository implements  IEmployeeReposito
     }
 
     @Override
-    public List<Employee> findBySalary(int salary) {
+    public List<Employee> findBySalary(BigDecimal salary) {
         List<Employee> results = new ArrayList<>();
         employeeList.forEach((employee -> {
-            if(employee.salary == salary) results.add(employee);
+            if(employee.salary.equals(salary)) results.add(employee);
         }));
         return results;
     }
 
     @Override
-    public List<Employee> findBySalaryBetween(int salary, int salary2) {
+    public List<Employee> findBySalaryBetween(BigDecimal salary, BigDecimal salary2) {
         List<Employee> results = new ArrayList<>();
         employeeList.forEach((employee -> {
-            if(employee.salary >= salary && employee.salary < salary2) results.add(employee);
+            if(employee.salary.compareTo(salary) > -1 && employee.salary.compareTo(salary2) < 0) results.add(employee);
         }));
         return results;
     }
@@ -111,7 +112,6 @@ public class EmployeeRepository extends Repository implements  IEmployeeReposito
 
     @Override
     public void update(int targetId, Employee employee) {
-        employee.id = targetId;
         for(int i = 0; i < employeeList.size(); i++) {
             if(employeeList.get(i).id == targetId) {
                 employeeList.set(i, employee);
