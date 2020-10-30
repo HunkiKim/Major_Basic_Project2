@@ -43,21 +43,21 @@ public class EmployeeService {
         } else {
             // inputType == MIXED
             if(salarmeasure(input)) {
-                int conversionSalary = salaryconversion(input);
-                return Erepositry.findBySalaryBetween(new BigDecimal(conversionSalary), new BigDecimal(conversionSalary + 10000));
+                BigDecimal conversionSalary = salaryconversion(input);
+                return Erepositry.findBySalaryBetween(conversionSalary, conversionSalary.add(new BigDecimal(10000)));
             } else {
                 throw new IllegalLetterException();
             }
         }
     }
 
-    public int salaryconversion(String target){ // 만으로 된 문자 빼고 0000 추가해주기
+    public BigDecimal salaryconversion(String target){ // 만으로 된 문자 빼고 0000 추가해주기
         String str = "";
         for(int i=0; i<target.length()-1; i++){
             str+=target.charAt(i);
         }
         str+="0000";
-        return Integer.parseInt(str);
+        return new BigDecimal(str);
     }
 
     public boolean salarmeasure(String target){//1000만 같은식으로 나올떄 확인
