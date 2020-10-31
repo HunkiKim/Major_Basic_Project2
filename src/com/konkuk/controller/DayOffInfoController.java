@@ -55,6 +55,9 @@ public class DayOffInfoController extends Controller {
             UI.print2(Langs.DAY_OFF_INFO_PAGE_REFUND);
             while (true) { //1.환급액 조회 2.메인메뉴 이동
                 String menu = UI.getInput();
+                if(menu.equals("B") || menu.equals("b")){
+                    return new MainController();
+                }
                 if (menu.equals("1")) {
                     UI.print(employee.getName()+"님의 연차 미사용으로 인한 환급액은 "
                             +Utils.floatToString(
@@ -93,6 +96,9 @@ public class DayOffInfoController extends Controller {
             UI.print2(Langs.DAY_OFF_INFO_PAGE);
             while (true) {
                 String menu = UI.getInput();
+                if(menu.equals("B") || menu.equals("b")){
+                    return new MainController();
+                }
                 if (menu.equals("1")) {
                     UI.print(employee.getName()+"님의 연차 초과사용으로 인한 차감액은 "
                             +Utils.floatToString(
