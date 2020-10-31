@@ -227,7 +227,7 @@ public class DayOffController extends Controller {
         while(true){
             UI.print2(Langs.DAY_OFF_CC);
             String menu = UI.getInput();
-            if(menu.toLowerCase().equals("b")) break;
+            if(menu.toLowerCase().equals("b")) return;
 
             if(menu.equals("1")){
                 m = 1;
@@ -235,7 +235,7 @@ public class DayOffController extends Controller {
             } else if(menu.equals("2")){
                 m = 2;
                 break;
-            } else{
+            } else {
                 Utils.pause(Langs.INPUT_ERROR);
                 continue;
             }

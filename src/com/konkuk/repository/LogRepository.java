@@ -19,21 +19,18 @@ public class LogRepository extends Repository {
     private LogRepository(String dataFilePath) {
         super(dataFilePath);
         this.debugTitle = "Log";
-        if(isDataFileExists()) {
-            logList = loadData((parsedData) -> {
-                int log_number = Integer.parseInt(parsedData.get(0));
-                String log_category = parsedData.get(1);
-                String log_content = parsedData.get(2);
-                String Day = parsedData.get(3);
-                if(uniquePolicy.contains(log_number)) {
-                    Utils.exit(this.debugTitle + " - " + Langs.VIOLATE_UNIQUE_KEY);
-                }
-                uniquePolicy.add(log_number);
-                return new Log(log_number, log_category, log_content, Day);
-            });
-        } else {
-            createEmptyDataFile(Log.getHeader());
-        }
+        if(!isDataFileExists()) createEmptyDataFile(Log.getHeader());
+        logList = loadData((parsedData) -> {
+            int log_number = Integer.parseInt(parsedData.get(0));
+            String log_category = parsedData.get(1);
+            String log_content = parsedData.get(2);
+            String Day = parsedData.get(3);
+            if(uniquePolicy.contains(log_number)) {
+                Utils.exit(this.debugTitle + " - " + Langs.VIOLATE_UNIQUE_KEY);
+            }
+            uniquePolicy.add(log_number);
+            return new Log(log_number, log_category, log_content, Day);
+        });
     }
 
     private static class Instance {

@@ -22,32 +22,29 @@ public class DayOffRepository extends Repository implements IDayOffRepository {
     private DayOffRepository(String dataFilePath) {
         super(dataFilePath);
         this.debugTitle = "DayOff";
-        if (isDataFileExists()) {
-            dayOffList = loadData((parsedData) -> {
-                int id = Integer.parseInt(parsedData.get(0));
-                int employeeId = Integer.parseInt(parsedData.get(1));
-                float changedDayOffCount = Float.parseFloat(parsedData.get(2));
-                if(uniquePolicy.contains(id)) {
-                    Utils.exit(this.debugTitle + " - " + Langs.VIOLATE_UNIQUE_KEY);
-                }
-                uniquePolicy.add(id);
-                String reason = parsedData.get(3);
-                Date dateDayOffStart = Utils.stringToDate(parsedData.get(4));
-                Date dateDayOffEnd = Utils.stringToDate(parsedData.get(5));
-                Date dateCreated = Utils.stringToDate(parsedData.get(6));
-                DayOff dayOff = new DayOff();
-                dayOff.id = id;
-                dayOff.employeeId = employeeId;
-                dayOff.changedDayOffCount = changedDayOffCount;
-                dayOff.reason = reason;
-                dayOff.dateDayOffStart = dateDayOffStart;
-                dayOff.dateDayOffEnd = dateDayOffEnd;
-                dayOff.dateCreated = dateCreated;
-                return dayOff;
-            });
-        } else {
-            createEmptyDataFile(header);
-        }
+        if(!isDataFileExists()) createEmptyDataFile(header);
+        dayOffList = loadData((parsedData) -> {
+            int id = Integer.parseInt(parsedData.get(0));
+            int employeeId = Integer.parseInt(parsedData.get(1));
+            float changedDayOffCount = Float.parseFloat(parsedData.get(2));
+            if(uniquePolicy.contains(id)) {
+                Utils.exit(this.debugTitle + " - " + Langs.VIOLATE_UNIQUE_KEY);
+            }
+            uniquePolicy.add(id);
+            String reason = parsedData.get(3);
+            Date dateDayOffStart = Utils.stringToDate(parsedData.get(4));
+            Date dateDayOffEnd = Utils.stringToDate(parsedData.get(5));
+            Date dateCreated = Utils.stringToDate(parsedData.get(6));
+            DayOff dayOff = new DayOff();
+            dayOff.id = id;
+            dayOff.employeeId = employeeId;
+            dayOff.changedDayOffCount = changedDayOffCount;
+            dayOff.reason = reason;
+            dayOff.dateDayOffStart = dateDayOffStart;
+            dayOff.dateDayOffEnd = dateDayOffEnd;
+            dayOff.dateCreated = dateCreated;
+            return dayOff;
+        });
     }
 
     private static class Instance {
